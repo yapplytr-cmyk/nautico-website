@@ -372,6 +372,7 @@ a:hover { color: #9DD8EF; }
   transform: scale(1.03);
 }
 .demo-video-row {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -404,6 +405,10 @@ a:hover { color: #9DD8EF; }
 }
 /* ── Arrow CTA trigger (desktop only) ── */
 .demo-cta-trigger {
+  position: absolute;
+  right: calc(50% - 190px);
+  top: 50%;
+  transform: translateY(-50%);
   width: 52px; height: 52px;
   border-radius: 50%;
   background: var(--bg-card);
@@ -411,10 +416,10 @@ a:hover { color: #9DD8EF; }
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   color: var(--accent);
-  margin-left: 20px;
   transition: all 0.3s ease;
   animation: demoPulse 2s ease-in-out infinite;
   flex-shrink: 0;
+  z-index: 2;
 }
 .demo-cta-trigger:hover {
   background: rgba(126,200,227,0.1);
@@ -436,16 +441,19 @@ a:hover { color: #9DD8EF; }
 
 /* ── CTA Panel (slides in from right) ── */
 .demo-cta-panel {
+  position: absolute;
+  left: calc(50% + 160px);
+  top: 50%;
+  transform: translateY(-50%);
   max-width: 0;
   opacity: 0;
   overflow: hidden;
-  transition: max-width 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease 0.1s, margin 0.5s ease;
-  margin-left: 0;
+  transition: max-width 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease 0.1s;
+  z-index: 2;
 }
 .demo-cta-panel.open {
   max-width: 320px;
   opacity: 1;
-  margin-left: 24px;
 }
 .demo-cta-content {
   background: var(--bg-card);
