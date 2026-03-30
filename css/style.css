@@ -484,14 +484,16 @@ a:hover { color: #9DD8EF; }
 .demo-cta-content .btn-appstore {
   width: 100%;
 }
+@media (max-width: 768px) {
+  .demo-cta-trigger, .demo-cta-panel { display: none !important; }
+  .demo-video-row { justify-content: center; }
+}
 @media (max-width: 600px) {
   .demo-video-phone {
     width: 220px;
     height: 450px;
     border-radius: 30px;
   }
-  .demo-cta-trigger, .demo-cta-panel { display: none !important; }
-  .demo-video-row { justify-content: center; }
 }
 
 /* ══ SECTIONS ══ */
