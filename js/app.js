@@ -300,49 +300,29 @@ async function loadDashboard() {
     try {
       const { data: profile } = await sb
         .from('profiles')
-        .select('full_name, country, role')
+        .select('full_name, role, preferred_language')
         .eq('id', currentUser.id)
         .single();
 
       if (profile) {
         document.getElementById('dash-name').textContent = profile.full_name || '—';
-        document.getElementById('dash-country').textContent = profile.country || '—';
+        document.getElementById('dash-country').textContent = profile.role ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1) : '—';
       }
     } catch (e) { console.log('Profile fetch:', e); }
 
-    // Load subscription info
-    try {
-      const { data: sub } = await sb
-        .from('subscriptions')
-        .select('plan, status, trial_ends_at, current_period_end')
-        .eq('user_id', currentUser.id)
-        .single();
+    // Subscription info — no subscriptions table exists yet, show defaults
+    document.getElementById('dash-plan').textContent = 'Free Trial';
+    document.getElementById('dash-status').textContent = 'Active';
+    document.getElementById('dash-status').style.color = 'var(--green)';
+    document.getElementById('dash-trial').textContent = '—';
+    document.getElementById('dash-billing').textContent = '—';
 
-      if (sub) {
-        document.getElementById('dash-plan').textContent = sub.plan ? sub.plan.charAt(0).toUpperCase() + sub.plan.slice(1) : 'Free Trial';
-        const statusEl = document.getElementById('dash-status');
-        statusEl.textContent = sub.status ? sub.status.charAt(0).toUpperCase() + sub.status.slice(1) : 'Active';
-        if (sub.status === 'active' || sub.status === 'trialing') statusEl.style.color = 'var(--green)';
-        if (sub.trial_ends_at) document.getElementById('dash-trial').textContent = new Date(sub.trial_ends_at).toLocaleDateString();
-        if (sub.current_period_end) document.getElementById('dash-billing').textContent = new Date(sub.current_period_end).toLocaleDateString();
-      } else {
-        document.getElementById('dash-plan').textContent = 'Free Trial';
-        document.getElementById('dash-status').textContent = 'Active';
-        document.getElementById('dash-status').style.color = 'var(--green)';
-        document.getElementById('dash-trial').textContent = '—';
-        document.getElementById('dash-billing').textContent = '—';
-      }
-    } catch (e) {
-      document.getElementById('dash-plan').textContent = 'Free Trial';
-      document.getElementById('dash-status').textContent = 'Active';
-    }
-
-    // Load fleet stats
+    // Load fleet stats from user_yachts (owner_id) and trips (user_id)
     try {
       const { count: vesselCount } = await sb
-        .from('yachts')
+        .from('user_yachts')
         .select('*', { count: 'exact', head: true })
-        .eq('user_id', currentUser.id);
+        .eq('owner_id', currentUser.id);
 
       const { data: trips } = await sb
         .from('trips')
