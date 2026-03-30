@@ -425,6 +425,9 @@
               </div>
             </div>
             <p class="demo-video-caption">Live App Walkthrough</p>
+            <a href="#screenshots-container" class="demo-scroll-arrow scroll-to" data-target="screenshots-container" aria-label="Scroll to screenshots">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg>
+            </a>
           </div>
           <!-- Inline CTA arrow toggle — guaranteed available -->
           <script>
@@ -439,8 +442,21 @@
             }
           })();
           </script>
+          <!-- Auto-play video when scrolled into view (iOS fix) -->
+          <script>
+          (function() {
+            var video = document.querySelector('.demo-video');
+            if (!video) return;
+            var observer = new IntersectionObserver(function(entries) {
+              entries.forEach(function(entry) {
+                if (entry.isIntersecting) { video.play(); }
+              });
+            }, { threshold: 0.3 });
+            observer.observe(video);
+          })();
+          </script>
 
-          <div class="screenshots-container">
+          <div class="screenshots-container" id="screenshots-container">
             <div class="screenshot-mockup">
               <div class="screenshot-phone">
                 <div class="screenshot-content">

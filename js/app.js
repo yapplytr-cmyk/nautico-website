@@ -4,8 +4,8 @@
 ═══════════════════════════════════════════ */
 
 // ── Supabase Init ──
-const SUPABASE_URL = 'https://sgoicvqgfydwfpttzgqu.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNnb2ljdnFnZnlkd2ZwdHR6Z3F1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkyOTIyNzUsImV4cCI6MjA1NDg2ODI3NX0.RVCwPHmMIjRS_71gQWCMnBMpmEOZ35JkBeYlLJHbIQo';
+const SUPABASE_URL = 'https://shgcdzdnmwkjqpwdlsug.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNoZ2NkemRubXdranFwd2Rsc3VnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NzA5MDIsImV4cCI6MjA5MDA0NjkwMn0.sWSvSuj1sS7Yi1ucFjX6gkOSOQkSwr6yX45lN3dFdw8';
 
 var sb = null;
 let currentUser = null;

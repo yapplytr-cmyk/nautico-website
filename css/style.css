@@ -384,6 +384,24 @@ a:hover { color: #9DD8EF; }
   color: var(--accent);
   letter-spacing: 0.3px;
 }
+.demo-scroll-arrow {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--border); background: rgba(23,58,72,0.6);
+  backdrop-filter: blur(8px); color: var(--accent);
+  cursor: pointer; margin-top: 12px; transition: all 0.25s ease;
+  text-decoration: none;
+  animation: bounceDown 2s ease-in-out infinite;
+}
+.demo-scroll-arrow:hover {
+  border-color: var(--border-hover);
+  background: rgba(126,200,227,0.10);
+  transform: scale(1.08);
+}
+@keyframes bounceDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
 /* ── Arrow CTA trigger (desktop only) ── */
 .demo-cta-trigger {
   width: 52px; height: 52px;
