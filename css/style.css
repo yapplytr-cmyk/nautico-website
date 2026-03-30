@@ -543,8 +543,47 @@ a:hover { color: #9DD8EF; }
 .feat-tab-icon.feat-charts { background: rgba(56,189,248,0.1); color: #38BDF8; }
 .feat-tab.active .feat-tab-icon { transform: scale(1.1); box-shadow: 0 4px 16px rgba(126,200,227,0.15); }
 
-/* Panels */
-.feat-panels { position: relative; min-height: 420px; }
+/* Panels wrapper with arrows */
+.feat-panels-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+.feat-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: rgba(23,58,72,0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+.feat-arrow:hover {
+  border-color: var(--border-hover);
+  background: rgba(126,200,227,0.10);
+  transform: scale(1.08);
+  box-shadow: 0 4px 20px rgba(126,200,227,0.15);
+}
+.feat-arrow:active {
+  transform: scale(0.95);
+}
+.feat-arrow svg {
+  stroke: var(--accent);
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.feat-arrow:hover svg {
+  opacity: 1;
+}
+.feat-panels { position: relative; min-height: 420px; flex: 1; min-width: 0; }
 .feat-panel {
   display: none;
   align-items: center;
@@ -1143,6 +1182,9 @@ a:hover { color: #9DD8EF; }
   .feat-tab-icon svg { width: 16px; height: 16px; }
   .feat-tab span { font-size: 0.55rem; }
   .feat-panels { min-height: auto; }
+  .feat-panels-wrapper { gap: 6px; }
+  .feat-arrow { width: 32px; height: 32px; }
+  .feat-arrow svg { width: 16px; height: 16px; }
   .feat-panel {
     padding: 16px 14px;
     gap: 14px;

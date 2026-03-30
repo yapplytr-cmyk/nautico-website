@@ -271,7 +271,11 @@
               <button class="feat-tab" data-feat="5" onclick="switchFeatTab(5)"><div class="feat-tab-icon feat-charts"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div><span>Charts</span></button>
             </div>
 
-            <!-- Detail panels -->
+            <!-- Detail panels with arrow nav -->
+            <div class="feat-panels-wrapper">
+              <button class="feat-arrow feat-arrow-left" onclick="featNav(-1)" aria-label="Previous feature">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
             <div class="feat-panels">
               <div class="feat-panel active" data-panel="0">
                 <div class="feat-panel-graphic"><div class="card-icon-circle feat-money"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
@@ -339,9 +343,18 @@
                 <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/chart.png" alt="Nautical Charts" /></div></div>
               </div>
             </div>
+              <button class="feat-arrow feat-arrow-right" onclick="featNav(1)" aria-label="Next feature">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
           </div>
           <!-- Inline tab switch function — guaranteed available -->
           <script>
+          var _featTotal = 6;
+          function _getCurrentFeat() {
+            var active = document.querySelector('.feat-tab.active');
+            return active ? parseInt(active.getAttribute('data-feat')) : 0;
+          }
           function switchFeatTab(idx) {
             document.querySelectorAll('.feat-tab').forEach(function(t) { t.classList.remove('active'); });
             var tab = document.querySelector('.feat-tab[data-feat="' + idx + '"]');
@@ -354,6 +367,11 @@
               panel.offsetHeight;
               panel.style.animation = 'featPanelIn 0.4s ease';
             }
+          }
+          function featNav(dir) {
+            var cur = _getCurrentFeat();
+            var next = (cur + dir + _featTotal) % _featTotal;
+            switchFeatTab(next);
           }
           </script>
           <div class="section-flow-btn">
