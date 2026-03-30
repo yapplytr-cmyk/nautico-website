@@ -14,10 +14,12 @@ function initSupabase() {
   try {
     if (!supabase && window.supabase && window.supabase.createClient) {
       supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      return true;
     }
   } catch (e) {
-    console.log('Supabase not loaded (CDN may be blocked), login disabled');
+    console.log('Supabase init error:', e);
   }
+  return !!supabase;
 }
 // Try now (may not be loaded yet since script is async)
 initSupabase();
@@ -26,6 +28,11 @@ document.querySelector('script[src*="supabase"]')?.addEventListener('load', () =
   initSupabase();
   checkSession();
 });
+// Polling fallback — if the load event was missed, retry a few times
+(function retrySupa(attempts) {
+  if (supabase || attempts <= 0) return;
+  setTimeout(() => { initSupabase(); if (supabase) checkSession(); else retrySupa(attempts - 1); }, 500);
+})(10);
 
 // ── Router ──
 const routes = {
@@ -100,20 +107,20 @@ function navigateWithSpinner(button, route, delay = 300) {
 
 // ── Event Listeners ──
 document.addEventListener('DOMContentLoaded', () => {
-  // Route links with spinner
-  document.querySelectorAll('[data-route]').forEach(el => {
-    el.addEventListener('click', (e) => {
-      e.preventDefault();
-      const route = el.dataset.route;
+  // Route links — use event delegation on document for maximum reliability
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest('[data-route]');
+    if (!el) return;
+    e.preventDefault();
+    const route = el.dataset.route;
 
-      // For buttons, show spinner before navigating
-      if (el.tagName === 'A' && (el.classList.contains('btn') || el.closest('.btn'))) {
-        const button = el.classList.contains('btn') ? el : el.closest('.btn');
-        navigateWithSpinner(button, route);
-      } else {
-        navigate(route);
-      }
-    });
+    // For buttons, show spinner before navigating
+    if (el.tagName === 'A' && (el.classList.contains('btn') || el.closest('.btn'))) {
+      const button = el.classList.contains('btn') ? el : el.closest('.btn');
+      navigateWithSpinner(button, route);
+    } else {
+      navigate(route);
+    }
   });
 
   // Smooth scroll buttons — any element with .scroll-to and data-target
@@ -183,6 +190,14 @@ window.addEventListener('popstate', () => {
   navigate(hash);
 });
 
+// Fallback: handle hashchange (catches cases where click listeners don't fire)
+window.addEventListener('hashchange', () => {
+  const hash = window.location.hash.replace('#', '') || 'home';
+  if (routes[hash]) {
+    navigate(hash);
+  }
+});
+
 // ── Auth ──
 async function checkSession() {
   if (!supabase) return;
@@ -204,6 +219,8 @@ async function handleLogin(e) {
   const errorEl = document.getElementById('login-error');
   const btn = document.getElementById('login-btn');
 
+  // Retry Supabase init in case CDN loaded after initial attempt
+  if (!supabase) initSupabase();
   if (!supabase) {
     errorEl.textContent = 'Login service is temporarily unavailable. Please try again later.';
     errorEl.style.display = 'block';
