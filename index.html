@@ -749,5 +749,115 @@
   </footer>
 
   <script src="js/app.js"></script>
+
+  <!-- Mobile accordion for Problem section -->
+  <script>
+  (function() {
+    function isMobile() { return window.innerWidth <= 520; }
+
+    function setupAccordion() {
+      var cards = document.querySelectorAll('.problem-card-animated');
+      cards.forEach(function(card) {
+        // Skip if already set up
+        if (card.querySelector('.card-accordion-header')) return;
+
+        var illustration = card.querySelector('.card-illustration');
+        var tag = card.querySelector('.card-tag');
+        var title = card.querySelector('.card-title');
+        var bullets = card.querySelector('.card-bullets');
+        if (!illustration || !title || !bullets) return;
+
+        // Create header wrapper
+        var header = document.createElement('div');
+        header.className = 'card-accordion-header';
+
+        // Create text group
+        var textGroup = document.createElement('div');
+        textGroup.style.cssText = 'flex:1;min-width:0;';
+        if (tag) textGroup.appendChild(tag);
+        textGroup.appendChild(title);
+
+        header.appendChild(illustration);
+        header.appendChild(textGroup);
+
+        // Chevron
+        var chevron = document.createElement('div');
+        chevron.className = 'accordion-chevron';
+        chevron.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+        header.appendChild(chevron);
+
+        // Body wrapper
+        var body = document.createElement('div');
+        body.className = 'accordion-body';
+        body.appendChild(bullets);
+
+        // Clear card and rebuild
+        card.innerHTML = '';
+        card.appendChild(header);
+        card.appendChild(body);
+
+        // Toggle on tap
+        header.addEventListener('click', function() {
+          var wasOpen = card.classList.contains('accordion-open');
+          // Close all others
+          cards.forEach(function(c) { c.classList.remove('accordion-open'); });
+          if (!wasOpen) card.classList.add('accordion-open');
+        });
+      });
+    }
+
+    function teardownAccordion() {
+      var cards = document.querySelectorAll('.problem-card-animated');
+      cards.forEach(function(card) {
+        var header = card.querySelector('.card-accordion-header');
+        if (!header) return;
+
+        var illustration = card.querySelector('.card-illustration');
+        var tag = card.querySelector('.card-tag');
+        var title = card.querySelector('.card-title');
+        var bullets = card.querySelector('.card-bullets');
+
+        card.innerHTML = '';
+        card.classList.remove('accordion-open');
+
+        // Rebuild original structure
+        var illWrap = document.createElement('div');
+        illWrap.className = 'card-illustration';
+        if (illustration) {
+          illWrap.innerHTML = illustration.innerHTML;
+        }
+        card.appendChild(illWrap);
+        if (tag) card.appendChild(tag);
+        if (title) card.appendChild(title);
+
+        var desc = document.createElement('p');
+        desc.className = 'card-desc';
+        card.appendChild(desc);
+
+        if (bullets) card.appendChild(bullets);
+      });
+    }
+
+    var active = false;
+    function check() {
+      if (isMobile() && !active) {
+        active = true;
+        setupAccordion();
+      } else if (!isMobile() && active) {
+        active = false;
+        // Reload to restore original desktop layout cleanly
+        location.reload();
+      }
+    }
+
+    // Run on DOM ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', check);
+    } else {
+      check();
+    }
+    window.addEventListener('resize', check);
+  })();
+  </script>
 </body>
 </html>

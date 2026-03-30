@@ -1038,33 +1038,99 @@ a:hover { color: #9DD8EF; }
   .section-flow-btn { margin-top: 16px; }
   .section-flow-btn .btn { padding: 10px 22px; font-size: 0.88rem; }
 
-  /* ── Problem section: premium horizontal card layout ── */
-  .problem-grid { gap: 10px; grid-template-columns: 1fr; }
+  /* ── Problem section: premium accordion layout (mobile) ── */
+  .problem-grid { gap: 0; grid-template-columns: 1fr; }
   .problem-card-animated {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    border-radius: 0;
+    text-align: left;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(126,200,227,0.08);
+    overflow: hidden;
+  }
+  .problem-card-animated:first-child {
+    border-top: 1px solid rgba(126,200,227,0.08);
+  }
+  .problem-card-animated:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: rgba(126,200,227,0.08);
+  }
+  .problem-card-animated::before { display: none; }
+
+  /* Accordion header row */
+  .problem-card-animated .card-accordion-header {
     display: flex;
     align-items: center;
     gap: 14px;
-    padding: 14px 16px;
-    border-radius: 16px;
-    text-align: left;
+    padding: 16px 4px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
   .card-illustration {
-    width: 48px; height: 48px;
+    width: 44px; height: 44px;
     margin: 0;
     flex-shrink: 0;
   }
   .card-icon-circle {
-    width: 48px; height: 48px;
+    width: 44px; height: 44px;
     margin: 0;
+    animation: none;
   }
-  .card-icon-circle svg { width: 24px; height: 24px; }
+  .card-icon-circle svg { width: 22px; height: 22px; }
   .card-orbit { display: none; }
-  .card-tag { font-size: 0.6rem; padding: 2px 8px; margin-bottom: 3px; border-radius: 12px; }
-  .card-title { font-size: 0.95rem; margin-bottom: 2px; }
+  .card-tag { font-size: 0.6rem; padding: 2px 8px; margin-bottom: 2px; border-radius: 12px; }
+  .card-title { font-size: 0.95rem; margin-bottom: 0; }
   .card-desc { display: none; }
-  .card-bullets { margin-top: 4px; gap: 2px; max-width: none; margin-left: 0; margin-right: 0; }
-  .card-bullet { font-size: 0.72rem; gap: 5px; }
-  .card-bullet-icon { width: 20px; height: 20px; border-radius: 5px; font-size: 0.65rem; }
+
+  /* Accordion chevron */
+  .problem-card-animated .accordion-chevron {
+    display: flex;
+    margin-left: auto;
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(126,200,227,0.06);
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), background 0.3s;
+  }
+  .problem-card-animated .accordion-chevron svg {
+    width: 14px; height: 14px;
+    stroke: rgba(126,200,227,0.5);
+    transition: stroke 0.3s;
+  }
+  .problem-card-animated.accordion-open .accordion-chevron {
+    transform: rotate(180deg);
+    background: rgba(126,200,227,0.12);
+  }
+  .problem-card-animated.accordion-open .accordion-chevron svg {
+    stroke: rgba(126,200,227,0.8);
+  }
+
+  /* Accordion body (hidden by default) */
+  .problem-card-animated .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;
+    opacity: 0;
+  }
+  .problem-card-animated.accordion-open .accordion-body {
+    max-height: 200px;
+    opacity: 1;
+  }
+
+  .card-bullets {
+    margin: 0 0 16px 58px;
+    gap: 6px;
+    max-width: none;
+    margin-right: 12px;
+  }
+  .card-bullet { font-size: 0.78rem; gap: 8px; }
+  .card-bullet-icon { width: 24px; height: 24px; border-radius: 6px; font-size: 0.7rem; }
 
   /* ── Solution / Feature Explorer: compact for iPhone ── */
   .feat-tabs { gap: 5px; margin-bottom: 14px; }
