@@ -23,10 +23,24 @@
         <span class="nav-brand-text">Nautico</span>
       </a>
       <div class="nav-links" id="nav-links">
-        <a href="#home" class="nav-link active" data-route="home">Home</a>
-        <a href="#pricing" class="nav-link" data-route="pricing">Pricing</a>
-        <a href="#contact" class="nav-link" data-route="contact">Contact</a>
-        <a href="#login" class="nav-link nav-login-btn" data-route="login">Log In</a>
+        <a href="#home" class="nav-link active" data-route="home" data-i18n="nav_home">Home</a>
+        <a href="#pricing" class="nav-link" data-route="pricing" data-i18n="nav_pricing">Pricing</a>
+        <a href="#contact" class="nav-link" data-route="contact" data-i18n="nav_contact">Contact</a>
+        <a href="#login" class="nav-link nav-login-btn" data-route="login" data-i18n="nav_login">Log In</a>
+        <div class="lang-switcher" id="lang-switcher">
+          <button class="lang-btn" id="lang-btn" aria-label="Language">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+            <span id="lang-current">EN</span>
+          </button>
+          <div class="lang-dropdown" id="lang-dropdown">
+            <button class="lang-option active" data-lang="en" onclick="setLanguage('en')">English</button>
+            <button class="lang-option" data-lang="ru" onclick="setLanguage('ru')">Русский</button>
+            <button class="lang-option" data-lang="tr" onclick="setLanguage('tr')">Türkçe</button>
+            <button class="lang-option" data-lang="fr" onclick="setLanguage('fr')">Français</button>
+            <button class="lang-option" data-lang="it" onclick="setLanguage('it')">Italiano</button>
+            <button class="lang-option" data-lang="es" onclick="setLanguage('es')">Español</button>
+          </div>
+        </div>
       </div>
       <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -109,23 +123,23 @@
           </svg>
         </div>
         <div class="hero-content">
-          <div class="hero-badge">Set sail with confidence</div>
-          <h1 class="hero-title">Your Entire Vessel,<br/><span class="hero-accent">In the Palm of Your Hand</span></h1>
-          <p class="hero-subtitle">From bow to stern — track expenses, log voyages, schedule maintenance, and navigate with live nautical charts. One app, every sea mile.</p>
+          <div class="hero-badge" data-i18n="hero_badge">Set sail with confidence</div>
+          <h1 class="hero-title"><span data-i18n="hero_title_1">Your Entire Vessel,</span><br/><span class="hero-accent" data-i18n="hero_title_2">In the Palm of Your Hand</span></h1>
+          <p class="hero-subtitle" data-i18n="hero_subtitle">From bow to stern — track expenses, log voyages, schedule maintenance, and navigate with live nautical charts. One app, every sea mile.</p>
           <div class="hero-cta-row">
             <a href="#problems-section" class="btn btn-primary btn-lg scroll-to" data-target="problems-section">
-              Discover More
+              <span data-i18n="hero_cta">Discover More</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:8px"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
             </a>
           </div>
           <div class="hero-trust">
             <span class="hero-trust-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              30-day free trial
+              <span data-i18n="hero_trust_trial">30-day free trial</span>
             </span>
             <span class="hero-trust-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              Cancel anytime
+              <span data-i18n="hero_trust_cancel">Cancel anytime</span>
             </span>
           </div>
         </div>
@@ -160,9 +174,9 @@
       <!-- Problems Section -->
       <div class="section section-dark" id="problems-section">
         <div class="section-inner">
-          <div class="section-label anim-in">The Problem</div>
-          <h2 class="section-title anim-in">Yacht ownership shouldn't feel like a second job</h2>
-          <p class="section-subtitle anim-in">Most owners juggle spreadsheets, paper logs, and scattered receipts just to keep track of their vessel. Sound familiar?</p>
+          <div class="section-label anim-in" data-i18n="prob_label">The Problem</div>
+          <h2 class="section-title anim-in" data-i18n="prob_title">Yacht ownership shouldn't feel like a second job</h2>
+          <p class="section-subtitle anim-in" data-i18n="prob_subtitle">Most owners juggle spreadsheets, paper logs, and scattered receipts just to keep track of their vessel. Sound familiar?</p>
           <div class="problem-grid">
 
             <div class="problem-card-animated anim-in">
@@ -179,13 +193,13 @@
                   </div>
                 </div>
               </div>
-              <span class="card-tag problem-cost-tag">Financial</span>
-              <h3 class="card-title">Hidden Costs Pile Up</h3>
-              <p class="card-desc">Fuel, docking, maintenance, insurance — expenses come from everywhere with no clear picture of total cost.</p>
+              <span class="card-tag problem-cost-tag" data-i18n="prob_tag_1">Financial</span>
+              <h3 class="card-title" data-i18n="prob_card_1_title">Hidden Costs Pile Up</h3>
+              <p class="card-desc" data-i18n="prob_card_1_desc">Fuel, docking, maintenance, insurance — expenses come from everywhere with no clear picture of total cost.</p>
               <div class="card-bullets">
-                <div class="card-bullet"><div class="card-bullet-icon red">💸</div><span>No consolidated expense tracking</span></div>
-                <div class="card-bullet"><div class="card-bullet-icon red">📊</div><span>Surprise bills every season</span></div>
-                <div class="card-bullet"><div class="card-bullet-icon red">🧾</div><span>Scattered receipts & invoices</span></div>
+                <div class="card-bullet"><div class="card-bullet-icon red">💸</div><span data-i18n="prob_card_1_b1">No consolidated expense tracking</span></div>
+                <div class="card-bullet"><div class="card-bullet-icon red">📊</div><span data-i18n="prob_card_1_b2">Surprise bills every season</span></div>
+                <div class="card-bullet"><div class="card-bullet-icon red">🧾</div><span data-i18n="prob_card_1_b3">Scattered receipts & invoices</span></div>
               </div>
             </div>
 
@@ -202,13 +216,13 @@
                   </div>
                 </div>
               </div>
-              <span class="card-tag problem-maint-tag">Maintenance</span>
-              <h3 class="card-title">Maintenance Gets Missed</h3>
-              <p class="card-desc">Without automated reminders based on your vessel's specs, critical service tasks fall through the cracks.</p>
+              <span class="card-tag problem-maint-tag" data-i18n="prob_tag_2">Maintenance</span>
+              <h3 class="card-title" data-i18n="prob_card_2_title">Maintenance Gets Missed</h3>
+              <p class="card-desc" data-i18n="prob_card_2_desc">Without automated reminders based on your vessel's specs, critical service tasks fall through the cracks.</p>
               <div class="card-bullets">
-                <div class="card-bullet"><div class="card-bullet-icon amber">🔧</div><span>Engine hours tracked manually</span></div>
-                <div class="card-bullet"><div class="card-bullet-icon amber">⚠️</div><span>Missed service deadlines</span></div>
-                <div class="card-bullet"><div class="card-bullet-icon amber">📝</div><span>Paper-based maintenance logs</span></div>
+                <div class="card-bullet"><div class="card-bullet-icon amber">🔧</div><span data-i18n="prob_card_2_b1">Engine hours tracked manually</span></div>
+                <div class="card-bullet"><div class="card-bullet-icon amber">⚠️</div><span data-i18n="prob_card_2_b2">Missed service deadlines</span></div>
+                <div class="card-bullet"><div class="card-bullet-icon amber">📝</div><span data-i18n="prob_card_2_b3">Paper-based maintenance logs</span></div>
               </div>
             </div>
 
@@ -226,20 +240,20 @@
                   </div>
                 </div>
               </div>
-              <span class="card-tag problem-hub-tag">Organization</span>
-              <h3 class="card-title">No Central Hub</h3>
-              <p class="card-desc">Voyage logs, documents, fuel data, and crew info are scattered across apps, emails, and notebooks.</p>
+              <span class="card-tag problem-hub-tag" data-i18n="prob_tag_3">Organization</span>
+              <h3 class="card-title" data-i18n="prob_card_3_title">No Central Hub</h3>
+              <p class="card-desc" data-i18n="prob_card_3_desc">Voyage logs, documents, fuel data, and crew info are scattered across apps, emails, and notebooks.</p>
               <div class="card-bullets">
-                <div class="card-bullet"><div class="card-bullet-icon violet">📁</div><span>Files across five different apps</span></div>
-                <div class="card-bullet"><div class="card-bullet-icon violet">📍</div><span>No single source of truth</span></div>
-                <div class="card-bullet"><div class="card-bullet-icon violet">🔍</div><span>Hours wasted searching for info</span></div>
+                <div class="card-bullet"><div class="card-bullet-icon violet">📁</div><span data-i18n="prob_card_3_b1">Files across five different apps</span></div>
+                <div class="card-bullet"><div class="card-bullet-icon violet">📍</div><span data-i18n="prob_card_3_b2">No single source of truth</span></div>
+                <div class="card-bullet"><div class="card-bullet-icon violet">🔍</div><span data-i18n="prob_card_3_b3">Hours wasted searching for info</span></div>
               </div>
             </div>
 
           </div>
           <div class="section-flow-btn">
             <a href="#features-section" class="btn btn-primary scroll-to" data-target="features-section">
-              See How We Solve It
+              <span data-i18n="prob_cta">See How We Solve It</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:6px"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
             </a>
           </div>
@@ -256,19 +270,19 @@
       <!-- Features Section -->
       <div class="section" id="features-section">
         <div class="section-inner">
-          <div class="section-label anim-in">The Solution</div>
-          <h2 class="section-title anim-in">Everything you need. One app.</h2>
-          <p class="section-subtitle anim-in">Nautico replaces your spreadsheets, paper logs, and guesswork with a single, intelligent platform designed for yacht owners.</p>
+          <div class="section-label anim-in" data-i18n="feat_label">The Solution</div>
+          <h2 class="section-title anim-in" data-i18n="feat_title">Everything you need. One app.</h2>
+          <p class="section-subtitle anim-in" data-i18n="feat_subtitle">Nautico replaces your spreadsheets, paper logs, and guesswork with a single, intelligent platform designed for yacht owners.</p>
           <!-- Interactive Feature Explorer -->
           <div class="feat-explorer">
             <!-- Icon tabs — onclick for bulletproof switching -->
             <div class="feat-tabs">
-              <button class="feat-tab active" data-feat="0" onclick="switchFeatTab(0)"><div class="feat-tab-icon feat-money"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><span>Money</span></button>
-              <button class="feat-tab" data-feat="1" onclick="switchFeatTab(1)"><div class="feat-tab-icon feat-health"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><span>Health</span></button>
-              <button class="feat-tab" data-feat="2" onclick="switchFeatTab(2)"><div class="feat-tab-icon feat-location"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><span>Location</span></button>
-              <button class="feat-tab" data-feat="3" onclick="switchFeatTab(3)"><div class="feat-tab-icon feat-logbook"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div><span>Logbook</span></button>
-              <button class="feat-tab" data-feat="4" onclick="switchFeatTab(4)"><div class="feat-tab-icon feat-fuel"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></div><span>Fuel</span></button>
-              <button class="feat-tab" data-feat="5" onclick="switchFeatTab(5)"><div class="feat-tab-icon feat-charts"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div><span>Charts</span></button>
+              <button class="feat-tab active" data-feat="0" onclick="switchFeatTab(0)"><div class="feat-tab-icon feat-money"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><span data-i18n="feat_tab_money">Money</span></button>
+              <button class="feat-tab" data-feat="1" onclick="switchFeatTab(1)"><div class="feat-tab-icon feat-health"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><span data-i18n="feat_tab_health">Health</span></button>
+              <button class="feat-tab" data-feat="2" onclick="switchFeatTab(2)"><div class="feat-tab-icon feat-location"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><span data-i18n="feat_tab_location">Location</span></button>
+              <button class="feat-tab" data-feat="3" onclick="switchFeatTab(3)"><div class="feat-tab-icon feat-logbook"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div><span data-i18n="feat_tab_logbook">Logbook</span></button>
+              <button class="feat-tab" data-feat="4" onclick="switchFeatTab(4)"><div class="feat-tab-icon feat-fuel"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></div><span data-i18n="feat_tab_fuel">Fuel</span></button>
+              <button class="feat-tab" data-feat="5" onclick="switchFeatTab(5)"><div class="feat-tab-icon feat-charts"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div><span data-i18n="feat_tab_charts">Charts</span></button>
             </div>
 
             <!-- Detail panels with arrow nav -->
@@ -280,10 +294,10 @@
               <div class="feat-panel active" data-panel="0">
                 <div class="feat-panel-graphic"><div class="card-icon-circle feat-money"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
                 <div class="feat-panel-info">
-                  <span class="card-tag feat-money-tag">Financial</span>
-                  <h3 class="card-title">Smart Money Management</h3>
-                  <p class="card-desc">Track every dollar spent on your vessel. Nautico automatically categorizes and totals costs so you always know where your money goes.</p>
-                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon green">📊</div><span>Monthly & yearly cost breakdowns</span></div><div class="card-bullet"><div class="card-bullet-icon green">⛽</div><span>Fuel, maintenance, docking & more</span></div><div class="card-bullet"><div class="card-bullet-icon green">📈</div><span>Spending trends & budget forecasts</span></div></div>
+                  <span class="card-tag feat-money-tag" data-i18n="feat_tag_0">Financial</span>
+                  <h3 class="card-title" data-i18n="feat_0_title">Smart Money Management</h3>
+                  <p class="card-desc" data-i18n="feat_0_desc">Track every dollar spent on your vessel. Nautico automatically categorizes and totals costs so you always know where your money goes.</p>
+                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon green">📊</div><span data-i18n="feat_0_b1">Monthly & yearly cost breakdowns</span></div><div class="card-bullet"><div class="card-bullet-icon green">⛽</div><span data-i18n="feat_0_b2">Fuel, maintenance, docking & more</span></div><div class="card-bullet"><div class="card-bullet-icon green">📈</div><span data-i18n="feat_0_b3">Spending trends & budget forecasts</span></div></div>
                 </div>
                 <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/dashboard.png" alt="Spending Dashboard" /></div></div>
               </div>
@@ -291,10 +305,10 @@
               <div class="feat-panel" data-panel="1">
                 <div class="feat-panel-graphic"><div class="card-icon-circle feat-health"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#5BC4F0" stroke-width="1.5" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
                 <div class="feat-panel-info">
-                  <span class="card-tag feat-health-tag">Maintenance</span>
-                  <h3 class="card-title">Vessel Health Monitor</h3>
-                  <p class="card-desc">Service reminders based on your specific make, model, and engine hours. Never miss an oil change or haul-out again.</p>
-                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon blue">🔧</div><span>Service reminders by model specs</span></div><div class="card-bullet"><div class="card-bullet-icon blue">⚙️</div><span>Engine hours & health score</span></div><div class="card-bullet"><div class="card-bullet-icon blue">📋</div><span>Full maintenance history log</span></div></div>
+                  <span class="card-tag feat-health-tag" data-i18n="feat_tag_1">Maintenance</span>
+                  <h3 class="card-title" data-i18n="feat_1_title">Vessel Health Monitor</h3>
+                  <p class="card-desc" data-i18n="feat_1_desc">Service reminders based on your specific make, model, and engine hours. Never miss an oil change or haul-out again.</p>
+                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon blue">🔧</div><span data-i18n="feat_1_b1">Service reminders by model specs</span></div><div class="card-bullet"><div class="card-bullet-icon blue">⚙️</div><span data-i18n="feat_1_b2">Engine hours & health score</span></div><div class="card-bullet"><div class="card-bullet-icon blue">📋</div><span data-i18n="feat_1_b3">Full maintenance history log</span></div></div>
                 </div>
                 <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/service.png" alt="Service Tracker" /></div></div>
               </div>
@@ -302,10 +316,10 @@
               <div class="feat-panel" data-panel="2">
                 <div class="feat-panel-graphic"><div class="card-icon-circle feat-location"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#FFC75F" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
                 <div class="feat-panel-info">
-                  <span class="card-tag feat-location-tag">Navigation</span>
-                  <h3 class="card-title">Location Intelligence</h3>
-                  <p class="card-desc">Wherever you sail, Nautico gives you the info you need — local regulations, safe mooring spots, and weather alerts.</p>
-                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon gold">🏗️</div><span>Safe mooring spots & marinas</span></div><div class="card-bullet"><div class="card-bullet-icon gold">⚖️</div><span>Local laws & regulations</span></div><div class="card-bullet"><div class="card-bullet-icon gold">🌊</div><span>Weather & sea conditions</span></div></div>
+                  <span class="card-tag feat-location-tag" data-i18n="feat_tag_2">Navigation</span>
+                  <h3 class="card-title" data-i18n="feat_2_title">Location Intelligence</h3>
+                  <p class="card-desc" data-i18n="feat_2_desc">Wherever you sail, Nautico gives you the info you need — local regulations, safe mooring spots, and weather alerts.</p>
+                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon gold">🏗️</div><span data-i18n="feat_2_b1">Safe mooring spots & marinas</span></div><div class="card-bullet"><div class="card-bullet-icon gold">⚖️</div><span data-i18n="feat_2_b2">Local laws & regulations</span></div><div class="card-bullet"><div class="card-bullet-icon gold">🌊</div><span data-i18n="feat_2_b3">Weather & sea conditions</span></div></div>
                 </div>
                 <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/alerts.png" alt="Smart Alerts" /></div></div>
               </div>
@@ -313,10 +327,10 @@
               <div class="feat-panel" data-panel="3">
                 <div class="feat-panel-graphic"><div class="card-icon-circle feat-logbook"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
                 <div class="feat-panel-info">
-                  <span class="card-tag feat-logbook-tag">Logbook</span>
-                  <h3 class="card-title">Digital Voyage Logbook</h3>
-                  <p class="card-desc">Every voyage auto-logged with departure, arrival, crew, conditions — exportable as a professional PDF.</p>
-                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon purple">📖</div><span>Auto-generated voyage entries</span></div><div class="card-bullet"><div class="card-bullet-icon purple">📄</div><span>Export logbook as PDF</span></div><div class="card-bullet"><div class="card-bullet-icon purple">🗺️</div><span>Route history with duration</span></div></div>
+                  <span class="card-tag feat-logbook-tag" data-i18n="feat_tag_3">Logbook</span>
+                  <h3 class="card-title" data-i18n="feat_3_title">Digital Voyage Logbook</h3>
+                  <p class="card-desc" data-i18n="feat_3_desc">Every voyage auto-logged with departure, arrival, crew, conditions — exportable as a professional PDF.</p>
+                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon purple">📖</div><span data-i18n="feat_3_b1">Auto-generated voyage entries</span></div><div class="card-bullet"><div class="card-bullet-icon purple">📄</div><span data-i18n="feat_3_b2">Export logbook as PDF</span></div><div class="card-bullet"><div class="card-bullet-icon purple">🗺️</div><span data-i18n="feat_3_b3">Route history with duration</span></div></div>
                 </div>
                 <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/logbook.png" alt="Voyage Logbook" /></div></div>
               </div>
@@ -324,10 +338,10 @@
               <div class="feat-panel" data-panel="4">
                 <div class="feat-panel-graphic"><div class="card-icon-circle feat-fuel"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
                 <div class="feat-panel-info">
-                  <span class="card-tag feat-fuel-tag">Smart Fuel</span>
-                  <h3 class="card-title">Fuel Cost Calculator</h3>
-                  <p class="card-desc">Select your ports and Nautico calculates distance, fuel needed, and estimated cost from live fuel prices.</p>
-                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon orange">⛽</div><span>Auto-calculates from vessel specs</span></div><div class="card-bullet"><div class="card-bullet-icon orange">📍</div><span>Marina-to-marina distance</span></div><div class="card-bullet"><div class="card-bullet-icon orange">💰</div><span>Live fuel price estimates</span></div></div>
+                  <span class="card-tag feat-fuel-tag" data-i18n="feat_tag_4">Smart Fuel</span>
+                  <h3 class="card-title" data-i18n="feat_4_title">Fuel Cost Calculator</h3>
+                  <p class="card-desc" data-i18n="feat_4_desc">Select your ports and Nautico calculates distance, fuel needed, and estimated cost from live fuel prices.</p>
+                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon orange">⛽</div><span data-i18n="feat_4_b1">Auto-calculates from vessel specs</span></div><div class="card-bullet"><div class="card-bullet-icon orange">📍</div><span data-i18n="feat_4_b2">Marina-to-marina distance</span></div><div class="card-bullet"><div class="card-bullet-icon orange">💰</div><span data-i18n="feat_4_b3">Live fuel price estimates</span></div></div>
                 </div>
                 <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/home.png" alt="Home Screen" /></div></div>
               </div>
@@ -335,10 +349,10 @@
               <div class="feat-panel" data-panel="5">
                 <div class="feat-panel-graphic"><div class="card-icon-circle feat-charts"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
                 <div class="feat-panel-info">
-                  <span class="card-tag feat-charts-tag">Charts</span>
-                  <h3 class="card-title">Nautical Charts & Map</h3>
-                  <p class="card-desc">Interactive sea charts with real marina locations, route planning, and live weather overlays at your fingertips.</p>
-                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon skyblue">🗺️</div><span>Interactive chart with marinas</span></div><div class="card-bullet"><div class="card-bullet-icon skyblue">⚓</div><span>Sea-path route planning</span></div><div class="card-bullet"><div class="card-bullet-icon skyblue">🌤️</div><span>Real-time weather overlays</span></div></div>
+                  <span class="card-tag feat-charts-tag" data-i18n="feat_tag_5">Charts</span>
+                  <h3 class="card-title" data-i18n="feat_5_title">Nautical Charts & Map</h3>
+                  <p class="card-desc" data-i18n="feat_5_desc">Interactive sea charts with real marina locations, route planning, and live weather overlays at your fingertips.</p>
+                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon skyblue">🗺️</div><span data-i18n="feat_5_b1">Interactive chart with marinas</span></div><div class="card-bullet"><div class="card-bullet-icon skyblue">⚓</div><span data-i18n="feat_5_b2">Sea-path route planning</span></div><div class="card-bullet"><div class="card-bullet-icon skyblue">🌤️</div><span data-i18n="feat_5_b3">Real-time weather overlays</span></div></div>
                 </div>
                 <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/chart.png" alt="Nautical Charts" /></div></div>
               </div>
@@ -376,7 +390,7 @@
           </script>
           <div class="section-flow-btn">
             <a href="#screenshots-section" class="btn btn-primary scroll-to" data-target="screenshots-section">
-              See It In Action
+              <span data-i18n="feat_cta">See It In Action</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:6px"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
             </a>
           </div>
@@ -394,9 +408,9 @@
       <div class="screenshots-section" id="screenshots-section">
         <div class="screenshots-inner">
           <div class="screenshots-header">
-            <div class="screenshots-label">See It In Action</div>
-            <h2 class="screenshots-title">Designed for yacht owners, by yacht owners</h2>
-            <p class="screenshots-subtitle">Explore every feature of Nautico with a visual walkthrough of the app's core screens.</p>
+            <div class="screenshots-label" data-i18n="ss_label">See It In Action</div>
+            <h2 class="screenshots-title" data-i18n="ss_title">Designed for yacht owners, by yacht owners</h2>
+            <p class="screenshots-subtitle" data-i18n="ss_subtitle">Explore every feature of Nautico with a visual walkthrough of the app's core screens.</p>
           </div>
           <!-- Live Demo Video + CTA Arrow -->
           <div class="demo-video-wrap">
@@ -416,15 +430,15 @@
                   <div class="demo-cta-icon">
                     <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
                   </div>
-                  <h3 class="demo-cta-title">Ready to try it?</h3>
-                  <p class="demo-cta-desc">Get Nautico on your iPhone and start managing your vessel today.</p>
+                  <h3 class="demo-cta-title" data-i18n="demo_cta_title">Ready to try it?</h3>
+                  <p class="demo-cta-desc" data-i18n="demo_cta_desc">Get Nautico on your iPhone and start managing your vessel today.</p>
                   <a href="https://apps.apple.com" target="_blank" class="btn btn-primary btn-lg btn-appstore" style="justify-content:center;text-align:center">
-                    Download on the App Store
+                    <span data-i18n="demo_cta_btn">Download on the App Store</span>
                   </a>
                 </div>
               </div>
             </div>
-            <p class="demo-video-caption">Live App Walkthrough</p>
+            <p class="demo-video-caption" data-i18n="ss_video_caption">Live App Walkthrough</p>
             <a href="#screenshots-container" class="demo-scroll-arrow scroll-to" data-target="screenshots-container" aria-label="Scroll to screenshots">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg>
             </a>
@@ -463,7 +477,7 @@
                   <img src="screenshots/home.png" alt="Home" class="screenshot-img" />
                 </div>
               </div>
-              <div class="screenshot-caption">Home</div>
+              <div class="screenshot-caption" data-i18n="ss_cap_home">Home</div>
             </div>
             <div class="screenshot-mockup">
               <div class="screenshot-phone">
@@ -471,7 +485,7 @@
                   <img src="screenshots/dashboard.png" alt="Weather & Spending" class="screenshot-img" />
                 </div>
               </div>
-              <div class="screenshot-caption">Weather & Spending</div>
+              <div class="screenshot-caption" data-i18n="ss_cap_spending">Weather & Spending</div>
             </div>
             <div class="screenshot-mockup">
               <div class="screenshot-phone">
@@ -479,7 +493,7 @@
                   <img src="screenshots/service.png" alt="Service Tracker" class="screenshot-img" />
                 </div>
               </div>
-              <div class="screenshot-caption">Service Tracker</div>
+              <div class="screenshot-caption" data-i18n="ss_cap_service">Service Tracker</div>
             </div>
             <div class="screenshot-mockup">
               <div class="screenshot-phone">
@@ -487,7 +501,7 @@
                   <img src="screenshots/logbook.png" alt="Voyage Logbook" class="screenshot-img" />
                 </div>
               </div>
-              <div class="screenshot-caption">Voyage Logbook</div>
+              <div class="screenshot-caption" data-i18n="ss_cap_logbook">Voyage Logbook</div>
             </div>
             <div class="screenshot-mockup">
               <div class="screenshot-phone">
@@ -495,7 +509,7 @@
                   <img src="screenshots/chart.png" alt="Nautical Charts" class="screenshot-img" />
                 </div>
               </div>
-              <div class="screenshot-caption">Nautical Charts</div>
+              <div class="screenshot-caption" data-i18n="ss_cap_charts">Nautical Charts</div>
             </div>
             <div class="screenshot-mockup">
               <div class="screenshot-phone">
@@ -503,12 +517,12 @@
                   <img src="screenshots/alerts.png" alt="Smart Alerts" class="screenshot-img" />
                 </div>
               </div>
-              <div class="screenshot-caption">Smart Alerts</div>
+              <div class="screenshot-caption" data-i18n="ss_cap_alerts">Smart Alerts</div>
             </div>
           </div>
           <div class="section-flow-btn">
             <a href="#cta-section" class="btn btn-primary scroll-to" data-target="cta-section">
-              Get Started
+              <span data-i18n="ss_cta">Get Started</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:6px"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
             </a>
           </div>
@@ -518,11 +532,10 @@
       <!-- CTA Section -->
       <div class="section section-cta" id="cta-section">
         <div class="section-inner center">
-          <h2 class="section-title">Ready to take control?</h2>
-          <p class="section-subtitle">Join yacht owners who've simplified their ownership with Nautico. Start your 30-day free trial today.</p>
-          <a href="https://apps.apple.com" target="_blank" class="btn btn-primary btn-lg btn-appstore">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right:8px"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-            Download on the App Store
+          <h2 class="section-title" data-i18n="cta_title">Ready to take control?</h2>
+          <p class="section-subtitle" data-i18n="cta_subtitle">Join yacht owners who've simplified their ownership with Nautico. Start your 30-day free trial today.</p>
+          <a href="https://apps.apple.com" target="_blank" class="btn btn-primary btn-lg btn-appstore" style="justify-content:center;text-align:center">
+            <span data-i18n="cta_btn">Download on the App Store</span>
           </a>
         </div>
       </div>
@@ -531,58 +544,58 @@
     <!-- ════════ PRICING PAGE ════════ -->
     <section class="page" id="page-pricing" style="display:none;">
       <div class="page-hero">
-        <h1>Simple, Transparent Pricing</h1>
-        <p>Both plans include a 30-day free trial. No charge until your trial ends.</p>
+        <h1 data-i18n="price_title">Simple, Transparent Pricing</h1>
+        <p data-i18n="price_subtitle">Both plans include a 30-day free trial. No charge until your trial ends.</p>
       </div>
       <div class="section">
         <div class="section-inner">
           <div class="pricing-grid">
             <div class="pricing-card">
-              <div class="pricing-name">Monthly</div>
+              <div class="pricing-name" data-i18n="price_monthly">Monthly</div>
               <div class="pricing-price">$9.99<span>/mo</span></div>
-              <div class="pricing-desc">Billed monthly after trial</div>
+              <div class="pricing-desc" data-i18n="price_monthly_desc">Billed monthly after trial</div>
               <ul class="pricing-features">
-                <li>30-day free trial</li>
-                <li>All features included</li>
-                <li>Unlimited vessels</li>
-                <li>Cloud-synced data</li>
-                <li>Cancel anytime</li>
+                <li data-i18n="price_f1">30-day free trial</li>
+                <li data-i18n="price_f2">All features included</li>
+                <li data-i18n="price_f3">Unlimited vessels</li>
+                <li data-i18n="price_f4">Cloud-synced data</li>
+                <li data-i18n="price_f5">Cancel anytime</li>
               </ul>
-              <a href="#login" class="btn btn-outline" data-route="login">Start Free Trial</a>
+              <a href="#login" class="btn btn-outline" data-route="login"><span data-i18n="price_cta">Start Free Trial</span></a>
             </div>
             <div class="pricing-card popular">
-              <div class="pricing-badge">Most Popular</div>
-              <div class="pricing-name">Yearly</div>
+              <div class="pricing-badge" data-i18n="price_badge">Most Popular</div>
+              <div class="pricing-name" data-i18n="price_yearly">Yearly</div>
               <div class="pricing-price">$4.99<span>/mo</span></div>
-              <div class="pricing-desc">$59.94/yr — Save 50%</div>
+              <div class="pricing-desc" data-i18n="price_yearly_desc">$59.94/yr — Save 50%</div>
               <ul class="pricing-features">
-                <li>30-day free trial</li>
-                <li>All features included</li>
-                <li>Unlimited vessels</li>
-                <li>Cloud-synced data</li>
-                <li>Priority support</li>
-                <li>Save $60/year vs monthly</li>
+                <li data-i18n="price_f1">30-day free trial</li>
+                <li data-i18n="price_f2">All features included</li>
+                <li data-i18n="price_f3">Unlimited vessels</li>
+                <li data-i18n="price_f4">Cloud-synced data</li>
+                <li data-i18n="price_f6">Priority support</li>
+                <li data-i18n="price_f7">Save $60/year vs monthly</li>
               </ul>
-              <a href="#login" class="btn btn-primary" data-route="login">Start Free Trial</a>
+              <a href="#login" class="btn btn-primary" data-route="login"><span data-i18n="price_cta">Start Free Trial</span></a>
             </div>
           </div>
           <div class="pricing-faq">
-            <h2>Frequently Asked Questions</h2>
+            <h2 data-i18n="price_faq_title">Frequently Asked Questions</h2>
             <div class="faq-item">
-              <h3>How does the free trial work?</h3>
-              <p>Both monthly and yearly plans come with a 30-day free trial. You won't be charged until the trial ends. Cancel anytime during the 30 days and pay nothing.</p>
+              <h3 data-i18n="price_faq1_q">How does the free trial work?</h3>
+              <p data-i18n="price_faq1_a">Both monthly and yearly plans come with a 30-day free trial. You won't be charged until the trial ends. Cancel anytime during the 30 days and pay nothing.</p>
             </div>
             <div class="faq-item">
-              <h3>Can I switch plans later?</h3>
-              <p>Yes. You can switch between monthly and yearly at any time from your account settings or through the App Store.</p>
+              <h3 data-i18n="price_faq2_q">Can I switch plans later?</h3>
+              <p data-i18n="price_faq2_a">Yes. You can switch between monthly and yearly at any time from your account settings or through the App Store.</p>
             </div>
             <div class="faq-item">
-              <h3>Is my data safe?</h3>
-              <p>Absolutely. All data is encrypted and stored securely on enterprise-grade infrastructure. We never sell or share your personal information.</p>
+              <h3 data-i18n="price_faq3_q">Is my data safe?</h3>
+              <p data-i18n="price_faq3_a">Absolutely. All data is encrypted and stored securely on enterprise-grade infrastructure. We never sell or share your personal information.</p>
             </div>
             <div class="faq-item">
-              <h3>What payment methods do you accept?</h3>
-              <p>Subscriptions are handled through Apple's App Store, which supports all major credit cards, Apple Pay, and carrier billing in select regions.</p>
+              <h3 data-i18n="price_faq4_q">What payment methods do you accept?</h3>
+              <p data-i18n="price_faq4_a">Subscriptions are handled through Apple's App Store, which supports all major credit cards, Apple Pay, and carrier billing in select regions.</p>
             </div>
           </div>
         </div>
@@ -592,8 +605,8 @@
     <!-- ════════ CONTACT PAGE ════════ -->
     <section class="page" id="page-contact" style="display:none;">
       <div class="page-hero">
-        <h1>Get In Touch</h1>
-        <p>Have a question, feature request, or need support? We'd love to hear from you.</p>
+        <h1 data-i18n="contact_title">Get In Touch</h1>
+        <p data-i18n="contact_subtitle">Have a question, feature request, or need support? We'd love to hear from you.</p>
       </div>
       <div class="section">
         <div class="section-inner">
@@ -601,47 +614,47 @@
             <div class="contact-form-wrap">
               <form id="contact-form" class="contact-form">
                 <div class="form-group">
-                  <label for="contact-name">Name</label>
-                  <input type="text" id="contact-name" placeholder="Your name" required />
+                  <label for="contact-name" data-i18n="contact_name">Name</label>
+                  <input type="text" id="contact-name" data-i18n-placeholder="contact_name_ph" placeholder="Your name" required />
                 </div>
                 <div class="form-group">
-                  <label for="contact-email">Email</label>
-                  <input type="email" id="contact-email" placeholder="you@example.com" required />
+                  <label for="contact-email" data-i18n="contact_email">Email</label>
+                  <input type="email" id="contact-email" data-i18n-placeholder="contact_email_ph" placeholder="you@example.com" required />
                 </div>
                 <div class="form-group">
-                  <label for="contact-subject">Subject</label>
+                  <label for="contact-subject" data-i18n="contact_subject">Subject</label>
                   <select id="contact-subject">
-                    <option value="general">General Inquiry</option>
-                    <option value="support">Technical Support</option>
-                    <option value="feature">Feature Request</option>
-                    <option value="billing">Billing Question</option>
-                    <option value="partnership">Partnership</option>
+                    <option value="general" data-i18n="contact_opt_general">General Inquiry</option>
+                    <option value="support" data-i18n="contact_opt_support">Technical Support</option>
+                    <option value="feature" data-i18n="contact_opt_feature">Feature Request</option>
+                    <option value="billing" data-i18n="contact_opt_billing">Billing Question</option>
+                    <option value="partnership" data-i18n="contact_opt_partner">Partnership</option>
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="contact-message">Message</label>
-                  <textarea id="contact-message" rows="5" placeholder="Tell us how we can help..." required></textarea>
+                  <label for="contact-message" data-i18n="contact_message">Message</label>
+                  <textarea id="contact-message" rows="5" data-i18n-placeholder="contact_message_ph" placeholder="Tell us how we can help..." required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+                <button type="submit" class="btn btn-primary btn-full"><span data-i18n="contact_send">Send Message</span></button>
               </form>
               <div id="contact-success" class="contact-success" style="display:none;">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <h3>Message Sent!</h3>
-                <p>We'll get back to you within 24 hours.</p>
+                <h3 data-i18n="contact_success_title">Message Sent!</h3>
+                <p data-i18n="contact_success_desc">We'll get back to you within 24 hours.</p>
               </div>
             </div>
             <div class="contact-info">
               <div class="contact-info-card">
-                <h3>Email Us</h3>
+                <h3 data-i18n="contact_info_email">Email Us</h3>
                 <p><a href="mailto:support@nautico.app">support@nautico.app</a></p>
               </div>
               <div class="contact-info-card">
-                <h3>Response Time</h3>
-                <p>We typically respond within 24 hours on business days.</p>
+                <h3 data-i18n="contact_info_response">Response Time</h3>
+                <p data-i18n="contact_info_response_desc">We typically respond within 24 hours on business days.</p>
               </div>
               <div class="contact-info-card">
-                <h3>Follow Us</h3>
-                <p>Stay updated on new features and releases.</p>
+                <h3 data-i18n="contact_info_follow">Follow Us</h3>
+                <p data-i18n="contact_info_follow_desc">Stay updated on new features and releases.</p>
               </div>
             </div>
           </div>
@@ -652,37 +665,37 @@
     <!-- ════════ PRIVACY POLICY PAGE ════════ -->
     <section class="page" id="page-privacy" style="display:none;">
       <div class="page-hero">
-        <h1>Privacy Policy</h1>
-        <p>Last updated: March 30, 2026</p>
+        <h1 data-i18n="privacy_title">Privacy Policy</h1>
+        <p data-i18n="privacy_updated">Last updated: March 30, 2026</p>
       </div>
       <div class="section">
         <div class="section-inner prose">
-          <h2>1. Information We Collect</h2>
-          <p>When you use Nautico, we collect information you provide directly, such as your name, email address, and vessel details. We also collect usage data to improve the app experience, including voyage logs, expense records, and app interaction patterns.</p>
+          <h2 data-i18n="privacy_h1">1. Information We Collect</h2>
+          <p data-i18n="privacy_p1">When you use Nautico, we collect information you provide directly, such as your name, email address, and vessel details. We also collect usage data to improve the app experience, including voyage logs, expense records, and app interaction patterns.</p>
 
-          <h2>2. How We Use Your Information</h2>
-          <p>We use your information to provide and improve the Nautico service, including: managing your account, syncing your data across devices, generating maintenance reminders, calculating fuel estimates, and providing customer support. We do not sell or share your personal data with third-party advertisers.</p>
+          <h2 data-i18n="privacy_h2">2. How We Use Your Information</h2>
+          <p data-i18n="privacy_p2">We use your information to provide and improve the Nautico service, including: managing your account, syncing your data across devices, generating maintenance reminders, calculating fuel estimates, and providing customer support. We do not sell or share your personal data with third-party advertisers.</p>
 
-          <h2>3. Data Storage & Security</h2>
-          <p>Your data is stored securely on Supabase infrastructure with enterprise-grade encryption at rest and in transit. We implement industry-standard security measures including SSL/TLS encryption, row-level security policies, and regular security audits.</p>
+          <h2 data-i18n="privacy_h3">3. Data Storage & Security</h2>
+          <p data-i18n="privacy_p3">Your data is stored securely on Supabase infrastructure with enterprise-grade encryption at rest and in transit. We implement industry-standard security measures including SSL/TLS encryption, row-level security policies, and regular security audits.</p>
 
-          <h2>4. Third-Party Services</h2>
-          <p>Nautico integrates with the following third-party services to provide its functionality: Supabase (database and authentication), Apple App Store (subscriptions and payments), Open-Meteo (weather data), and MapLibre (nautical charts). Each service has its own privacy policy governing their data practices.</p>
+          <h2 data-i18n="privacy_h4">4. Third-Party Services</h2>
+          <p data-i18n="privacy_p4">Nautico integrates with the following third-party services to provide its functionality: Supabase (database and authentication), Apple App Store (subscriptions and payments), Open-Meteo (weather data), and MapLibre (nautical charts). Each service has its own privacy policy governing their data practices.</p>
 
-          <h2>5. Your Rights</h2>
-          <p>You have the right to access, correct, or delete your personal data at any time. You can export your data from within the app or by contacting our support team. To delete your account and all associated data, contact us at support@nautico.app.</p>
+          <h2 data-i18n="privacy_h5">5. Your Rights</h2>
+          <p data-i18n="privacy_p5">You have the right to access, correct, or delete your personal data at any time. You can export your data from within the app or by contacting our support team. To delete your account and all associated data, contact us at support@nautico.app.</p>
 
-          <h2>6. Cookies & Tracking</h2>
-          <p>The Nautico website uses minimal cookies for authentication and session management. We do not use third-party tracking cookies or advertising pixels. The mobile app does not use cookies.</p>
+          <h2 data-i18n="privacy_h6">6. Cookies & Tracking</h2>
+          <p data-i18n="privacy_p6">The Nautico website uses minimal cookies for authentication and session management. We do not use third-party tracking cookies or advertising pixels. The mobile app does not use cookies.</p>
 
-          <h2>7. Children's Privacy</h2>
-          <p>Nautico is not intended for use by children under 13. We do not knowingly collect personal information from children under 13.</p>
+          <h2 data-i18n="privacy_h7">7. Children's Privacy</h2>
+          <p data-i18n="privacy_p7">Nautico is not intended for use by children under 13. We do not knowingly collect personal information from children under 13.</p>
 
-          <h2>8. Changes to This Policy</h2>
-          <p>We may update this privacy policy from time to time. We will notify you of any material changes by posting the updated policy on this page and updating the "Last updated" date.</p>
+          <h2 data-i18n="privacy_h8">8. Changes to This Policy</h2>
+          <p data-i18n="privacy_p8">We may update this privacy policy from time to time. We will notify you of any material changes by posting the updated policy on this page and updating the "Last updated" date.</p>
 
-          <h2>9. Contact</h2>
-          <p>If you have questions about this privacy policy or your data, contact us at <a href="mailto:support@nautico.app">support@nautico.app</a>.</p>
+          <h2 data-i18n="privacy_h9">9. Contact</h2>
+          <p data-i18n="privacy_p9">If you have questions about this privacy policy or your data, contact us at <a href="mailto:support@nautico.app">support@nautico.app</a>.</p>
         </div>
       </div>
     </section>
@@ -694,21 +707,21 @@
           <div class="auth-logo">
             <img src="screenshots/logo-compass.png" alt="Nautico" class="auth-logo-img" />
           </div>
-          <h2>Welcome Back</h2>
-          <p class="auth-subtitle">Log in to view your Nautico account</p>
+          <h2 data-i18n="login_title">Welcome Back</h2>
+          <p class="auth-subtitle" data-i18n="login_subtitle">Log in to view your Nautico account</p>
           <form id="login-form" class="auth-form">
             <div class="form-group">
-              <label for="login-email">Email</label>
-              <input type="email" id="login-email" placeholder="you@example.com" required />
+              <label for="login-email" data-i18n="login_email">Email</label>
+              <input type="email" id="login-email" data-i18n-placeholder="login_email_ph" placeholder="you@example.com" required />
             </div>
             <div class="form-group">
-              <label for="login-password">Password</label>
-              <input type="password" id="login-password" placeholder="Your password" required />
+              <label for="login-password" data-i18n="login_password">Password</label>
+              <input type="password" id="login-password" data-i18n-placeholder="login_password_ph" placeholder="Your password" required />
             </div>
             <div id="login-error" class="auth-error" style="display:none;"></div>
-            <button type="submit" class="btn btn-primary btn-full" id="login-btn">Log In</button>
+            <button type="submit" class="btn btn-primary btn-full" id="login-btn"><span data-i18n="login_btn">Log In</span></button>
           </form>
-          <p class="auth-footer-text">Don't have an account? <a href="https://apps.apple.com" target="_blank">Download Nautico</a> to get started.</p>
+          <p class="auth-footer-text"><span data-i18n="login_footer">Don't have an account?</span> <a href="https://apps.apple.com" target="_blank" data-i18n="login_footer_link">Download Nautico</a> <span data-i18n="login_footer_suffix">to get started.</span></p>
         </div>
       </div>
     </section>
@@ -718,43 +731,43 @@
       <div class="dashboard">
         <div class="dash-header">
           <div>
-            <h1>Your Account</h1>
+            <h1 data-i18n="dash_title">Your Account</h1>
             <p id="dash-greeting">Welcome back</p>
           </div>
-          <button class="btn btn-ghost btn-sm" id="logout-btn">Log Out</button>
+          <button class="btn btn-ghost btn-sm" id="logout-btn" data-i18n="dash_logout">Log Out</button>
         </div>
         <div class="dash-grid">
           <div class="dash-card">
             <div class="dash-card-header">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7EC8E3" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-              <h3>Profile</h3>
+              <h3 data-i18n="dash_profile">Profile</h3>
             </div>
-            <div class="dash-row"><span class="dash-label">Name</span><span class="dash-value" id="dash-name">—</span></div>
-            <div class="dash-row"><span class="dash-label">Email</span><span class="dash-value" id="dash-email">—</span></div>
-            <div class="dash-row"><span class="dash-label">Member Since</span><span class="dash-value" id="dash-joined">—</span></div>
-            <div class="dash-row"><span class="dash-label">Country</span><span class="dash-value" id="dash-country">—</span></div>
+            <div class="dash-row"><span class="dash-label" data-i18n="dash_name">Name</span><span class="dash-value" id="dash-name">—</span></div>
+            <div class="dash-row"><span class="dash-label" data-i18n="dash_email">Email</span><span class="dash-value" id="dash-email">—</span></div>
+            <div class="dash-row"><span class="dash-label" data-i18n="dash_joined">Member Since</span><span class="dash-value" id="dash-joined">—</span></div>
+            <div class="dash-row"><span class="dash-label" data-i18n="dash_country">Role</span><span class="dash-value" id="dash-country">—</span></div>
           </div>
           <div class="dash-card">
             <div class="dash-card-header">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-              <h3>Subscription</h3>
+              <h3 data-i18n="dash_sub">Subscription</h3>
             </div>
-            <div class="dash-row"><span class="dash-label">Plan</span><span class="dash-value" id="dash-plan">—</span></div>
-            <div class="dash-row"><span class="dash-label">Status</span><span class="dash-value" id="dash-status">—</span></div>
-            <div class="dash-row"><span class="dash-label">Trial Ends</span><span class="dash-value" id="dash-trial">—</span></div>
-            <div class="dash-row"><span class="dash-label">Next Billing</span><span class="dash-value" id="dash-billing">—</span></div>
+            <div class="dash-row"><span class="dash-label" data-i18n="dash_plan">Plan</span><span class="dash-value" id="dash-plan">—</span></div>
+            <div class="dash-row"><span class="dash-label" data-i18n="dash_status">Status</span><span class="dash-value" id="dash-status">—</span></div>
+            <div class="dash-row"><span class="dash-label" data-i18n="dash_trial">Trial Ends</span><span class="dash-value" id="dash-trial">—</span></div>
+            <div class="dash-row"><span class="dash-label" data-i18n="dash_billing">Next Billing</span><span class="dash-value" id="dash-billing">—</span></div>
           </div>
           <div class="dash-card full-width">
             <div class="dash-card-header">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFC75F" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg>
-              <h3>Fleet Overview</h3>
+              <h3 data-i18n="dash_fleet">Fleet Overview</h3>
             </div>
-            <div class="dash-row"><span class="dash-label">Total Vessels</span><span class="dash-value" id="dash-vessels">—</span></div>
-            <div class="dash-row"><span class="dash-label">Total Voyages</span><span class="dash-value" id="dash-voyages">—</span></div>
-            <div class="dash-row"><span class="dash-label">Total Distance</span><span class="dash-value" id="dash-distance">—</span></div>
+            <div class="dash-row"><span class="dash-label" data-i18n="dash_vessels">Total Vessels</span><span class="dash-value" id="dash-vessels">—</span></div>
+            <div class="dash-row"><span class="dash-label" data-i18n="dash_voyages">Total Voyages</span><span class="dash-value" id="dash-voyages">—</span></div>
+            <div class="dash-row"><span class="dash-label" data-i18n="dash_distance">Total Distance</span><span class="dash-value" id="dash-distance">—</span></div>
           </div>
         </div>
-        <p class="dash-note">This is a read-only overview. To manage your vessels, voyages, and expenses, use the Nautico app on your iPhone.</p>
+        <p class="dash-note" data-i18n="dash_note">This is a read-only overview. To manage your vessels, voyages, and expenses, use the Nautico app on your iPhone.</p>
       </div>
     </section>
 
@@ -769,19 +782,51 @@
           <span>Nautico</span>
         </div>
         <div class="footer-links">
-          <a href="#home" data-route="home">Home</a>
-          <a href="#pricing" data-route="pricing">Pricing</a>
-          <a href="#contact" data-route="contact">Contact</a>
-          <a href="#privacy" data-route="privacy">Privacy Policy</a>
+          <a href="#home" data-route="home" data-i18n="footer_home">Home</a>
+          <a href="#pricing" data-route="pricing" data-i18n="footer_pricing">Pricing</a>
+          <a href="#contact" data-route="contact" data-i18n="footer_contact">Contact</a>
+          <a href="#privacy" data-route="privacy" data-i18n="footer_privacy">Privacy Policy</a>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 Nautico. All rights reserved.</p>
+        <p data-i18n="footer_copy">&copy; 2026 Nautico. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
+  <script src="js/i18n.js"></script>
   <script src="js/app.js"></script>
+
+  <!-- Language switcher dropdown toggle -->
+  <script>
+  // Language switcher dropdown toggle
+  (function() {
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('#lang-btn');
+      var dropdown = document.getElementById('lang-dropdown');
+      var switcher = document.getElementById('lang-switcher');
+      if (btn) {
+        e.stopPropagation();
+        switcher.classList.toggle('open');
+        return;
+      }
+      var opt = e.target.closest('.lang-option');
+      if (opt) {
+        var lang = opt.getAttribute('data-lang');
+        setLanguage(lang);
+        // Update current language display
+        document.getElementById('lang-current').textContent = lang.toUpperCase();
+        // Update active state
+        document.querySelectorAll('.lang-option').forEach(function(o) { o.classList.remove('active'); });
+        opt.classList.add('active');
+        switcher.classList.remove('open');
+        return;
+      }
+      // Close dropdown when clicking outside
+      if (switcher) switcher.classList.remove('open');
+    });
+  })();
+  </script>
 
   <!-- Mobile accordion for Problem section -->
   <script>
