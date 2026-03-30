@@ -7,19 +7,19 @@
 const SUPABASE_URL = 'https://sgoicvqgfydwfpttzgqu.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNnb2ljdnFnZnlkd2ZwdHR6Z3F1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkyOTIyNzUsImV4cCI6MjA1NDg2ODI3NX0.RVCwPHmMIjRS_71gQWCMnBMpmEOZ35JkBeYlLJHbIQo';
 
-let supabase = null;
+var sb = null;
 let currentUser = null;
 
 function initSupabase() {
   try {
-    if (!supabase && window.supabase && window.supabase.createClient) {
-      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    if (!sb && window.supabase && window.supabase.createClient) {
+      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       return true;
     }
   } catch (e) {
     console.log('Supabase init error:', e);
   }
-  return !!supabase;
+  return !!sb;
 }
 // Try now (may not be loaded yet since script is async)
 initSupabase();
@@ -30,8 +30,8 @@ document.querySelector('script[src*="supabase"]')?.addEventListener('load', () =
 });
 // Polling fallback — if the load event was missed, retry a few times
 (function retrySupa(attempts) {
-  if (supabase || attempts <= 0) return;
-  setTimeout(() => { initSupabase(); if (supabase) checkSession(); else retrySupa(attempts - 1); }, 500);
+  if (sb || attempts <= 0) return;
+  setTimeout(() => { initSupabase(); if (sb) checkSession(); else retrySupa(attempts - 1); }, 500);
 })(10);
 
 // ── Router ──
@@ -200,9 +200,9 @@ window.addEventListener('hashchange', () => {
 
 // ── Auth ──
 async function checkSession() {
-  if (!supabase) return;
+  if (!sb) return;
   try {
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await sb.auth.getSession();
     if (session?.user) {
       currentUser = session.user;
       updateNavForAuth(true);
@@ -220,8 +220,8 @@ async function handleLogin(e) {
   const btn = document.getElementById('login-btn');
 
   // Retry Supabase init in case CDN loaded after initial attempt
-  if (!supabase) initSupabase();
-  if (!supabase) {
+  if (!sb) initSupabase();
+  if (!sb) {
     errorEl.textContent = 'Login service is temporarily unavailable. Please try again later.';
     errorEl.style.display = 'block';
     return;
@@ -232,7 +232,7 @@ async function handleLogin(e) {
   errorEl.style.display = 'none';
 
   try {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
     if (error) throw error;
     currentUser = data.user;
     updateNavForAuth(true);
@@ -247,8 +247,8 @@ async function handleLogin(e) {
 }
 
 async function handleLogout() {
-  if (supabase) {
-    await supabase.auth.signOut();
+  if (sb) {
+    await sb.auth.signOut();
   }
   currentUser = null;
   updateNavForAuth(false);
@@ -296,9 +296,9 @@ async function loadDashboard() {
   }
 
   // Load profile from profiles table
-  if (supabase) {
+  if (sb) {
     try {
-      const { data: profile } = await supabase
+      const { data: profile } = await sb
         .from('profiles')
         .select('full_name, country, role')
         .eq('id', currentUser.id)
@@ -312,7 +312,7 @@ async function loadDashboard() {
 
     // Load subscription info
     try {
-      const { data: sub } = await supabase
+      const { data: sub } = await sb
         .from('subscriptions')
         .select('plan, status, trial_ends_at, current_period_end')
         .eq('user_id', currentUser.id)
@@ -339,12 +339,12 @@ async function loadDashboard() {
 
     // Load fleet stats
     try {
-      const { count: vesselCount } = await supabase
+      const { count: vesselCount } = await sb
         .from('yachts')
         .select('*', { count: 'exact', head: true })
         .eq('user_id', currentUser.id);
 
-      const { data: trips } = await supabase
+      const { data: trips } = await sb
         .from('trips')
         .select('distance_nm')
         .eq('user_id', currentUser.id);
