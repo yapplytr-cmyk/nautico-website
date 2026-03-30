@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nautico — Smart Yacht Management</title>
+  <meta name="description" content="Nautico is the all-in-one yacht management app. Track expenses, plan voyages, monitor maintenance, and navigate with live nautical charts." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" async></script>
+</head>
+<body>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#home" class="nav-brand" data-route="home">
+        <div class="nav-logo">
+          <img src="screenshots/logo-compass.png" alt="Nautico" class="nav-logo-img" />
+        </div>
+        <span class="nav-brand-text">Nautico</span>
+      </a>
+      <div class="nav-links" id="nav-links">
+        <a href="#home" class="nav-link active" data-route="home">Home</a>
+        <a href="#pricing" class="nav-link" data-route="pricing">Pricing</a>
+        <a href="#contact" class="nav-link" data-route="contact">Contact</a>
+        <a href="#login" class="nav-link nav-login-btn" data-route="login">Log In</a>
+      </div>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ══ MAIN CONTENT ══ -->
+  <main id="app-content">
+
+    <!-- ════════ HOME PAGE ════════ -->
+    <section class="page" id="page-home">
+
+      <!-- Hero -->
+      <div class="hero">
+        <!-- Floating nautical graphics -->
+        <div class="hero-bg-elements" aria-hidden="true">
+          <!-- Large compass rose — top left -->
+          <svg class="hero-float f1" width="220" height="220" viewBox="0 0 220 220" fill="none" opacity="0.04">
+            <circle cx="110" cy="110" r="105" stroke="#7EC8E3" stroke-width="0.6"/>
+            <circle cx="110" cy="110" r="90" stroke="#7EC8E3" stroke-width="0.4" stroke-dasharray="4 6"/>
+            <circle cx="110" cy="110" r="70" stroke="#7EC8E3" stroke-width="0.5"/>
+            <circle cx="110" cy="110" r="12" stroke="#7EC8E3" stroke-width="0.8"/>
+            <polygon points="110,18 115,98 110,88 105,98" fill="#7EC8E3" opacity="0.7"/>
+            <polygon points="110,202 115,122 110,132 105,122" fill="#5BA3CF" opacity="0.5"/>
+            <polygon points="18,110 98,105 88,110 98,115" fill="#5BA3CF" opacity="0.4"/>
+            <polygon points="202,110 122,105 132,110 122,115" fill="#5BA3CF" opacity="0.4"/>
+            <text x="110" y="14" text-anchor="middle" fill="#7EC8E3" font-size="8" font-weight="300" opacity="0.6">N</text>
+            <text x="110" y="214" text-anchor="middle" fill="#7EC8E3" font-size="8" font-weight="300" opacity="0.6">S</text>
+            <text x="8" y="113" text-anchor="middle" fill="#7EC8E3" font-size="8" font-weight="300" opacity="0.6">W</text>
+            <text x="212" y="113" text-anchor="middle" fill="#7EC8E3" font-size="8" font-weight="300" opacity="0.6">E</text>
+            <!-- Degree ticks -->
+            <line x1="110" y1="5" x2="110" y2="20" stroke="#7EC8E3" stroke-width="0.3" opacity="0.5"/>
+            <line x1="110" y1="200" x2="110" y2="215" stroke="#7EC8E3" stroke-width="0.3" opacity="0.5"/>
+            <line x1="5" y1="110" x2="20" y2="110" stroke="#7EC8E3" stroke-width="0.3" opacity="0.5"/>
+            <line x1="200" y1="110" x2="215" y2="110" stroke="#7EC8E3" stroke-width="0.3" opacity="0.5"/>
+          </svg>
+
+          <!-- Detailed helm wheel — bottom left -->
+          <svg class="hero-float f6" width="180" height="180" viewBox="0 0 180 180" fill="none" opacity="0.035">
+            <circle cx="90" cy="90" r="80" stroke="#7EC8E3" stroke-width="0.6"/>
+            <circle cx="90" cy="90" r="65" stroke="#7EC8E3" stroke-width="0.4"/>
+            <circle cx="90" cy="90" r="20" stroke="#7EC8E3" stroke-width="0.8"/>
+            <circle cx="90" cy="90" r="8" fill="#7EC8E3" opacity="0.15"/>
+            <!-- 8 spokes with handles -->
+            <line x1="90" y1="10" x2="90" y2="70" stroke="#7EC8E3" stroke-width="0.6"/><circle cx="90" cy="8" r="4" stroke="#7EC8E3" stroke-width="0.5"/>
+            <line x1="90" y1="110" x2="90" y2="170" stroke="#7EC8E3" stroke-width="0.6"/><circle cx="90" cy="172" r="4" stroke="#7EC8E3" stroke-width="0.5"/>
+            <line x1="10" y1="90" x2="70" y2="90" stroke="#7EC8E3" stroke-width="0.6"/><circle cx="8" cy="90" r="4" stroke="#7EC8E3" stroke-width="0.5"/>
+            <line x1="110" y1="90" x2="170" y2="90" stroke="#7EC8E3" stroke-width="0.6"/><circle cx="172" cy="90" r="4" stroke="#7EC8E3" stroke-width="0.5"/>
+            <line x1="33.4" y1="33.4" x2="63.4" y2="63.4" stroke="#7EC8E3" stroke-width="0.5"/><circle cx="31" cy="31" r="3.5" stroke="#7EC8E3" stroke-width="0.5"/>
+            <line x1="146.6" y1="146.6" x2="116.6" y2="116.6" stroke="#7EC8E3" stroke-width="0.5"/><circle cx="149" cy="149" r="3.5" stroke="#7EC8E3" stroke-width="0.5"/>
+            <line x1="33.4" y1="146.6" x2="63.4" y2="116.6" stroke="#7EC8E3" stroke-width="0.5"/><circle cx="31" cy="149" r="3.5" stroke="#7EC8E3" stroke-width="0.5"/>
+            <line x1="146.6" y1="33.4" x2="116.6" y2="63.4" stroke="#7EC8E3" stroke-width="0.5"/><circle cx="149" cy="31" r="3.5" stroke="#7EC8E3" stroke-width="0.5"/>
+          </svg>
+
+          <!-- Topographic wave pattern — top right -->
+          <svg class="hero-float f3" width="300" height="80" viewBox="0 0 300 80" fill="none" opacity="0.035">
+            <path d="M0,40 Q37.5,15 75,40 T150,40 T225,40 T300,40" stroke="#7EC8E3" stroke-width="0.8" fill="none"/>
+            <path d="M0,50 Q37.5,25 75,50 T150,50 T225,50 T300,50" stroke="#7EC8E3" stroke-width="0.6" fill="none"/>
+            <path d="M0,60 Q37.5,35 75,60 T150,60 T225,60 T300,60" stroke="#5BA3CF" stroke-width="0.5" fill="none"/>
+            <path d="M0,30 Q37.5,5 75,30 T150,30 T225,30 T300,30" stroke="#5BA3CF" stroke-width="0.4" fill="none" opacity="0.7"/>
+          </svg>
+
+          <!-- Concentric rings — right side -->
+          <svg class="hero-float f2" width="160" height="160" viewBox="0 0 160 160" fill="none" opacity="0.03">
+            <circle cx="80" cy="80" r="75" stroke="#7EC8E3" stroke-width="0.5"/>
+            <circle cx="80" cy="80" r="60" stroke="#7EC8E3" stroke-width="0.4" stroke-dasharray="3 5"/>
+            <circle cx="80" cy="80" r="45" stroke="#7EC8E3" stroke-width="0.3"/>
+            <circle cx="80" cy="80" r="30" stroke="#5BA3CF" stroke-width="0.4" stroke-dasharray="2 4"/>
+            <circle cx="80" cy="80" r="15" stroke="#5BA3CF" stroke-width="0.5"/>
+            <circle cx="80" cy="80" r="3" fill="#7EC8E3" opacity="0.3"/>
+          </svg>
+
+          <!-- Grid / chart lines — bottom right -->
+          <svg class="hero-float f7" width="200" height="140" viewBox="0 0 200 140" fill="none" opacity="0.025">
+            <line x1="0" y1="0" x2="0" y2="140" stroke="#7EC8E3" stroke-width="0.3"/><line x1="40" y1="0" x2="40" y2="140" stroke="#7EC8E3" stroke-width="0.3"/><line x1="80" y1="0" x2="80" y2="140" stroke="#7EC8E3" stroke-width="0.3"/><line x1="120" y1="0" x2="120" y2="140" stroke="#7EC8E3" stroke-width="0.3"/><line x1="160" y1="0" x2="160" y2="140" stroke="#7EC8E3" stroke-width="0.3"/><line x1="200" y1="0" x2="200" y2="140" stroke="#7EC8E3" stroke-width="0.3"/>
+            <line x1="0" y1="0" x2="200" y2="0" stroke="#7EC8E3" stroke-width="0.3"/><line x1="0" y1="35" x2="200" y2="35" stroke="#7EC8E3" stroke-width="0.3"/><line x1="0" y1="70" x2="200" y2="70" stroke="#7EC8E3" stroke-width="0.3"/><line x1="0" y1="105" x2="200" y2="105" stroke="#7EC8E3" stroke-width="0.3"/><line x1="0" y1="140" x2="200" y2="140" stroke="#7EC8E3" stroke-width="0.3"/>
+            <path d="M0,100 L40,80 L80,90 L120,60 L160,70 L200,40" stroke="#5BA3CF" stroke-width="0.8" fill="none"/>
+            <circle cx="40" cy="80" r="2" fill="#5BA3CF" opacity="0.4"/><circle cx="120" cy="60" r="2" fill="#5BA3CF" opacity="0.4"/><circle cx="200" cy="40" r="2" fill="#5BA3CF" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="hero-content">
+          <div class="hero-badge">Set sail with confidence</div>
+          <h1 class="hero-title">Your Entire Vessel,<br/><span class="hero-accent">In the Palm of Your Hand</span></h1>
+          <p class="hero-subtitle">From bow to stern — track expenses, log voyages, schedule maintenance, and navigate with live nautical charts. One app, every sea mile.</p>
+          <div class="hero-cta-row">
+            <a href="#problems-section" class="btn btn-primary btn-lg scroll-to" data-target="problems-section">
+              Discover More
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:8px"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+            </a>
+          </div>
+          <div class="hero-trust">
+            <span class="hero-trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              30-day free trial
+            </span>
+            <span class="hero-trust-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Cancel anytime
+            </span>
+          </div>
+        </div>
+        <div class="hero-visual hero-visual-wide">
+          <div class="hero-3phones">
+            <div class="hero-phone hero-phone-left">
+              <div class="hero-phone-screen">
+                <img src="screenshots/dashboard.png" alt="Weather & Spending" />
+              </div>
+            </div>
+            <div class="hero-phone hero-phone-center">
+              <div class="hero-phone-screen">
+                <img src="screenshots/home.png" alt="Nautico Home" />
+              </div>
+            </div>
+            <div class="hero-phone hero-phone-right">
+              <div class="hero-phone-screen">
+                <img src="screenshots/chart.png" alt="Nautical Charts" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wave Divider -->
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,30 C360,55 720,5 1080,30 C1260,42 1380,35 1440,30 L1440,60 L0,60 Z" fill="#13303D"/>
+        </svg>
+      </div>
+
+      <!-- Problems Section -->
+      <div class="section section-dark" id="problems-section">
+        <div class="section-inner">
+          <div class="section-label anim-in">The Problem</div>
+          <h2 class="section-title anim-in">Yacht ownership shouldn't feel like a second job</h2>
+          <p class="section-subtitle anim-in">Most owners juggle spreadsheets, paper logs, and scattered receipts just to keep track of their vessel. Sound familiar?</p>
+          <div class="problem-grid">
+
+            <div class="problem-card-animated anim-in">
+              <div class="card-illustration">
+                <div class="card-icon-circle problem-cost">
+                  <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+                    <line x1="4" y1="4" x2="20" y2="20" stroke="#F87171" stroke-width="2" opacity="0.5"/>
+                  </svg>
+                  <div class="card-orbit">
+                    <div class="card-orbit-dot d1"></div>
+                    <div class="card-orbit-dot d2"></div>
+                    <div class="card-orbit-dot d3"></div>
+                  </div>
+                </div>
+              </div>
+              <span class="card-tag problem-cost-tag">Financial</span>
+              <h3 class="card-title">Hidden Costs Pile Up</h3>
+              <p class="card-desc">Fuel, docking, maintenance, insurance — expenses come from everywhere with no clear picture of total cost.</p>
+              <div class="card-bullets">
+                <div class="card-bullet"><div class="card-bullet-icon red">💸</div><span>No consolidated expense tracking</span></div>
+                <div class="card-bullet"><div class="card-bullet-icon red">📊</div><span>Surprise bills every season</span></div>
+                <div class="card-bullet"><div class="card-bullet-icon red">🧾</div><span>Scattered receipts & invoices</span></div>
+              </div>
+            </div>
+
+            <div class="problem-card-animated anim-in">
+              <div class="card-illustration">
+                <div class="card-icon-circle problem-maint">
+                  <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+                  </svg>
+                  <div class="card-orbit">
+                    <div class="card-orbit-dot d1"></div>
+                    <div class="card-orbit-dot d2"></div>
+                    <div class="card-orbit-dot d3"></div>
+                  </div>
+                </div>
+              </div>
+              <span class="card-tag problem-maint-tag">Maintenance</span>
+              <h3 class="card-title">Maintenance Gets Missed</h3>
+              <p class="card-desc">Without automated reminders based on your vessel's specs, critical service tasks fall through the cracks.</p>
+              <div class="card-bullets">
+                <div class="card-bullet"><div class="card-bullet-icon amber">🔧</div><span>Engine hours tracked manually</span></div>
+                <div class="card-bullet"><div class="card-bullet-icon amber">⚠️</div><span>Missed service deadlines</span></div>
+                <div class="card-bullet"><div class="card-bullet-icon amber">📝</div><span>Paper-based maintenance logs</span></div>
+              </div>
+            </div>
+
+            <div class="problem-card-animated anim-in">
+              <div class="card-illustration">
+                <div class="card-icon-circle problem-hub">
+                  <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#C084FC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6"/>
+                    <line x1="9" y1="15" x2="15" y2="15" opacity="0.5"/><line x1="9" y1="11" x2="13" y2="11" opacity="0.5"/>
+                  </svg>
+                  <div class="card-orbit">
+                    <div class="card-orbit-dot d1"></div>
+                    <div class="card-orbit-dot d2"></div>
+                    <div class="card-orbit-dot d3"></div>
+                  </div>
+                </div>
+              </div>
+              <span class="card-tag problem-hub-tag">Organization</span>
+              <h3 class="card-title">No Central Hub</h3>
+              <p class="card-desc">Voyage logs, documents, fuel data, and crew info are scattered across apps, emails, and notebooks.</p>
+              <div class="card-bullets">
+                <div class="card-bullet"><div class="card-bullet-icon violet">📁</div><span>Files across five different apps</span></div>
+                <div class="card-bullet"><div class="card-bullet-icon violet">📍</div><span>No single source of truth</span></div>
+                <div class="card-bullet"><div class="card-bullet-icon violet">🔍</div><span>Hours wasted searching for info</span></div>
+              </div>
+            </div>
+
+          </div>
+          <div class="section-flow-btn">
+            <a href="#features-section" class="btn btn-primary scroll-to" data-target="features-section">
+              See How We Solve It
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:6px"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wave Divider -->
+      <div class="wave-divider wave-divider-flip">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,30 C360,55 720,5 1080,30 C1260,42 1380,35 1440,30 L1440,60 L0,60 Z" fill="#13303D"/>
+        </svg>
+      </div>
+
+      <!-- Features Section -->
+      <div class="section" id="features-section">
+        <div class="section-inner">
+          <div class="section-label anim-in">The Solution</div>
+          <h2 class="section-title anim-in">Everything you need. One app.</h2>
+          <p class="section-subtitle anim-in">Nautico replaces your spreadsheets, paper logs, and guesswork with a single, intelligent platform designed for yacht owners.</p>
+          <!-- Interactive Feature Explorer -->
+          <div class="feat-explorer">
+            <!-- Icon tabs — onclick for bulletproof switching -->
+            <div class="feat-tabs">
+              <button class="feat-tab active" data-feat="0" onclick="switchFeatTab(0)"><div class="feat-tab-icon feat-money"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><span>Money</span></button>
+              <button class="feat-tab" data-feat="1" onclick="switchFeatTab(1)"><div class="feat-tab-icon feat-health"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><span>Health</span></button>
+              <button class="feat-tab" data-feat="2" onclick="switchFeatTab(2)"><div class="feat-tab-icon feat-location"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><span>Location</span></button>
+              <button class="feat-tab" data-feat="3" onclick="switchFeatTab(3)"><div class="feat-tab-icon feat-logbook"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div><span>Logbook</span></button>
+              <button class="feat-tab" data-feat="4" onclick="switchFeatTab(4)"><div class="feat-tab-icon feat-fuel"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></div><span>Fuel</span></button>
+              <button class="feat-tab" data-feat="5" onclick="switchFeatTab(5)"><div class="feat-tab-icon feat-charts"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div><span>Charts</span></button>
+            </div>
+
+            <!-- Detail panels -->
+            <div class="feat-panels">
+              <div class="feat-panel active" data-panel="0">
+                <div class="feat-panel-graphic"><div class="card-icon-circle feat-money"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
+                <div class="feat-panel-info">
+                  <span class="card-tag feat-money-tag">Financial</span>
+                  <h3 class="card-title">Smart Money Management</h3>
+                  <p class="card-desc">Track every dollar spent on your vessel. Nautico automatically categorizes and totals costs so you always know where your money goes.</p>
+                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon green">📊</div><span>Monthly & yearly cost breakdowns</span></div><div class="card-bullet"><div class="card-bullet-icon green">⛽</div><span>Fuel, maintenance, docking & more</span></div><div class="card-bullet"><div class="card-bullet-icon green">📈</div><span>Spending trends & budget forecasts</span></div></div>
+                </div>
+                <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/dashboard.png" alt="Spending Dashboard" /></div></div>
+              </div>
+
+              <div class="feat-panel" data-panel="1">
+                <div class="feat-panel-graphic"><div class="card-icon-circle feat-health"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#5BC4F0" stroke-width="1.5" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
+                <div class="feat-panel-info">
+                  <span class="card-tag feat-health-tag">Maintenance</span>
+                  <h3 class="card-title">Vessel Health Monitor</h3>
+                  <p class="card-desc">Service reminders based on your specific make, model, and engine hours. Never miss an oil change or haul-out again.</p>
+                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon blue">🔧</div><span>Service reminders by model specs</span></div><div class="card-bullet"><div class="card-bullet-icon blue">⚙️</div><span>Engine hours & health score</span></div><div class="card-bullet"><div class="card-bullet-icon blue">📋</div><span>Full maintenance history log</span></div></div>
+                </div>
+                <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/service.png" alt="Service Tracker" /></div></div>
+              </div>
+
+              <div class="feat-panel" data-panel="2">
+                <div class="feat-panel-graphic"><div class="card-icon-circle feat-location"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#FFC75F" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
+                <div class="feat-panel-info">
+                  <span class="card-tag feat-location-tag">Navigation</span>
+                  <h3 class="card-title">Location Intelligence</h3>
+                  <p class="card-desc">Wherever you sail, Nautico gives you the info you need — local regulations, safe mooring spots, and weather alerts.</p>
+                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon gold">🏗️</div><span>Safe mooring spots & marinas</span></div><div class="card-bullet"><div class="card-bullet-icon gold">⚖️</div><span>Local laws & regulations</span></div><div class="card-bullet"><div class="card-bullet-icon gold">🌊</div><span>Weather & sea conditions</span></div></div>
+                </div>
+                <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/alerts.png" alt="Smart Alerts" /></div></div>
+              </div>
+
+              <div class="feat-panel" data-panel="3">
+                <div class="feat-panel-graphic"><div class="card-icon-circle feat-logbook"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
+                <div class="feat-panel-info">
+                  <span class="card-tag feat-logbook-tag">Logbook</span>
+                  <h3 class="card-title">Digital Voyage Logbook</h3>
+                  <p class="card-desc">Every voyage auto-logged with departure, arrival, crew, conditions — exportable as a professional PDF.</p>
+                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon purple">📖</div><span>Auto-generated voyage entries</span></div><div class="card-bullet"><div class="card-bullet-icon purple">📄</div><span>Export logbook as PDF</span></div><div class="card-bullet"><div class="card-bullet-icon purple">🗺️</div><span>Route history with duration</span></div></div>
+                </div>
+                <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/logbook.png" alt="Voyage Logbook" /></div></div>
+              </div>
+
+              <div class="feat-panel" data-panel="4">
+                <div class="feat-panel-graphic"><div class="card-icon-circle feat-fuel"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
+                <div class="feat-panel-info">
+                  <span class="card-tag feat-fuel-tag">Smart Fuel</span>
+                  <h3 class="card-title">Fuel Cost Calculator</h3>
+                  <p class="card-desc">Select your ports and Nautico calculates distance, fuel needed, and estimated cost from live fuel prices.</p>
+                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon orange">⛽</div><span>Auto-calculates from vessel specs</span></div><div class="card-bullet"><div class="card-bullet-icon orange">📍</div><span>Marina-to-marina distance</span></div><div class="card-bullet"><div class="card-bullet-icon orange">💰</div><span>Live fuel price estimates</span></div></div>
+                </div>
+                <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/home.png" alt="Home Screen" /></div></div>
+              </div>
+
+              <div class="feat-panel" data-panel="5">
+                <div class="feat-panel-graphic"><div class="card-icon-circle feat-charts"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
+                <div class="feat-panel-info">
+                  <span class="card-tag feat-charts-tag">Charts</span>
+                  <h3 class="card-title">Nautical Charts & Map</h3>
+                  <p class="card-desc">Interactive sea charts with real marina locations, route planning, and live weather overlays at your fingertips.</p>
+                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon skyblue">🗺️</div><span>Interactive chart with marinas</span></div><div class="card-bullet"><div class="card-bullet-icon skyblue">⚓</div><span>Sea-path route planning</span></div><div class="card-bullet"><div class="card-bullet-icon skyblue">🌤️</div><span>Real-time weather overlays</span></div></div>
+                </div>
+                <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/chart.png" alt="Nautical Charts" /></div></div>
+              </div>
+            </div>
+          </div>
+          <!-- Inline tab switch function — guaranteed available -->
+          <script>
+          function switchFeatTab(idx) {
+            document.querySelectorAll('.feat-tab').forEach(function(t) { t.classList.remove('active'); });
+            var tab = document.querySelector('.feat-tab[data-feat="' + idx + '"]');
+            if (tab) tab.classList.add('active');
+            document.querySelectorAll('.feat-panel').forEach(function(p) { p.classList.remove('active'); });
+            var panel = document.querySelector('.feat-panel[data-panel="' + idx + '"]');
+            if (panel) {
+              panel.classList.add('active');
+              panel.style.animation = 'none';
+              panel.offsetHeight;
+              panel.style.animation = 'featPanelIn 0.4s ease';
+            }
+          }
+          </script>
+          <div class="section-flow-btn">
+            <a href="#screenshots-section" class="btn btn-primary scroll-to" data-target="screenshots-section">
+              See It In Action
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:6px"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wave Divider -->
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,30 C360,55 720,5 1080,30 C1260,42 1380,35 1440,30 L1440,60 L0,60 Z" fill="#13303D"/>
+        </svg>
+      </div>
+
+      <!-- Screenshots Section -->
+      <div class="screenshots-section" id="screenshots-section">
+        <div class="screenshots-inner">
+          <div class="screenshots-header">
+            <div class="screenshots-label">See It In Action</div>
+            <h2 class="screenshots-title">Designed for yacht owners, by yacht owners</h2>
+            <p class="screenshots-subtitle">Explore every feature of Nautico with a visual walkthrough of the app's core screens.</p>
+          </div>
+          <!-- Live Demo Video + CTA Arrow -->
+          <div class="demo-video-wrap">
+            <div class="demo-video-row">
+              <div class="demo-video-phone">
+                <video class="demo-video" autoplay muted loop playsinline>
+                  <source src="screenshots/app-demo.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <!-- Arrow trigger (desktop only) -->
+              <div class="demo-cta-trigger" id="demo-cta-trigger">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+              </div>
+              <!-- Animated CTA panel -->
+              <div class="demo-cta-panel" id="demo-cta-panel">
+                <div class="demo-cta-content">
+                  <div class="demo-cta-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                  </div>
+                  <h3 class="demo-cta-title">Ready to try it?</h3>
+                  <p class="demo-cta-desc">Get Nautico on your iPhone and start managing your vessel today.</p>
+                  <a href="https://apps.apple.com" target="_blank" class="btn btn-primary btn-lg btn-appstore">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right:8px"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                    Download on the App Store
+                  </a>
+                </div>
+              </div>
+            </div>
+            <p class="demo-video-caption">Live App Walkthrough</p>
+          </div>
+          <!-- Inline CTA arrow toggle — guaranteed available -->
+          <script>
+          (function() {
+            var trigger = document.getElementById('demo-cta-trigger');
+            var panel = document.getElementById('demo-cta-panel');
+            if (trigger && panel) {
+              trigger.addEventListener('click', function() {
+                var isOpen = panel.classList.toggle('open');
+                trigger.classList.toggle('active', isOpen);
+              });
+            }
+          })();
+          </script>
+
+          <div class="screenshots-container">
+            <div class="screenshot-mockup">
+              <div class="screenshot-phone">
+                <div class="screenshot-content">
+                  <img src="screenshots/home.png" alt="Home" class="screenshot-img" />
+                </div>
+              </div>
+              <div class="screenshot-caption">Home</div>
+            </div>
+            <div class="screenshot-mockup">
+              <div class="screenshot-phone">
+                <div class="screenshot-content">
+                  <img src="screenshots/dashboard.png" alt="Weather & Spending" class="screenshot-img" />
+                </div>
+              </div>
+              <div class="screenshot-caption">Weather & Spending</div>
+            </div>
+            <div class="screenshot-mockup">
+              <div class="screenshot-phone">
+                <div class="screenshot-content">
+                  <img src="screenshots/service.png" alt="Service Tracker" class="screenshot-img" />
+                </div>
+              </div>
+              <div class="screenshot-caption">Service Tracker</div>
+            </div>
+            <div class="screenshot-mockup">
+              <div class="screenshot-phone">
+                <div class="screenshot-content">
+                  <img src="screenshots/logbook.png" alt="Voyage Logbook" class="screenshot-img" />
+                </div>
+              </div>
+              <div class="screenshot-caption">Voyage Logbook</div>
+            </div>
+            <div class="screenshot-mockup">
+              <div class="screenshot-phone">
+                <div class="screenshot-content">
+                  <img src="screenshots/chart.png" alt="Nautical Charts" class="screenshot-img" />
+                </div>
+              </div>
+              <div class="screenshot-caption">Nautical Charts</div>
+            </div>
+            <div class="screenshot-mockup">
+              <div class="screenshot-phone">
+                <div class="screenshot-content">
+                  <img src="screenshots/alerts.png" alt="Smart Alerts" class="screenshot-img" />
+                </div>
+              </div>
+              <div class="screenshot-caption">Smart Alerts</div>
+            </div>
+          </div>
+          <div class="section-flow-btn">
+            <a href="#cta-section" class="btn btn-primary scroll-to" data-target="cta-section">
+              Get Started
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:6px"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="section section-cta" id="cta-section">
+        <div class="section-inner center">
+          <h2 class="section-title">Ready to take control?</h2>
+          <p class="section-subtitle">Join yacht owners who've simplified their ownership with Nautico. Start your 30-day free trial today.</p>
+          <a href="https://apps.apple.com" target="_blank" class="btn btn-primary btn-lg btn-appstore">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right:8px"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Download on the App Store
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ PRICING PAGE ════════ -->
+    <section class="page" id="page-pricing" style="display:none;">
+      <div class="page-hero">
+        <h1>Simple, Transparent Pricing</h1>
+        <p>Both plans include a 30-day free trial. No charge until your trial ends.</p>
+      </div>
+      <div class="section">
+        <div class="section-inner">
+          <div class="pricing-grid">
+            <div class="pricing-card">
+              <div class="pricing-name">Monthly</div>
+              <div class="pricing-price">$9.99<span>/mo</span></div>
+              <div class="pricing-desc">Billed monthly after trial</div>
+              <ul class="pricing-features">
+                <li>30-day free trial</li>
+                <li>All features included</li>
+                <li>Unlimited vessels</li>
+                <li>Cloud-synced data</li>
+                <li>Cancel anytime</li>
+              </ul>
+              <a href="#login" class="btn btn-outline" data-route="login">Start Free Trial</a>
+            </div>
+            <div class="pricing-card popular">
+              <div class="pricing-badge">Most Popular</div>
+              <div class="pricing-name">Yearly</div>
+              <div class="pricing-price">$4.99<span>/mo</span></div>
+              <div class="pricing-desc">$59.94/yr — Save 50%</div>
+              <ul class="pricing-features">
+                <li>30-day free trial</li>
+                <li>All features included</li>
+                <li>Unlimited vessels</li>
+                <li>Cloud-synced data</li>
+                <li>Priority support</li>
+                <li>Save $60/year vs monthly</li>
+              </ul>
+              <a href="#login" class="btn btn-primary" data-route="login">Start Free Trial</a>
+            </div>
+          </div>
+          <div class="pricing-faq">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+              <h3>How does the free trial work?</h3>
+              <p>Both monthly and yearly plans come with a 30-day free trial. You won't be charged until the trial ends. Cancel anytime during the 30 days and pay nothing.</p>
+            </div>
+            <div class="faq-item">
+              <h3>Can I switch plans later?</h3>
+              <p>Yes. You can switch between monthly and yearly at any time from your account settings or through the App Store.</p>
+            </div>
+            <div class="faq-item">
+              <h3>Is my data safe?</h3>
+              <p>Absolutely. All data is encrypted and stored securely on enterprise-grade infrastructure. We never sell or share your personal information.</p>
+            </div>
+            <div class="faq-item">
+              <h3>What payment methods do you accept?</h3>
+              <p>Subscriptions are handled through Apple's App Store, which supports all major credit cards, Apple Pay, and carrier billing in select regions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ CONTACT PAGE ════════ -->
+    <section class="page" id="page-contact" style="display:none;">
+      <div class="page-hero">
+        <h1>Get In Touch</h1>
+        <p>Have a question, feature request, or need support? We'd love to hear from you.</p>
+      </div>
+      <div class="section">
+        <div class="section-inner">
+          <div class="contact-grid">
+            <div class="contact-form-wrap">
+              <form id="contact-form" class="contact-form">
+                <div class="form-group">
+                  <label for="contact-name">Name</label>
+                  <input type="text" id="contact-name" placeholder="Your name" required />
+                </div>
+                <div class="form-group">
+                  <label for="contact-email">Email</label>
+                  <input type="email" id="contact-email" placeholder="you@example.com" required />
+                </div>
+                <div class="form-group">
+                  <label for="contact-subject">Subject</label>
+                  <select id="contact-subject">
+                    <option value="general">General Inquiry</option>
+                    <option value="support">Technical Support</option>
+                    <option value="feature">Feature Request</option>
+                    <option value="billing">Billing Question</option>
+                    <option value="partnership">Partnership</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="contact-message">Message</label>
+                  <textarea id="contact-message" rows="5" placeholder="Tell us how we can help..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+              </form>
+              <div id="contact-success" class="contact-success" style="display:none;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <h3>Message Sent!</h3>
+                <p>We'll get back to you within 24 hours.</p>
+              </div>
+            </div>
+            <div class="contact-info">
+              <div class="contact-info-card">
+                <h3>Email Us</h3>
+                <p><a href="mailto:support@nautico.app">support@nautico.app</a></p>
+              </div>
+              <div class="contact-info-card">
+                <h3>Response Time</h3>
+                <p>We typically respond within 24 hours on business days.</p>
+              </div>
+              <div class="contact-info-card">
+                <h3>Follow Us</h3>
+                <p>Stay updated on new features and releases.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ PRIVACY POLICY PAGE ════════ -->
+    <section class="page" id="page-privacy" style="display:none;">
+      <div class="page-hero">
+        <h1>Privacy Policy</h1>
+        <p>Last updated: March 30, 2026</p>
+      </div>
+      <div class="section">
+        <div class="section-inner prose">
+          <h2>1. Information We Collect</h2>
+          <p>When you use Nautico, we collect information you provide directly, such as your name, email address, and vessel details. We also collect usage data to improve the app experience, including voyage logs, expense records, and app interaction patterns.</p>
+
+          <h2>2. How We Use Your Information</h2>
+          <p>We use your information to provide and improve the Nautico service, including: managing your account, syncing your data across devices, generating maintenance reminders, calculating fuel estimates, and providing customer support. We do not sell or share your personal data with third-party advertisers.</p>
+
+          <h2>3. Data Storage & Security</h2>
+          <p>Your data is stored securely on Supabase infrastructure with enterprise-grade encryption at rest and in transit. We implement industry-standard security measures including SSL/TLS encryption, row-level security policies, and regular security audits.</p>
+
+          <h2>4. Third-Party Services</h2>
+          <p>Nautico integrates with the following third-party services to provide its functionality: Supabase (database and authentication), Apple App Store (subscriptions and payments), Open-Meteo (weather data), and MapLibre (nautical charts). Each service has its own privacy policy governing their data practices.</p>
+
+          <h2>5. Your Rights</h2>
+          <p>You have the right to access, correct, or delete your personal data at any time. You can export your data from within the app or by contacting our support team. To delete your account and all associated data, contact us at support@nautico.app.</p>
+
+          <h2>6. Cookies & Tracking</h2>
+          <p>The Nautico website uses minimal cookies for authentication and session management. We do not use third-party tracking cookies or advertising pixels. The mobile app does not use cookies.</p>
+
+          <h2>7. Children's Privacy</h2>
+          <p>Nautico is not intended for use by children under 13. We do not knowingly collect personal information from children under 13.</p>
+
+          <h2>8. Changes to This Policy</h2>
+          <p>We may update this privacy policy from time to time. We will notify you of any material changes by posting the updated policy on this page and updating the "Last updated" date.</p>
+
+          <h2>9. Contact</h2>
+          <p>If you have questions about this privacy policy or your data, contact us at <a href="mailto:support@nautico.app">support@nautico.app</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ LOGIN PAGE ════════ -->
+    <section class="page" id="page-login" style="display:none;">
+      <div class="auth-container">
+        <div class="auth-card">
+          <div class="auth-logo">
+            <img src="screenshots/logo-compass.png" alt="Nautico" class="auth-logo-img" />
+          </div>
+          <h2>Welcome Back</h2>
+          <p class="auth-subtitle">Log in to view your Nautico account</p>
+          <form id="login-form" class="auth-form">
+            <div class="form-group">
+              <label for="login-email">Email</label>
+              <input type="email" id="login-email" placeholder="you@example.com" required />
+            </div>
+            <div class="form-group">
+              <label for="login-password">Password</label>
+              <input type="password" id="login-password" placeholder="Your password" required />
+            </div>
+            <div id="login-error" class="auth-error" style="display:none;"></div>
+            <button type="submit" class="btn btn-primary btn-full" id="login-btn">Log In</button>
+          </form>
+          <p class="auth-footer-text">Don't have an account? <a href="https://apps.apple.com" target="_blank">Download Nautico</a> to get started.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ DASHBOARD PAGE ════════ -->
+    <section class="page" id="page-dashboard" style="display:none;">
+      <div class="dashboard">
+        <div class="dash-header">
+          <div>
+            <h1>Your Account</h1>
+            <p id="dash-greeting">Welcome back</p>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="logout-btn">Log Out</button>
+        </div>
+        <div class="dash-grid">
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7EC8E3" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <h3>Profile</h3>
+            </div>
+            <div class="dash-row"><span class="dash-label">Name</span><span class="dash-value" id="dash-name">—</span></div>
+            <div class="dash-row"><span class="dash-label">Email</span><span class="dash-value" id="dash-email">—</span></div>
+            <div class="dash-row"><span class="dash-label">Member Since</span><span class="dash-value" id="dash-joined">—</span></div>
+            <div class="dash-row"><span class="dash-label">Country</span><span class="dash-value" id="dash-country">—</span></div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              <h3>Subscription</h3>
+            </div>
+            <div class="dash-row"><span class="dash-label">Plan</span><span class="dash-value" id="dash-plan">—</span></div>
+            <div class="dash-row"><span class="dash-label">Status</span><span class="dash-value" id="dash-status">—</span></div>
+            <div class="dash-row"><span class="dash-label">Trial Ends</span><span class="dash-value" id="dash-trial">—</span></div>
+            <div class="dash-row"><span class="dash-label">Next Billing</span><span class="dash-value" id="dash-billing">—</span></div>
+          </div>
+          <div class="dash-card full-width">
+            <div class="dash-card-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFC75F" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg>
+              <h3>Fleet Overview</h3>
+            </div>
+            <div class="dash-row"><span class="dash-label">Total Vessels</span><span class="dash-value" id="dash-vessels">—</span></div>
+            <div class="dash-row"><span class="dash-label">Total Voyages</span><span class="dash-value" id="dash-voyages">—</span></div>
+            <div class="dash-row"><span class="dash-label">Total Distance</span><span class="dash-value" id="dash-distance">—</span></div>
+          </div>
+        </div>
+        <p class="dash-note">This is a read-only overview. To manage your vessels, voyages, and expenses, use the Nautico app on your iPhone.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="footer" id="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="screenshots/logo-compass.png" alt="Nautico" class="footer-logo-img" />
+          <span>Nautico</span>
+        </div>
+        <div class="footer-links">
+          <a href="#home" data-route="home">Home</a>
+          <a href="#pricing" data-route="pricing">Pricing</a>
+          <a href="#contact" data-route="contact">Contact</a>
+          <a href="#privacy" data-route="privacy">Privacy Policy</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nautico. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
