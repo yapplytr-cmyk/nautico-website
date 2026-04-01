@@ -200,7 +200,36 @@ var I18N = {
     footer_pricing: "Pricing",
     footer_contact: "Contact",
     footer_privacy: "Privacy Policy",
+    footer_terms: "Terms of Use",
     footer_copy: "© 2026 Nautico. All rights reserved.",
+
+    // TERMS OF USE (EULA) PAGE
+    terms_title: "Terms of Use (EULA)",
+    terms_updated: "Last updated: April 1, 2026",
+    terms_h1: "1. Acceptance of Terms",
+    terms_p1: "By downloading, installing, or using the Nautico application (\"App\"), you agree to be bound by these Terms of Use. If you do not agree, do not use the App. These terms constitute a legally binding agreement between you and Nautico.",
+    terms_h2: "2. License Grant",
+    terms_p2: "Nautico grants you a limited, non-exclusive, non-transferable, revocable license to use the App for personal, non-commercial purposes on Apple-branded devices that you own or control, subject to the Apple Media Services Terms and Conditions.",
+    terms_h3: "3. Subscriptions & Payments",
+    terms_p3: "Nautico offers auto-renewable subscription plans (Monthly and Yearly), each with a 30-day free trial. Payment is charged to your Apple ID account at confirmation of purchase. Subscriptions automatically renew unless cancelled at least 24 hours before the end of the current billing period. You can manage or cancel your subscription in your Apple ID Account Settings. Any unused portion of a free trial is forfeited upon purchasing a subscription.",
+    terms_h4: "4. User Accounts",
+    terms_p4: "You may create an account to sync your data across devices. You are responsible for maintaining the confidentiality of your login credentials. You may delete your account at any time from the Settings page within the App, which will permanently remove all your data from our servers.",
+    terms_h5: "5. User Conduct",
+    terms_p5: "You agree not to misuse the App, including attempting to reverse-engineer, decompile, or tamper with the App or its servers. You agree not to use the App for any unlawful purpose or in violation of these Terms.",
+    terms_h6: "6. Intellectual Property",
+    terms_p6: "All content, features, and functionality of the App, including but not limited to text, graphics, logos, icons, and software, are owned by Nautico and protected by international copyright, trademark, and other intellectual property laws.",
+    terms_h7: "7. Disclaimer of Warranties",
+    terms_p7: "The App is provided \"as is\" and \"as available\" without warranties of any kind, whether express or implied. Nautico does not guarantee that the App will be uninterrupted, error-free, or free of harmful components. Navigation data, weather information, and nautical charts are provided for informational purposes only and should not replace official maritime navigation tools and procedures.",
+    terms_h8: "8. Limitation of Liability",
+    terms_p8: "To the maximum extent permitted by law, Nautico shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or relating to your use of the App. Nautico is not responsible for any decisions made based on data provided by the App, including navigation, weather, or maintenance information.",
+    terms_h9: "9. Termination",
+    terms_p9: "Nautico may terminate or suspend your access to the App at any time, without notice, for conduct that violates these Terms or is harmful to other users, Nautico, or third parties. Upon termination, your right to use the App ceases immediately.",
+    terms_h10: "10. Changes to Terms",
+    terms_p10: "We reserve the right to modify these Terms at any time. Continued use of the App after changes constitutes acceptance of the updated Terms. We will notify users of material changes through the App or via email.",
+    terms_h11: "11. Governing Law",
+    terms_p11: "These Terms are governed by and construed in accordance with applicable laws. Any disputes arising under these Terms shall be resolved in the appropriate courts of the jurisdiction in which Nautico operates.",
+    terms_h12: "12. Contact",
+    terms_p12: "If you have questions about these Terms of Use, contact us at support@nautico.app.",
 
     // PRIVACY PAGE
     privacy_title: "Privacy Policy",
@@ -431,6 +460,7 @@ var I18N = {
     footer_pricing: "Цены",
     footer_contact: "Контакты",
     footer_privacy: "Политика Конфиденциальности",
+    footer_terms: "Условия использования",
     footer_copy: "© 2026 Nautico. Все права защищены.",
 
     // PRIVACY PAGE
@@ -662,6 +692,7 @@ var I18N = {
     footer_pricing: "Fiyatlar",
     footer_contact: "İletişim",
     footer_privacy: "Gizlilik Politikası",
+    footer_terms: "Kullanım Koşulları",
     footer_copy: "© 2026 Nautico. Tüm hakları saklıdır.",
 
     // PRIVACY PAGE
@@ -893,6 +924,7 @@ var I18N = {
     footer_pricing: "Tarification",
     footer_contact: "Contact",
     footer_privacy: "Politique de confidentialité",
+    footer_terms: "Conditions d'utilisation",
     footer_copy: "© 2026 Nautico. Tous les droits réservés.",
 
     // PRIVACY PAGE
@@ -1124,6 +1156,7 @@ var I18N = {
     footer_pricing: "Prezzi",
     footer_contact: "Contatti",
     footer_privacy: "Informativa sulla privacy",
+    footer_terms: "Termini di utilizzo",
     footer_copy: "© 2026 Nautico. Tutti i diritti riservati.",
 
     // PRIVACY PAGE
@@ -1355,6 +1388,7 @@ var I18N = {
     footer_pricing: "Precios",
     footer_contact: "Contacto",
     footer_privacy: "Política de privacidad",
+    footer_terms: "Términos de uso",
     footer_copy: "© 2026 Nautico. Todos los derechos reservados.",
 
     // PRIVACY PAGE

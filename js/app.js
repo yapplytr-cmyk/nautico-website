@@ -40,6 +40,7 @@ const routes = {
   pricing: 'page-pricing',
   contact: 'page-contact',
   privacy: 'page-privacy',
+  terms: 'page-terms',
   login: 'page-login',
   dashboard: 'page-dashboard'
 };
