@@ -229,7 +229,7 @@ var I18N = {
     terms_h11: "11. Governing Law",
     terms_p11: "These Terms are governed by and construed in accordance with applicable laws. Any disputes arising under these Terms shall be resolved in the appropriate courts of the jurisdiction in which Nautico operates.",
     terms_h12: "12. Contact",
-    terms_p12: "If you have questions about these Terms of Use, contact us at support@nautico.app.",
+    terms_p12: "If you have questions about these Terms of Use, contact us at contactnautico@gmail.com.",
 
     // PRIVACY PAGE
     privacy_title: "Privacy Policy",
@@ -243,7 +243,7 @@ var I18N = {
     privacy_h4: "4. Third-Party Services",
     privacy_p4: "Nautico integrates with the following third-party services to provide its functionality: Supabase (database and authentication), Apple App Store (subscriptions and payments), Open-Meteo (weather data), and MapLibre (nautical charts). Each service has its own privacy policy governing their data practices.",
     privacy_h5: "5. Your Rights",
-    privacy_p5: "You have the right to access, correct, or delete your personal data at any time. You can export your data from within the app or by contacting our support team. To delete your account and all associated data, contact us at support@nautico.app.",
+    privacy_p5: "You have the right to access, correct, or delete your personal data at any time. You can export your data from within the app or by contacting our support team. To delete your account and all associated data, contact us at contactnautico@gmail.com.",
     privacy_h6: "6. Cookies & Tracking",
     privacy_p6: "The Nautico website uses minimal cookies for authentication and session management. We do not use third-party tracking cookies or advertising pixels. The mobile app does not use cookies.",
     privacy_h7: "7. Children's Privacy",
@@ -251,7 +251,7 @@ var I18N = {
     privacy_h8: "8. Changes to This Policy",
     privacy_p8: "We may update this privacy policy from time to time. We will notify you of any material changes by posting the updated policy on this page and updating the \"Last updated\" date.",
     privacy_h9: "9. Contact",
-    privacy_p9: "If you have questions about this privacy policy or your data, contact us at support@nautico.app.",
+    privacy_p9: "If you have questions about this privacy policy or your data, contact us at contactnautico@gmail.com.",
 
     // LANGUAGE SWITCHER
     lang_en: "English",
@@ -475,7 +475,7 @@ var I18N = {
     privacy_h4: "4. Сервисы Третьих Сторон",
     privacy_p4: "Nautico интегрируется со следующими сервисами третьих сторон для предоставления своей функциональности: Supabase (база данных и аутентификация), Apple App Store (подписки и платежи), Open-Meteo (данные о погоде) и MapLibre (навигационные карты). Каждый сервис имеет свою собственную политику конфиденциальности, регулирующую их методы обработки данных.",
     privacy_h5: "5. Ваши Права",
-    privacy_p5: "Вы имеете право доступа, исправления или удаления своей личной информации в любой момент. Вы можете экспортировать ваши данные из приложения или связавшись с нашей группой поддержки. Чтобы удалить вашу учётную запись и все связанные данные, свяжитесь с нами по адресу support@nautico.app.",
+    privacy_p5: "Вы имеете право доступа, исправления или удаления своей личной информации в любой момент. Вы можете экспортировать ваши данные из приложения или связавшись с нашей группой поддержки. Чтобы удалить вашу учётную запись и все связанные данные, свяжитесь с нами по адресу contactnautico@gmail.com.",
     privacy_h6: "6. Куки и Отслеживание",
     privacy_p6: "Веб-сайт Nautico использует минимальные куки для аутентификации и управления сессией. Мы не используем куки отслеживания третьих сторон или пиксели объявлений. Мобильное приложение не использует куки.",
     privacy_h7: "7. Конфиденциальность Детей",
@@ -483,7 +483,7 @@ var I18N = {
     privacy_h8: "8. Изменения в Этой Политике",
     privacy_p8: "Мы можем обновлять эту политику конфиденциальности время от времени. Мы уведомим вас о любых существенных изменениях, опубликовав обновленную политику на этой странице и обновив дату \"Последнее обновление\".",
     privacy_h9: "9. Контакты",
-    privacy_p9: "Если у вас есть вопросы по этой политике конфиденциальности или по вашим данным, свяжитесь с нами по адресу support@nautico.app.",
+    privacy_p9: "Если у вас есть вопросы по этой политике конфиденциальности или по вашим данным, свяжитесь с нами по адресу contactnautico@gmail.com.",
 
     // LANGUAGE SWITCHER
     lang_en: "English",
@@ -707,7 +707,7 @@ var I18N = {
     privacy_h4: "4. Üçüncü Taraf Hizmetleri",
     privacy_p4: "Nautico işlevselliğini sağlamak için şu üçüncü taraf hizmetlerle entegre çalışır: Supabase (veritabanı ve kimlik doğrulama), Apple App Store (abonelik ve ödeme), Open-Meteo (hava durumu verileri) ve MapLibre (deniz haritaları). Her hizmetin kendi gizlilik politikası bulunmaktadır.",
     privacy_h5: "5. Haklarınız",
-    privacy_p5: "Kişisel verilerinize istediğiniz zaman erişme, düzeltme veya silme hakkına sahipsiniz. Verilerinizi uygulama üzerinden dışa aktarabilir veya destek ekibimize başvurabilirsiniz. Hesabınızı ve tüm ilişkili verileri silmek için support@nautico.app adresine yazabilirsiniz.",
+    privacy_p5: "Kişisel verilerinize istediğiniz zaman erişme, düzeltme veya silme hakkına sahipsiniz. Verilerinizi uygulama üzerinden dışa aktarabilir veya destek ekibimize başvurabilirsiniz. Hesabınızı ve tüm ilişkili verileri silmek için contactnautico@gmail.com adresine yazabilirsiniz.",
     privacy_h6: "6. Çerezler ve İzleme",
     privacy_p6: "Nautico web sitesi yalnızca kimlik doğrulama ve oturum yönetimi için minimum düzeyde çerez kullanır. Üçüncü taraf izleme çerezleri veya reklam pikselleri kullanılmaz. Mobil uygulamada çerez bulunmamaktadır.",
     privacy_h7: "7. Çocukların Gizliliği",
@@ -715,7 +715,7 @@ var I18N = {
     privacy_h8: "8. Politika Değişiklikleri",
     privacy_p8: "Bu gizlilik politikasını zaman zaman güncelleyebiliriz. Önemli değişiklikleri bu sayfada yayınlayarak ve \"Son güncelleme\" tarihini güncelleyerek bildiririz.",
     privacy_h9: "9. İletişim",
-    privacy_p9: "Bu gizlilik politikası veya verilerinizle ilgili sorularınız için support@nautico.app adresinden bize ulaşabilirsiniz.",
+    privacy_p9: "Bu gizlilik politikası veya verilerinizle ilgili sorularınız için contactnautico@gmail.com adresinden bize ulaşabilirsiniz.",
 
     // LANGUAGE SWITCHER
     lang_en: "English",
@@ -939,7 +939,7 @@ var I18N = {
     privacy_h4: "4. Services tiers",
     privacy_p4: "Nautico s'intègre aux services tiers suivants pour fournir sa fonctionnalité : Supabase (base de données et authentification), Apple App Store (abonnements et paiements), Open-Meteo (données météorologiques) et MapLibre (cartes marines). Chaque service a sa propre politique de confidentialité régissant ses pratiques en matière de données.",
     privacy_h5: "5. Vos droits",
-    privacy_p5: "Vous avez le droit d'accéder, de corriger ou de supprimer vos données personnelles à tout moment. Vous pouvez exporter vos données depuis l'application ou en contactant notre équipe d'assistance. Pour supprimer votre compte et toutes les données associées, contactez-nous à support@nautico.app.",
+    privacy_p5: "Vous avez le droit d'accéder, de corriger ou de supprimer vos données personnelles à tout moment. Vous pouvez exporter vos données depuis l'application ou en contactant notre équipe d'assistance. Pour supprimer votre compte et toutes les données associées, contactez-nous à contactnautico@gmail.com.",
     privacy_h6: "6. Cookies et suivi",
     privacy_p6: "Le site Web Nautico utilise des cookies minimaux pour l'authentification et la gestion des sessions. Nous n'utilisons pas de cookies de suivi tiers ni de pixels publicitaires. L'application mobile n'utilise pas de cookies.",
     privacy_h7: "7. Confidentialité des enfants",
@@ -947,7 +947,7 @@ var I18N = {
     privacy_h8: "8. Modifications de cette politique",
     privacy_p8: "Nous pouvons mettre à jour cette politique de confidentialité de temps en temps. Nous vous informerons des modifications matérielles en publiant la politique mise à jour sur cette page et en mettant à jour la date \"Dernière mise à jour\".",
     privacy_h9: "9. Contact",
-    privacy_p9: "Si vous avez des questions sur cette politique de confidentialité ou vos données, contactez-nous à support@nautico.app.",
+    privacy_p9: "Si vous avez des questions sur cette politique de confidentialité ou vos données, contactez-nous à contactnautico@gmail.com.",
 
     // LANGUAGE SWITCHER
     lang_en: "English",
@@ -1171,7 +1171,7 @@ var I18N = {
     privacy_h4: "4. Servizi di terze parti",
     privacy_p4: "Nautico si integra con i seguenti servizi di terze parti per fornire la Sua funzionalità: Supabase (database e autenticazione), Apple App Store (abbonamenti e pagamenti), Open-Meteo (dati meteorologici) e MapLibre (carte nautiche). Ogni servizio ha la propria politica sulla privacy che disciplina le Sue pratiche sui dati.",
     privacy_h5: "5. I Suoi Diritti",
-    privacy_p5: "Ha il diritto di accedere, correggere o eliminare i Suoi dati personali in qualsiasi momento. Può esportare i Suoi dati dall'app o contattando il Nostro team di supporto. Per eliminare il Suo account e tutti i dati associati, contattaci a support@nautico.app.",
+    privacy_p5: "Ha il diritto di accedere, correggere o eliminare i Suoi dati personali in qualsiasi momento. Può esportare i Suoi dati dall'app o contattando il Nostro team di supporto. Per eliminare il Suo account e tutti i dati associati, contattaci a contactnautico@gmail.com.",
     privacy_h6: "6. Cookie e monitoraggio",
     privacy_p6: "Il sito web Nautico utilizza cookie minimi per l'autenticazione e la gestione delle sessioni. Non utilizziamo cookie di tracciamento di terze parti o pixel pubblicitari. L'app mobile non utilizza cookie.",
     privacy_h7: "7. Privacy dei Minori",
@@ -1179,7 +1179,7 @@ var I18N = {
     privacy_h8: "8. Modifiche a Questa Politica",
     privacy_p8: "Potremmo aggiornare questa informativa sulla privacy di tanto in tanto. Ti notificheremo delle modifiche materiali pubblicando l'informativa aggiornata su questa pagina e aggiornando la data \"Ultimo aggiornamento\".",
     privacy_h9: "9. Contatti",
-    privacy_p9: "Se ha domande su questa informativa sulla privacy o sui Suoi dati, contattaci a support@nautico.app.",
+    privacy_p9: "Se ha domande su questa informativa sulla privacy o sui Suoi dati, contattaci a contactnautico@gmail.com.",
 
     // LANGUAGE SWITCHER
     lang_en: "English",
@@ -1403,7 +1403,7 @@ var I18N = {
     privacy_h4: "4. Servicios de terceros",
     privacy_p4: "Nautico se integra con los siguientes servicios de terceros para proporcionar su funcionalidad: Supabase (base de datos y autenticación), Apple App Store (suscripciones y pagos), Open-Meteo (datos meteorológicos) y MapLibre (cartas náuticas). Cada servicio tiene su propia política de privacidad que rige sus prácticas de datos.",
     privacy_h5: "5. Sus Derechos",
-    privacy_p5: "Tiene derecho a acceder, corregir o eliminar sus datos personales en cualquier momento. Puede exportar sus datos desde la aplicación o poniéndose en contacto con nuestro equipo de soporte. Para eliminar su cuenta y todos los datos asociados, contáctenos en support@nautico.app.",
+    privacy_p5: "Tiene derecho a acceder, corregir o eliminar sus datos personales en cualquier momento. Puede exportar sus datos desde la aplicación o poniéndose en contacto con nuestro equipo de soporte. Para eliminar su cuenta y todos los datos asociados, contáctenos en contactnautico@gmail.com.",
     privacy_h6: "6. Cookies y seguimiento",
     privacy_p6: "El sitio web de Nautico utiliza cookies mínimas para autenticación y administración de sesiones. No utilizamos cookies de seguimiento de terceros ni píxeles publicitarios. La aplicación móvil no utiliza cookies.",
     privacy_h7: "7. Privacidad de los Niños",
@@ -1411,7 +1411,7 @@ var I18N = {
     privacy_h8: "8. Cambios en Esta Política",
     privacy_p8: "Podemos actualizar esta política de privacidad de vez en cuando. Le notificaremos de los cambios materiales publicando la política actualizada en esta página y actualizando la fecha \"Última actualización\".",
     privacy_h9: "9. Contacto",
-    privacy_p9: "Si tiene preguntas sobre esta política de privacidad o sus datos, contáctenos en support@nautico.app.",
+    privacy_p9: "Si tiene preguntas sobre esta política de privacidad o sus datos, contáctenos en contactnautico@gmail.com.",
 
     // LANGUAGE SWITCHER
     lang_en: "English",
