@@ -649,6 +649,7 @@ a:hover { color: #9DD8EF; }
 .feat-tab-icon.feat-logbook { background: rgba(167,139,250,0.1); color: #A78BFA; }
 .feat-tab-icon.feat-fuel { background: rgba(249,115,22,0.1); color: #F97316; }
 .feat-tab-icon.feat-charts { background: rgba(56,189,248,0.1); color: #38BDF8; }
+.feat-tab-icon.feat-anchor { background: rgba(46,204,113,0.1); color: #2ECC71; }
 .feat-tab.active .feat-tab-icon { transform: scale(1.1); box-shadow: 0 4px 16px rgba(126,200,227,0.15); }
 
 /* Panels wrapper with arrows */
@@ -887,6 +888,10 @@ a:hover { color: #9DD8EF; }
   background: linear-gradient(135deg, rgba(56,189,248,0.10), rgba(59,130,246,0.08));
   box-shadow: 0 6px 28px rgba(56,189,248,0.12);
 }
+.card-icon-circle.feat-anchor {
+  background: linear-gradient(135deg, rgba(46,204,113,0.10), rgba(39,174,96,0.08));
+  box-shadow: 0 6px 28px rgba(46,204,113,0.12);
+}
 
 .card-icon-circle svg {
   filter: drop-shadow(0 3px 10px rgba(91,196,240,0.15));
@@ -914,6 +919,7 @@ a:hover { color: #9DD8EF; }
 .card-tag.feat-logbook-tag { background: rgba(167,139,250,0.10); color: #A78BFA; }
 .card-tag.feat-fuel-tag { background: rgba(249,115,22,0.10); color: #F97316; }
 .card-tag.feat-charts-tag { background: rgba(56,189,248,0.10); color: #38BDF8; }
+.card-tag.feat-anchor-tag { background: rgba(46,204,113,0.10); color: #2ECC71; }
 
 /* Card text */
 .card-title {

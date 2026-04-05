@@ -290,6 +290,7 @@
               <button class="feat-tab" data-feat="3" onclick="switchFeatTab(3)"><div class="feat-tab-icon feat-logbook"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div><span data-i18n="feat_tab_logbook">Logbook</span></button>
               <button class="feat-tab" data-feat="4" onclick="switchFeatTab(4)"><div class="feat-tab-icon feat-fuel"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></div><span data-i18n="feat_tab_fuel">Fuel</span></button>
               <button class="feat-tab" data-feat="5" onclick="switchFeatTab(5)"><div class="feat-tab-icon feat-charts"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div><span data-i18n="feat_tab_charts">Charts</span></button>
+              <button class="feat-tab" data-feat="6" onclick="switchFeatTab(6)"><div class="feat-tab-icon feat-anchor"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="21"/><path d="M5 19a7 7 0 0114 0"/></svg></div><span data-i18n="feat_tab_anchor">Anchor</span></button>
             </div>
 
             <!-- Detail panels with arrow nav -->
@@ -363,6 +364,17 @@
                 </div>
                 <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/chart.png" alt="Nautical Charts" /></div></div>
               </div>
+
+              <div class="feat-panel" data-panel="6">
+                <div class="feat-panel-graphic"><div class="card-icon-circle feat-anchor"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="21"/><path d="M5 19a7 7 0 0114 0"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
+                <div class="feat-panel-info">
+                  <span class="card-tag feat-anchor-tag" data-i18n="feat_tag_6">Anchor Monitor</span>
+                  <h3 class="card-title" data-i18n="feat_6_title">Anchor Watch & Drift Alerts</h3>
+                  <p class="card-desc" data-i18n="feat_6_desc">Set your anchor radius and rest easy. Nautico monitors your vessel's position around the clock and sends critical alerts if you drift — even when your screen is off or the app is closed.</p>
+                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon skyblue">📍</div><span data-i18n="feat_6_b1">Native GPS monitoring 24/7</span></div><div class="card-bullet"><div class="card-bullet-icon skyblue">🔔</div><span data-i18n="feat_6_b2">Critical alerts even when app is closed</span></div><div class="card-bullet"><div class="card-bullet-icon skyblue">🛡️</div><span data-i18n="feat_6_b3">Custom radius with live distance tracking</span></div></div>
+                </div>
+                <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/alerts.png" alt="Anchor Watch Alerts" /></div></div>
+              </div>
             </div>
               <button class="feat-arrow feat-arrow-right" onclick="featNav(1)" aria-label="Next feature">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
@@ -371,7 +383,7 @@
           </div>
           <!-- Inline tab switch function — guaranteed available -->
           <script>
-          var _featTotal = 6;
+          var _featTotal = 7;
           function _getCurrentFeat() {
             var active = document.querySelector('.feat-tab.active');
             return active ? parseInt(active.getAttribute('data-feat')) : 0;
