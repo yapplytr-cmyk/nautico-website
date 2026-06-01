@@ -1626,11 +1626,10 @@ html[data-theme="dark"] .theme-toggle-knob {
 ═══════════════════════════════════════════════════════════════ */
 /* LIGHT theme: one teal gradient field behind everything */
 html:not([data-theme="dark"]) body {
-  background:
-    radial-gradient(60% 40% at 18% 10%, rgba(126,200,227,0.10) 0%, transparent 60%),
-    radial-gradient(55% 38% at 84% 46%, rgba(126,200,227,0.07) 0%, transparent 60%),
-    linear-gradient(180deg, #0F2732 0%, #0B1E27 100%) !important;
-  background-attachment: fixed !important;
+  /* Soft top-to-bottom teal gradient — no positioned pools, no fold jump. */
+  background: linear-gradient(180deg, #103040 0%, #0E2835 45%, #0B1E27 100%) !important;
+  background-attachment: scroll !important;
+  background-repeat: no-repeat !important;
 }
 html:not([data-theme="dark"]) #page-home .section,
 html:not([data-theme="dark"]) #page-home #problems-section,
@@ -1642,12 +1641,17 @@ html:not([data-theme="dark"]) #page-home .cc-hero { background: transparent !imp
 
 /* DARK theme: fixed black galaxy field behind everything */
 html[data-theme="dark"] body {
+  /* One huge, soft top-to-bottom gradient over pure black — no positioned
+     glow pools that could create a visible edge at a scroll fold. Solid
+     near-black so there is never a hard line between any sections. */
   background:
-    radial-gradient(55% 40% at 20% 12%, rgba(143,211,244,0.06) 0%, transparent 60%),
-    radial-gradient(50% 38% at 82% 44%, rgba(167,139,250,0.06) 0%, transparent 60%),
-    radial-gradient(55% 40% at 35% 82%, rgba(46,204,154,0.045) 0%, transparent 60%),
-    #000 !important;
-  background-attachment: fixed !important;
+    linear-gradient(180deg,
+      #060912 0%,
+      #04060d 30%,
+      #020308 60%,
+      #000000 100%) !important;
+  background-attachment: scroll !important;
+  background-repeat: no-repeat !important;
 }
 
 /* 3D boat canvases must be fully transparent — no box, no backing */
@@ -1696,3 +1700,13 @@ html body #app-content #page-home #intro-section {
 .section-arrow .cc-ar { animation: ccArrow 1.8s ease-in-out infinite; }
 .section-arrow .cc-ar:nth-child(2) { animation-delay: 0.2s; margin-top: -13px; opacity: 0.5; }
 .section-arrow:hover svg { stroke: var(--text-primary); }
+
+/* ── Big soft feather between the hero and the next section ──
+   A tall transparent→dark→transparent gradient straddling the fold so the
+   transition reads as a long, soft gradient — never a hard line. */
+#page-home .cc-hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -160px;
+  height: 320px; pointer-events: none; z-index: 1;
+  background: linear-gradient(to bottom, transparent 0%, rgba(2,3,8,0.6) 45%, transparent 100%);
+}
+#page-home #intro-section { position: relative; }
