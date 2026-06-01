@@ -72,8 +72,8 @@
 
     var isMobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
     var W = container.clientWidth || 600, H = container.clientHeight || 460;
-    var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !isMobile });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2)); // lighter on phones
+    var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !isMobile, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1.25 : 2)); // much lighter on phones
     renderer.setSize(W, H);
     renderer.outputEncoding = THREE.sRGBEncoding;
     container.appendChild(renderer.domElement);
@@ -206,10 +206,21 @@
     }
     window.addEventListener('resize', resize);
 
+    // Only render while the boat is actually on screen — saves the GPU (and
+    // battery) the rest of the time, which keeps scrolling buttery on mobile.
+    var onScreen = true;
+    if ('IntersectionObserver' in window) {
+      var visIO = new IntersectionObserver(function (ents) {
+        onScreen = ents[0] && ents[0].isIntersecting;
+      }, { rootMargin: '120px 0px' });
+      visIO.observe(container);
+    }
+
     var t0 = performance.now();
     function animate(now) {
       requestAnimationFrame(animate);
       var dt = Math.min(0.05, (now - t0) / 1000); t0 = now;
+      if (!onScreen) { return; }   // skip all work while off-screen
       holo.uniforms.uTime.value = now / 1000;
 
       if (ready3d) {
@@ -272,19 +283,35 @@
   }
 
   function bootAll() {
-    // Hero = Midnight (big). Section boats added by index.html data hooks.
-    var specs = [{ id: 'hero3d', url: 'assets/boat-midnight.glb', fit: 6.2 }];
-    var nodes = document.querySelectorAll('[data-boat3d]');
-    nodes.forEach(function (n) {
+    // Hero = Midnight (big) — load it immediately so the first screen is alive.
+    bootOne({ id: 'hero3d', url: 'assets/boat-midnight.glb', fit: 6.2 }, 0);
+
+    // Section boats are LAZY: each only spins up its WebGL context + downloads
+    // its GLB when the user scrolls near it. This keeps the first paint fast and
+    // avoids 3 simultaneous WebGL contexts choking mobile GPUs (was glitchy/slow).
+    var sectionNodes = [];
+    document.querySelectorAll('[data-boat3d]').forEach(function (n) {
       if (n.id === 'hero3d') return;
-      specs.push({
+      sectionNodes.push(n);
+    });
+    function specFor(n) {
+      return {
         id: n.id,
         url: n.getAttribute('data-boat3d'),
         fit: parseFloat(n.getAttribute('data-fit')) || 5.4,
         baseYaw: parseFloat(n.getAttribute('data-base-yaw')) || 0
-      });
-    });
-    specs.forEach(function (s) { bootOne(s, 0); });
+      };
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { io.unobserve(e.target); bootOne(specFor(e.target), 0); }
+        });
+      }, { rootMargin: '500px 0px' });  // start loading a bit before it's on screen
+      sectionNodes.forEach(function (n) { io.observe(n); });
+    } else {
+      sectionNodes.forEach(function (n) { bootOne(specFor(n), 0); });
+    }
   }
 
   if (document.readyState === 'loading') {
