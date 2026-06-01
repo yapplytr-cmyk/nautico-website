@@ -16,6 +16,26 @@
 </head>
 <body>
 
+  <!-- ══ COMMAND CENTER INTRO (Rival-style) ══ -->
+  <div class="cc-intro" id="cc-intro">
+    <div class="cc-stars"></div>
+    <div class="cc-stars2"></div>
+    <div class="cc-stars3"></div>
+    <div class="cc-aurora a1"></div>
+    <div class="cc-aurora a2"></div>
+    <div class="cc-inner">
+      <div class="cc-brand">N A U T I C O</div>
+      <h1 class="cc-tagline">Enter your<br><span class="cc-grad">command center</span></h1>
+      <button class="cc-enter-btn" id="cc-enter-btn">Enter your command center</button>
+      <div class="cc-arrows" id="cc-arrows" aria-hidden="true">
+        <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <div class="cc-hint">Tap to set sail</div>
+      </div>
+    </div>
+  </div>
+
   <!-- ══ NAVBAR ══ -->
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
@@ -30,6 +50,11 @@
         <a href="#pricing" class="nav-link" data-route="pricing" data-i18n="nav_pricing">Pricing</a>
         <a href="#contact" class="nav-link" data-route="contact" data-i18n="nav_contact">Contact</a>
         <a href="#login" class="nav-link nav-login-btn" data-route="login" data-i18n="nav_login">Log In</a>
+      </div>
+      <div class="theme-toggle" id="theme-toggle" role="button" aria-label="Toggle theme" title="Toggle light / dark">
+        <div class="theme-toggle-knob" id="theme-knob">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#2A1A00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="theme-icon"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/></svg>
+        </div>
       </div>
       <div class="lang-switcher" id="lang-switcher">
         <button class="lang-btn" id="lang-btn" aria-label="Language">
@@ -1004,6 +1029,52 @@
       check();
     }
     window.addEventListener('resize', check);
+  })();
+  </script>
+
+  <!-- ══ THEME TOGGLE + COMMAND-CENTER INTRO ══ -->
+  <script>
+  (function () {
+    var SUN = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/>';
+    var MOON = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+    function applyTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      try { localStorage.setItem('nautico_site_theme', t); } catch (e) {}
+      var icon = document.getElementById('theme-icon');
+      if (icon) icon.innerHTML = (t === 'dark') ? MOON : SUN;
+    }
+    // Default = light (current Nautico look); honor saved choice.
+    var saved = 'light';
+    try { saved = localStorage.getItem('nautico_site_theme') || 'light'; } catch (e) {}
+    applyTheme(saved);
+
+    var toggle = document.getElementById('theme-toggle');
+    if (toggle) toggle.addEventListener('click', function () {
+      var cur = document.documentElement.getAttribute('data-theme') || 'light';
+      applyTheme(cur === 'dark' ? 'light' : 'dark');
+    });
+
+    // ── Command-center intro reveal ──
+    var intro = document.getElementById('cc-intro');
+    var enterBtn = document.getElementById('cc-enter-btn');
+    if (intro) {
+      // Show once per session so it doesn't nag on every navigation.
+      var seen = false;
+      try { seen = sessionStorage.getItem('nautico_cc_seen') === '1'; } catch (e) {}
+      if (seen) { intro.classList.add('cc-gone'); }
+      else {
+        document.body.classList.add('cc-locked');
+        var reveal = function () {
+          intro.classList.add('cc-hide');
+          document.body.classList.remove('cc-locked');
+          try { sessionStorage.setItem('nautico_cc_seen', '1'); } catch (e) {}
+          setTimeout(function () { intro.classList.add('cc-gone'); }, 750);
+        };
+        if (enterBtn) enterBtn.addEventListener('click', reveal);
+        // Tapping anywhere on the overlay also enters.
+        intro.addEventListener('click', function (e) { if (e.target === intro || e.target.closest('.cc-arrows') || e.target.closest('.cc-inner')) reveal(); });
+      }
+    }
   })();
   </script>
 </body>
