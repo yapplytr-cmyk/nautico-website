@@ -250,13 +250,9 @@ a:hover { color: #9DD8EF; }
 .hero-trust-item { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-muted); }
 
 /* Sea wave divider */
-.wave-divider {
-  width: 100%; overflow: hidden; line-height: 0;
-}
-.wave-divider svg {
-  display: block; width: 100%; height: 40px;
-}
-.wave-divider-flip { transform: rotate(180deg); }
+/* Wave dividers removed — they painted a teal band between sections and
+   broke the single continuous background. The page is now one black surface. */
+.wave-divider { display: none !important; }
 
 /* Phone Mockup — Hero */
 .hero-visual { flex: 0 0 320px; position: relative; z-index: 1; }
@@ -1690,3 +1686,13 @@ html body #app-content #page-home #intro-section {
 @media (max-width: 768px) {
   .cc-section-3d-sm { width: min(360px, 86vw); height: clamp(150px, 22vh, 210px); }
 }
+
+/* Animated down-arrow cue at the bottom of EVERY section */
+.section-arrow {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0; width: max-content; margin: 22px auto 0; text-decoration: none;
+}
+.section-arrow svg { width: 24px; height: 24px; stroke: var(--accent); fill: none; stroke-width: 2; }
+.section-arrow .cc-ar { animation: ccArrow 1.8s ease-in-out infinite; }
+.section-arrow .cc-ar:nth-child(2) { animation-delay: 0.2s; margin-top: -13px; opacity: 0.5; }
+.section-arrow:hover svg { stroke: var(--text-primary); }
