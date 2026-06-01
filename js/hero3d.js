@@ -140,10 +140,17 @@
     requestAnimationFrame(animate);
   }
 
-  // Wait for THREE to be present (scripts load just above this one)
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { setTimeout(init, 60); });
-  } else {
-    setTimeout(init, 60);
+  // Wait until THREE + GLTFLoader are actually defined AND the container has
+  // a real size, then init. Retries for a few seconds (big three.min.js can
+  // still be parsing when DOMContentLoaded fires).
+  function boot(tries) {
+    tries = tries || 0;
+    var c = document.getElementById('hero3d');
+    var sized = c && c.clientHeight > 40 && c.clientWidth > 40;
+    if (ready() && sized) { init(); return; }
+    if (tries < 80) { setTimeout(function () { boot(tries + 1); }, 100); }
   }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { boot(0); });
+  } else { boot(0); }
 })();

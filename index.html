@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -77,7 +77,7 @@
           <div class="cc-brand">N A U T I C O</div>
           <h1 class="cc-tagline">Enter your<br><span class="cc-grad">command center</span></h1>
           <p class="cc-hero-sub">Your entire vessel — expenses, voyages, maintenance and live nautical charts — in one app.</p>
-          <a href="https://apps.apple.com/tr/app/nautico/id6761394669" target="_blank" class="cc-enter-btn">Download on the App Store</a>
+          <a href="#problems-section" class="cc-enter-btn scroll-to" data-target="problems-section">Discover Nautico</a>
         </div>
 
         <!-- Scroll cue -->
@@ -1058,14 +1058,14 @@
       var icon = document.getElementById('theme-icon');
       if (icon) icon.innerHTML = (t === 'dark') ? MOON : SUN;
     }
-    // Default = light (current Nautico look); honor saved choice.
-    var saved = 'light';
-    try { saved = localStorage.getItem('nautico_site_theme') || 'light'; } catch (e) {}
+    // Default = DARK (Rival-style); honor saved choice if the user switched.
+    var saved = 'dark';
+    try { saved = localStorage.getItem('nautico_site_theme') || 'dark'; } catch (e) {}
     applyTheme(saved);
 
     var toggle = document.getElementById('theme-toggle');
     if (toggle) toggle.addEventListener('click', function () {
-      var cur = document.documentElement.getAttribute('data-theme') || 'light';
+      var cur = document.documentElement.getAttribute('data-theme') || 'dark';
       applyTheme(cur === 'dark' ? 'light' : 'dark');
     });
 
