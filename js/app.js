@@ -203,6 +203,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   revealTargets.forEach(function (el) { if (!el.classList.contains('cc-hero')) sectionObserver.observe(el); });
+
+  // ── Scroll progress dots (grow toward the download CTA, Rival-style) ──
+  (function () {
+    var rail = document.getElementById('cc-progress');
+    if (!rail) return;
+    var dots = [].slice.call(rail.querySelectorAll('.cc-pdot'));
+    var sections = dots.map(function (d) { return document.getElementById(d.getAttribute('data-target')); });
+    // smooth-scroll on dot click
+    dots.forEach(function (d) {
+      d.addEventListener('click', function (e) {
+        var t = document.getElementById(d.getAttribute('data-target'));
+        if (t) { e.preventDefault(); var nh = (document.getElementById('navbar') || {}).offsetHeight || 60; window.scrollTo({ top: t.getBoundingClientRect().top + window.pageYOffset - nh - 8, behavior: 'smooth' }); }
+      });
+    });
+    function update() {
+      // only show the rail on the home page
+      var home = document.getElementById('page-home');
+      var onHome = home && home.offsetParent !== null;
+      rail.classList.toggle('visible', !!onHome);
+      if (!onHome) return;
+      var mid = window.scrollY + window.innerHeight * 0.45;
+      var activeIdx = 0;
+      for (var i = 0; i < sections.length; i++) {
+        var s = sections[i]; if (!s) continue;
+        if (s.offsetTop <= mid) activeIdx = i;
+      }
+      dots.forEach(function (d, i) {
+        d.classList.toggle('active', i === activeIdx);
+        d.classList.toggle('passed', i < activeIdx);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
 });
 
 // Handle browser back/forward

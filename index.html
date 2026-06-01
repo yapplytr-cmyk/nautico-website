@@ -16,6 +16,16 @@
 </head>
 <body>
 
+  <!-- ══ SCROLL PROGRESS DOTS (grow toward the download CTA) ══ -->
+  <div class="cc-progress" id="cc-progress" aria-hidden="true">
+    <a class="cc-pdot" data-target="cc-hero" href="#home"></a>
+    <a class="cc-pdot" data-target="intro-section" href="#intro-section"></a>
+    <a class="cc-pdot" data-target="problems-section" href="#problems-section"></a>
+    <a class="cc-pdot" data-target="features-section" href="#features-section"></a>
+    <a class="cc-pdot" data-target="screenshots-section" href="#screenshots-section"></a>
+    <a class="cc-pdot cc-pdot-cta" data-target="cta-section" href="#cta-section"></a>
+  </div>
+
   <!-- ══ NAVBAR ══ -->
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
@@ -317,6 +327,11 @@
           <div class="section-label anim-in" data-i18n="feat_label">The Solution</div>
           <h2 class="section-title anim-in" data-i18n="feat_title">Everything you need. One app.</h2>
           <p class="section-subtitle anim-in" data-i18n="feat_subtitle">Nautico replaces your spreadsheets, paper logs, and guesswork with a single, intelligent platform designed for yacht owners.</p>
+          <!-- 3D Viking showcase -->
+          <div class="cc-section-3d" id="boat-viking" data-boat3d="assets/boat-viking.glb" data-fit="5.6">
+            <div class="cc-hero-3d-loading">Loading vessel…</div>
+          </div>
+          <p class="cc-section-3d-cap anim-in">Sportfish • Viking Convertible — drag to explore</p>
           <!-- Interactive Feature Explorer -->
           <div class="feat-explorer">
             <!-- Icon tabs — onclick for bulletproof switching -->
@@ -468,6 +483,11 @@
             <h2 class="screenshots-title" data-i18n="ss_title">Designed for yacht owners, by yacht owners</h2>
             <p class="screenshots-subtitle" data-i18n="ss_subtitle">Explore every feature of Nautico with a visual walkthrough of the app's core screens.</p>
           </div>
+          <!-- 3D Center-console showcase -->
+          <div class="cc-section-3d" id="boat-cc" data-boat3d="assets/boat-cc.glb" data-fit="5.4">
+            <div class="cc-hero-3d-loading">Loading vessel…</div>
+          </div>
+          <p class="cc-section-3d-cap anim-in">Center Console — drag to explore</p>
           <!-- Live Demo Video + CTA Arrow -->
           <div class="demo-video-wrap">
             <div class="demo-video-row">
