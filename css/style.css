@@ -1557,10 +1557,24 @@ html[data-theme="dark"] .theme-toggle-knob {
 .cc-hero .cc-tagline .cc-grad { filter: drop-shadow(0 0 30px var(--accent-glow)); }
 /* keep nav readable but let the galaxy show at the very top of home */
 #page-home .cc-hero ~ * { position: relative; z-index: 2; }
+/* ── 3D boats on mobile: smaller, full-width, fits phone screens ── */
 @media (max-width: 768px) {
-  .cc-hero { min-height: 92vh; padding-top: 80px; }
-  .cc-hero-3d { opacity: 0; }
-  .cc-hero-3d.hero3d-loaded { opacity: 0.9; }
+  .cc-hero { min-height: 92vh; padding: 76px 16px 96px; }
+  .cc-hero-3d {
+    width: 100%;
+    height: clamp(220px, 34vh, 320px);
+    margin: 2px auto 0;
+  }
+  .cc-hero-3d.hero3d-loaded { opacity: 1; }
+  .cc-section-3d {
+    width: 100%;
+    height: clamp(200px, 30vh, 300px);
+    margin: 18px auto 4px;
+  }
+}
+@media (max-width: 480px) {
+  .cc-hero-3d { height: clamp(190px, 30vh, 270px); }
+  .cc-section-3d { height: clamp(180px, 28vh, 250px); }
 }
 
 /* ── Section fade-in reveal (Rival-style scroll feel) ── */
