@@ -98,13 +98,15 @@
       model.position.set(-c.x, -c.y, -c.z);
       baseY = -c.y;
 
-      model.traverse(function (o) {
-        if (o.isMesh && o.geometry) {
-          o.material = holo.mat;
-          var shell = new THREE.Mesh(o.geometry, backMat);
-          shell.renderOrder = -1;
-          o.add(shell);
-        }
+      // Collect meshes FIRST, then add shells — adding children mid-traverse
+      // makes traverse() recurse into them forever (stack overflow).
+      var meshes = [];
+      model.traverse(function (o) { if (o.isMesh && o.geometry) meshes.push(o); });
+      meshes.forEach(function (o) {
+        o.material = holo.mat;
+        var shell = new THREE.Mesh(o.geometry, backMat);
+        shell.renderOrder = -1;
+        o.add(shell);
       });
       scene.add(model);
       container.classList.add('hero3d-loaded');
