@@ -1658,6 +1658,14 @@ html[data-theme="dark"] body {
 .cc-hero-3d, .cc-section-3d { background: transparent !important; border: none !important; }
 .cc-hero-3d canvas, .cc-section-3d canvas { background: transparent !important; display: block; }
 
+/* iPhone: touch ON a boat rotates/zooms it (don't scroll the page). */
+@media (max-width: 768px) {
+  .cc-hero-3d, .cc-section-3d, .cc-section-3d-sm,
+  .cc-hero-3d canvas, .cc-section-3d canvas, .cc-section-3d-sm canvas {
+    touch-action: none;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════════
    FINAL OVERRIDE — guarantee ONE continuous page (both themes).
    Every home-page surface is transparent; only <body> paints colour.
@@ -1716,5 +1724,11 @@ html body #app-content #page-home #intro-section {
   position: fixed; inset: 0; width: 100%; height: 100%;
   pointer-events: none; z-index: 0;
 }
-/* keep all real content above the particle canvas */
-#app-content, .navbar, .cc-progress, footer { position: relative; z-index: 1; }
+/* keep all real content above the particle canvas (navbar stays on top) */
+#app-content, footer { position: relative; z-index: 1; }
+.cc-progress { z-index: 80; }
+/* navbar: pinned to the very top, above everything, flush under the notch */
+.navbar {
+  z-index: 200 !important;
+  padding-top: env(safe-area-inset-top, 0px);
+}

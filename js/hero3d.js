@@ -104,6 +104,55 @@
     var instanceViewYaw = 0;        // base view offset (changed by Solution tabs)
     var spin = 0;                   // ALWAYS-ON continuous rotation accumulator
 
+    // ── Touch interaction (iPhone): direct swipe-to-rotate + pinch-to-zoom ──
+    // On phones the global mouse-follow is replaced with hands-on control:
+    //   • 1 finger drag  → rotate the boat (yaw + pitch)
+    //   • 2 finger pinch → zoom the camera in/out
+    var touchYaw = 0, touchPitch = 0;     // accumulated drag rotation (radians)
+    var zoom = 1;                          // 1 = default; <1 closer, >1 farther
+    var ZOOM_MIN = 0.6, ZOOM_MAX = 1.7;
+    var baseCamZ = SETTLE.pos.z;
+    var dragging = false, lastX = 0, lastY = 0;
+    var pinchStart = 0, zoomStart = 1, pinching = false;
+    function dist2(t) {
+      var dx = t[0].clientX - t[1].clientX, dy = t[0].clientY - t[1].clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+    if (isMobile) {
+      container.addEventListener('touchstart', function (e) {
+        if (e.touches.length === 1) {
+          dragging = true; pinching = false;
+          lastX = e.touches[0].clientX; lastY = e.touches[0].clientY;
+        } else if (e.touches.length === 2) {
+          pinching = true; dragging = false;
+          pinchStart = dist2(e.touches); zoomStart = zoom;
+        }
+      }, { passive: true });
+      container.addEventListener('touchmove', function (e) {
+        if (pinching && e.touches.length === 2) {
+          var d = dist2(e.touches);
+          if (pinchStart > 0) {
+            zoom = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, zoomStart * (pinchStart / d)));
+          }
+          if (e.cancelable) e.preventDefault();
+        } else if (dragging && e.touches.length === 1) {
+          var x = e.touches[0].clientX, y = e.touches[0].clientY;
+          touchYaw += (x - lastX) * 0.01;
+          touchPitch += (y - lastY) * 0.006;
+          touchPitch = Math.max(-0.5, Math.min(0.5, touchPitch));
+          lastX = x; lastY = y;
+          if (e.cancelable) e.preventDefault();
+        }
+      }, { passive: false });
+      container.addEventListener('touchend', function (e) {
+        if (e.touches.length === 0) { dragging = false; pinching = false; }
+        else if (e.touches.length === 1) {
+          pinching = false; dragging = true;
+          lastX = e.touches[0].clientX; lastY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+    }
+
     makeLoader().load(opts.url, function (gltf) {
       var loaded = gltf.scene || (gltf.scenes && gltf.scenes[0]);
       if (!loaded) return;
@@ -170,13 +219,23 @@
           var e = 1 - Math.pow(1 - entrance, 3);  // easeOutCubic
           pivot.scale.setScalar(0.9 + 0.1 * e);
         }
-        // GLOBAL pointer steer: NauticoPointer.x/y are -1..1 across the page.
-        var px = (window.NauticoPointer && window.NauticoPointer.x) || 0;
-        var py = (window.NauticoPointer && window.NauticoPointer.y) || 0;
-        var targetYaw = px * 0.45;                // boat leans toward cursor
-        var targetPitch = py * 0.18;
-        curYaw += (targetYaw - curYaw) * 0.05;    // slow, smooth easing
-        curPitch += (targetPitch - curPitch) * 0.05;
+        if (isMobile) {
+          // PHONE: direct hands-on control — swipe rotates, pinch zooms.
+          curYaw += (touchYaw - curYaw) * 0.12;
+          curPitch += (touchPitch - curPitch) * 0.12;
+          // ease the camera toward the pinch-zoom target
+          var targetZ = baseCamZ * zoom;
+          camera.position.z += (targetZ - camera.position.z) * 0.12;
+          camera.lookAt(SETTLE.look);
+        } else {
+          // DESKTOP: boat follows the cursor across the whole page.
+          var px = (window.NauticoPointer && window.NauticoPointer.x) || 0;
+          var py = (window.NauticoPointer && window.NauticoPointer.y) || 0;
+          var targetYaw = px * 0.45;                // boat leans toward cursor
+          var targetPitch = py * 0.18;
+          curYaw += (targetYaw - curYaw) * 0.05;    // slow, smooth easing
+          curPitch += (targetPitch - curPitch) * 0.05;
+        }
         // ALWAYS rotating to show movement: a steady slow continuous spin,
         // around this boat's base angle + the (eased) Solution view offset.
         spin += dt * 0.30;                        // continuous rotation
