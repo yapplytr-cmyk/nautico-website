@@ -1395,21 +1395,41 @@ html[data-theme="dark"] .theme-toggle-knob {
 .theme-toggle-knob svg { width: 13px; height: 13px; }
 
 /* ═══════════════════════════════════════════════════════════════
-   COMMAND-CENTER INTRO OVERLAY (Rival-style)
+   COMMAND-CENTER HERO (Rival-style, full-screen, in-flow)
 ═══════════════════════════════════════════════════════════════ */
-.cc-intro {
-  position: fixed; inset: 0; z-index: 9000;
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
+.cc-hero {
+  position: relative;
+  min-height: 100vh; min-height: 100svh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  overflow: hidden; text-align: center;
+  padding: 90px 24px 40px;
   background:
     radial-gradient(120% 90% at 50% -10%, var(--intro-accent) 0%, transparent 8%),
     radial-gradient(140% 100% at 50% 0%, rgba(126,200,227,0.10) 0%, transparent 45%),
-    linear-gradient(180deg, var(--intro-grad-1) 0%, var(--intro-grad-2) 50%, var(--intro-grad-3) 100%);
-  transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), filter 0.7s cubic-bezier(0.4,0,0.2,1);
+    linear-gradient(180deg, var(--intro-grad-1) 0%, var(--intro-grad-2) 55%, var(--intro-grad-3) 100%);
 }
-.cc-intro.cc-hide { opacity: 0; filter: blur(16px); pointer-events: none; }
-.cc-intro.cc-gone { display: none; }
-body.cc-locked { overflow: hidden; }
+/* 3D boat fills the hero, behind the text */
+.cc-hero-3d {
+  position: absolute; inset: 0; z-index: 1;
+  width: 100%; height: 100%;
+  opacity: 0; transition: opacity 1.2s ease;
+}
+.cc-hero-3d.hero3d-loaded { opacity: 1; }
+.cc-hero-3d canvas { width: 100% !important; height: 100% !important; display: block; }
+.cc-hero-inner { position: relative; z-index: 5; pointer-events: none; }
+.cc-hero-inner .cc-enter-btn, .cc-hero-inner a { pointer-events: auto; }
+.cc-hero-sub {
+  max-width: 540px; margin: 0 auto 32px; color: var(--text-secondary);
+  font-size: clamp(15px, 2.2vw, 18px); line-height: 1.6;
+  opacity: 0; animation: ccUp 1s ease-out 0.6s forwards;
+}
+.cc-enter-btn { display: inline-block; text-decoration: none; }
+/* Scroll cue at the bottom of the hero */
+.cc-scroll-cue {
+  position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+  z-index: 6; text-decoration: none; display: flex; flex-direction: column; align-items: center;
+  opacity: 0; animation: ccUp 1s ease-out 1.3s forwards;
+}
 
 /* Starfield (twinkling) */
 .cc-stars, .cc-stars2, .cc-stars3 { position: absolute; inset: 0; pointer-events: none; }
@@ -1489,4 +1509,16 @@ body.cc-locked { overflow: hidden; }
 @media (max-width: 640px) {
   .cc-brand { letter-spacing: 8px; font-size: 13px; }
   .cc-enter-btn { padding: 15px 38px; font-size: 13px; }
+}
+
+/* ── Command-center hero polish ── */
+.cc-hero .cc-brand { margin-bottom: 18px; }
+.cc-hero .cc-tagline { margin-bottom: 22px; text-shadow: 0 4px 40px rgba(0,0,0,0.5); }
+.cc-hero .cc-tagline .cc-grad { filter: drop-shadow(0 0 30px var(--accent-glow)); }
+/* keep nav readable but let the galaxy show at the very top of home */
+#page-home .cc-hero ~ * { position: relative; z-index: 2; }
+@media (max-width: 768px) {
+  .cc-hero { min-height: 92vh; padding-top: 80px; }
+  .cc-hero-3d { opacity: 0; }
+  .cc-hero-3d.hero3d-loaded { opacity: 0.9; }
 }

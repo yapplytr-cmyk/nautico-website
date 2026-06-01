@@ -16,26 +16,6 @@
 </head>
 <body>
 
-  <!-- ══ COMMAND CENTER INTRO (Rival-style) ══ -->
-  <div class="cc-intro" id="cc-intro">
-    <div class="cc-stars"></div>
-    <div class="cc-stars2"></div>
-    <div class="cc-stars3"></div>
-    <div class="cc-aurora a1"></div>
-    <div class="cc-aurora a2"></div>
-    <div class="cc-inner">
-      <div class="cc-brand">N A U T I C O</div>
-      <h1 class="cc-tagline">Enter your<br><span class="cc-grad">command center</span></h1>
-      <button class="cc-enter-btn" id="cc-enter-btn">Enter your command center</button>
-      <div class="cc-arrows" id="cc-arrows" aria-hidden="true">
-        <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        <div class="cc-hint">Tap to set sail</div>
-      </div>
-    </div>
-  </div>
-
   <!-- ══ NAVBAR ══ -->
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
@@ -81,6 +61,35 @@
 
     <!-- ════════ HOME PAGE ════════ -->
     <section class="page" id="page-home">
+
+      <!-- ══ COMMAND CENTER HERO — full screen, 3D Midnight ══ -->
+      <section class="cc-hero" id="cc-hero">
+        <div class="cc-stars"></div>
+        <div class="cc-stars2"></div>
+        <div class="cc-stars3"></div>
+        <div class="cc-aurora a1"></div>
+        <div class="cc-aurora a2"></div>
+
+        <!-- Big 3D boat -->
+        <div class="cc-hero-3d" id="hero3d"></div>
+
+        <div class="cc-hero-inner">
+          <div class="cc-brand">N A U T I C O</div>
+          <h1 class="cc-tagline">Enter your<br><span class="cc-grad">command center</span></h1>
+          <p class="cc-hero-sub">Your entire vessel — expenses, voyages, maintenance and live nautical charts — in one app.</p>
+          <a href="https://apps.apple.com/tr/app/nautico/id6761394669" target="_blank" class="cc-enter-btn">Download on the App Store</a>
+        </div>
+
+        <!-- Scroll cue -->
+        <a href="#problems-section" class="cc-scroll-cue scroll-to" data-target="problems-section" aria-label="Scroll down">
+          <div class="cc-arrows" aria-hidden="true">
+            <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="cc-hint">Discover Nautico</div>
+        </a>
+      </section>
 
       <!-- Hero -->
       <div class="hero">
@@ -151,7 +160,7 @@
           </svg>
         </div>
         <div class="hero-content">
-          <div class="hero-badge" data-i18n="hero_badge">Set sail with confidence</div>
+          <div class="hero-badge" data-i18n="this_is_nautico">This is Nautico</div>
           <h1 class="hero-title"><span data-i18n="hero_title_1">Your Entire Vessel,</span><br/><span class="hero-accent" data-i18n="hero_title_2">In the Palm of Your Hand</span></h1>
           <p class="hero-subtitle" data-i18n="hero_subtitle">From bow to stern — track expenses, log voyages, schedule maintenance, and navigate with live nautical charts. One app, every sea mile.</p>
           <div class="hero-cta-row">
@@ -888,6 +897,12 @@
     </div>
   </footer>
 
+  <!-- 3D hero (Three.js r128, vendored locally) -->
+  <script src="assets/vendor/three.min.js"></script>
+  <script src="assets/vendor/GLTFLoader.js"></script>
+  <script src="assets/vendor/DRACOLoader.js"></script>
+  <script src="js/hero3d.js"></script>
+
   <script src="js/i18n.js"></script>
   <script src="js/app.js"></script>
 
@@ -1054,27 +1069,7 @@
       applyTheme(cur === 'dark' ? 'light' : 'dark');
     });
 
-    // ── Command-center intro reveal ──
-    var intro = document.getElementById('cc-intro');
-    var enterBtn = document.getElementById('cc-enter-btn');
-    if (intro) {
-      // Show once per session so it doesn't nag on every navigation.
-      var seen = false;
-      try { seen = sessionStorage.getItem('nautico_cc_seen') === '1'; } catch (e) {}
-      if (seen) { intro.classList.add('cc-gone'); }
-      else {
-        document.body.classList.add('cc-locked');
-        var reveal = function () {
-          intro.classList.add('cc-hide');
-          document.body.classList.remove('cc-locked');
-          try { sessionStorage.setItem('nautico_cc_seen', '1'); } catch (e) {}
-          setTimeout(function () { intro.classList.add('cc-gone'); }, 750);
-        };
-        if (enterBtn) enterBtn.addEventListener('click', reveal);
-        // Tapping anywhere on the overlay also enters.
-        intro.addEventListener('click', function (e) { if (e.target === intro || e.target.closest('.cc-arrows') || e.target.closest('.cc-inner')) reveal(); });
-      }
-    }
+    // (Command-center is now the in-flow page hero; no overlay reveal needed.)
   })();
   </script>
 </body>
