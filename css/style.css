@@ -1425,7 +1425,7 @@ html[data-theme="dark"] .theme-toggle-knob {
 .cc-hero-3d {
   position: relative; z-index: 2;
   width: min(720px, 92vw);
-  height: clamp(240px, 38vh, 460px);
+  height: clamp(280px, 42vh, 520px);
   margin: 6px auto 4px;
   opacity: 0; transform: translateY(10px);
   transition: opacity 1s ease, transform 1s ease;

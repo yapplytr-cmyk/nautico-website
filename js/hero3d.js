@@ -72,7 +72,9 @@
 
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(34, W / H, 0.1, 1000);
-    camera.position.set(2.2, 1.2, 5.4);
+    // Pulled back + slightly above, AIMED at the boat's centre (origin).
+    camera.position.set(0, 1.4, 8.2);
+    camera.lookAt(0, 0, 0);
 
     var holo = makeHolo();
     var backMat = new THREE.MeshBasicMaterial({
@@ -81,34 +83,43 @@
     });
 
     var model = null;
-    var targetScale = 1;      // final fitted scale
-    var baseY = 0;            // centered Y after recenter
     var spinY = -0.9;         // start rotated, settle to ~0 facing
     var entrance = 0;         // 0..1 entrance progress
 
-    makeLoader().load('assets/boat-midnight.glb', function (gltf) {
-      model = gltf.scene || (gltf.scenes && gltf.scenes[0]);
-      if (!model) return;
-      var box = new THREE.Box3().setFromObject(model);
-      var c = box.getCenter(new THREE.Vector3()), sz = box.getSize(new THREE.Vector3());
-      var maxDim = Math.max(sz.x, sz.y, sz.z) || 1;
-      targetScale = 5.0 / maxDim;             // big hero presence
-      model.scale.setScalar(targetScale * 0.7); // start a touch small, grow in
-      box.setFromObject(model); box.getCenter(c);
-      model.position.set(-c.x, -c.y, -c.z);
-      baseY = -c.y;
+    var pivot = null; // group whose origin = boat centre; we spin/scale THIS
 
-      // Collect meshes FIRST, then add shells — adding children mid-traverse
-      // makes traverse() recurse into them forever (stack overflow).
+    makeLoader().load('assets/boat-midnight.glb', function (gltf) {
+      var loaded = gltf.scene || (gltf.scenes && gltf.scenes[0]);
+      if (!loaded) return;
+
+      // Normalize: fit longest dimension, then recentre the mesh so its
+      // bounding-box centre sits at (0,0,0).
+      var box = new THREE.Box3().setFromObject(loaded);
+      var sz = box.getSize(new THREE.Vector3());
+      var maxDim = Math.max(sz.x, sz.y, sz.z) || 1;
+      var fit = 4.2 / maxDim;                 // fits the whole hull in frame
+      loaded.scale.setScalar(fit);
+      box.setFromObject(loaded);
+      var c = box.getCenter(new THREE.Vector3());
+      loaded.position.sub(c);                 // boat centre now at origin
+
+      // Glowing-glass material + dark inner shell (collected, not added mid-traverse)
       var meshes = [];
-      model.traverse(function (o) { if (o.isMesh && o.geometry) meshes.push(o); });
+      loaded.traverse(function (o) { if (o.isMesh && o.geometry) meshes.push(o); });
       meshes.forEach(function (o) {
         o.material = holo.mat;
         var shell = new THREE.Mesh(o.geometry, backMat);
         shell.renderOrder = -1;
         o.add(shell);
       });
-      scene.add(model);
+
+      // Pivot group: scaling/rotating this always happens around the boat
+      // centre, so it stays perfectly centred no matter the entrance scale.
+      pivot = new THREE.Group();
+      pivot.add(loaded);
+      pivot.scale.setScalar(0.78);            // grow-in entrance start
+      model = pivot;
+      scene.add(pivot);
       container.classList.add('hero3d-loaded');
     }, undefined, function (err) {
       console.error('Nautico hero3d GLB load failed:', err);
@@ -132,12 +143,12 @@
       if (model) {
         if (entrance < 1) {
           entrance = Math.min(1, entrance + dt * 0.5);
-          var e = 1 - Math.pow(1 - entrance, 3); // easeOutCubic
-          model.scale.setScalar(targetScale * (0.7 + 0.3 * e));
+          var e = 1 - Math.pow(1 - entrance, 3);      // easeOutCubic
+          model.scale.setScalar(0.78 + 0.22 * e);     // 0.78 → 1.0 around centre
         }
-        spinY += dt * 0.35;                 // slow continuous rotation
+        spinY += dt * 0.35;                            // slow continuous rotation
         model.rotation.y = spinY;
-        model.position.y = baseY + Math.sin(now / 1400) * 0.06; // gentle bob
+        model.position.y = Math.sin(now / 1400) * 0.06; // gentle bob (pivot at origin)
       }
       renderer.render(scene, camera);
     }
