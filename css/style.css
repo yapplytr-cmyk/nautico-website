@@ -736,12 +736,12 @@ a:hover { color: #9DD8EF; }
   flex: 1; min-width: 0; gap: 36px;
 }
 .feat-viking-3d {
-  flex: 0 0 240px; width: 240px; height: 300px; margin: 0; align-self: center;
+  flex: 0 0 168px; width: 168px; height: 210px; margin: 0; align-self: center;
 }
-.feat-viking-3d .cc-hero-3d-loading { font-size: 12px; }
+.feat-viking-3d .cc-hero-3d-loading { font-size: 11px; }
 @media (max-width: 768px) {
-  .feat-panels { flex-direction: column; gap: 12px; padding: 18px; }
-  .feat-viking-3d { flex: none; width: min(300px, 80%); height: 170px; }
+  .feat-panels { flex-direction: column; gap: 10px; padding: 16px; }
+  .feat-viking-3d { flex: none; width: min(180px, 52%); height: 130px; }
 }
 
 /* Info (middle) */
@@ -1349,6 +1349,20 @@ a:hover { color: #9DD8EF; }
   .section-cta .section-title { font-size: 1.3rem; }
   .section-cta .section-subtitle { font-size: 0.88rem; margin-bottom: 20px; }
   .btn-appstore { padding: 14px 28px; font-size: 0.95rem; }
+
+  /* ── Next-section glowing arrow button: smaller, tap-friendly ── */
+  .section-arrow { width: 46px; height: 46px; margin: 20px auto 2px; }
+  .section-arrow svg { width: 22px; height: 22px; }
+  .section-arrow .cc-ar:nth-child(2) { margin-top: -13px; }
+
+  /* ── Viking inside the Solution box: small + centered above the text ── */
+  .feat-viking-3d { width: min(170px, 50%); height: 120px; margin: 0 auto; }
+
+  /* hero 3D a touch tighter so the brand + tagline fit one screen */
+  .cc-hero { min-height: 90vh; padding: 70px 14px 80px; }
+  .cc-hero-3d { height: clamp(260px, 40vh, 360px); }
+  .cc-tagline { font-size: clamp(1.7rem, 8vw, 2.3rem); }
+  .cc-hero-sub { font-size: 0.9rem; }
 }
 
 
@@ -1712,14 +1726,14 @@ html body #app-content #page-home #intro-section {
   box-shadow: none !important;
 }
 
-/* Small Viking render that lives inside the Solution explorer */
+/* Small Viking render that lives inside the Solution explorer — compact */
 .cc-section-3d-sm {
-  width: min(420px, 80vw);
-  height: clamp(170px, 24vh, 240px);
-  margin: 0 auto 8px;
+  width: min(300px, 62vw);
+  height: clamp(130px, 17vh, 180px);
+  margin: 0 auto 4px;
 }
 @media (max-width: 768px) {
-  .cc-section-3d-sm { width: min(360px, 86vw); height: clamp(150px, 22vh, 210px); }
+  .cc-section-3d-sm { width: min(240px, 64vw); height: clamp(115px, 16vh, 150px); }
 }
 
 /* Prominent glowing "next section" button at the bottom of EVERY section.
