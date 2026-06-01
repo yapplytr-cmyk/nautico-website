@@ -101,6 +101,8 @@
     // Smooth entrance: the boat eases up + fades in, then drifts slowly.
     var entrance = 0;               // 0..1
     var curYaw = 0, curPitch = 0;   // eased rotation
+    var instanceViewYaw = 0;        // base view offset (changed by Solution tabs)
+    var spin = 0;                   // ALWAYS-ON continuous rotation accumulator
 
     makeLoader().load(opts.url, function (gltf) {
       var loaded = gltf.scene || (gltf.scenes && gltf.scenes[0]);
@@ -132,6 +134,15 @@
       scene.add(pivot);
       ready3d = true;
       container.classList.add('hero3d-loaded');
+
+      // Register this instance so external UI (e.g. the Solution explorer)
+      // can nudge its viewing angle. The boat keeps continuously rotating;
+      // setView() just shifts the base angle it spins around.
+      window.NauticoBoats = window.NauticoBoats || {};
+      window.NauticoBoats[opts.id] = {
+        setView: function (yaw) { instanceViewYaw = yaw || 0; },
+        bumpView: function () { instanceViewYaw += Math.PI * 0.5; }  // quarter-turn to a new face
+      };
     }, undefined, function (err) {
       console.error('Nautico 3D load failed (' + opts.url + '):', err);
       var l = container.querySelector('.cc-hero-3d-loading');
@@ -162,13 +173,17 @@
         // GLOBAL pointer steer: NauticoPointer.x/y are -1..1 across the page.
         var px = (window.NauticoPointer && window.NauticoPointer.x) || 0;
         var py = (window.NauticoPointer && window.NauticoPointer.y) || 0;
-        var targetYaw = px * 0.6;                 // boat turns toward cursor
-        var targetPitch = py * 0.22;
+        var targetYaw = px * 0.45;                // boat leans toward cursor
+        var targetPitch = py * 0.18;
         curYaw += (targetYaw - curYaw) * 0.05;    // slow, smooth easing
         curPitch += (targetPitch - curPitch) * 0.05;
-        // very slow idle drift layered under the steer, around each boat's
-        // flattering base angle (so the Viking stays side-on, not stern-on)
-        pivot.rotation.y = (pivot.userData.baseYaw || 0) + curYaw + Math.sin(now / 7000) * 0.18;
+        // ALWAYS rotating to show movement: a steady slow continuous spin,
+        // around this boat's base angle + the (eased) Solution view offset.
+        spin += dt * 0.30;                        // continuous rotation
+        var viewYaw = (pivot.userData.viewYaw || 0);
+        viewYaw += (instanceViewYaw - viewYaw) * 0.06;  // ease toward new view
+        pivot.userData.viewYaw = viewYaw;
+        pivot.rotation.y = (pivot.userData.baseYaw || 0) + viewYaw + spin + curYaw;
         pivot.rotation.x = curPitch;
         pivot.position.y = Math.sin(now / 2200) * 0.04;  // soft bob
       }

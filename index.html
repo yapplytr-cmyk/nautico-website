@@ -328,12 +328,12 @@
           <h2 class="section-title anim-in" data-i18n="feat_title">Everything you need. One app.</h2>
           <p class="section-subtitle anim-in" data-i18n="feat_subtitle">Nautico replaces your spreadsheets, paper logs, and guesswork with a single, intelligent platform designed for yacht owners.</p>
           <!-- 3D Viking showcase -->
-          <div class="cc-section-3d" id="boat-viking" data-boat3d="assets/boat-viking.glb" data-fit="5.6" data-base-yaw="-1.57">
-            <div class="cc-hero-3d-loading">Loading vessel…</div>
-          </div>
-          <p class="cc-section-3d-cap anim-in">Sportfish • Viking Convertible</p>
           <!-- Interactive Feature Explorer -->
           <div class="feat-explorer">
+            <!-- Small Viking 3D render — re-angles on each solution change, always rotating -->
+            <div class="cc-section-3d cc-section-3d-sm" id="boat-viking" data-boat3d="assets/boat-viking.glb" data-fit="5.2" data-base-yaw="-1.57">
+              <div class="cc-hero-3d-loading">Loading vessel…</div>
+            </div>
             <!-- Icon tabs — onclick for bulletproof switching -->
             <div class="feat-tabs">
               <button class="feat-tab active" data-feat="0" onclick="switchFeatTab(0)"><div class="feat-tab-icon feat-money"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><span data-i18n="feat_tab_money">Money</span></button>
@@ -452,6 +452,13 @@
               panel.offsetHeight;
               panel.style.animation = 'featPanelIn 0.4s ease';
             }
+            // Swing the Viking 3D to a fresh viewing angle per solution
+            // (it keeps continuously rotating; this just shifts the base view).
+            try {
+              if (window.NauticoBoats && window.NauticoBoats['boat-viking']) {
+                window.NauticoBoats['boat-viking'].setView(idx * (Math.PI / 3)); // 60° per tab
+              }
+            } catch (e) {}
           }
           function featNav(dir) {
             var cur = _getCurrentFeat();

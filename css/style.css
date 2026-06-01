@@ -1680,3 +1680,13 @@ html body #app-content #page-home #intro-section {
   border-bottom: 0 !important;
   box-shadow: none !important;
 }
+
+/* Small Viking render that lives inside the Solution explorer */
+.cc-section-3d-sm {
+  width: min(420px, 80vw);
+  height: clamp(170px, 24vh, 240px);
+  margin: 0 auto 8px;
+}
+@media (max-width: 768px) {
+  .cc-section-3d-sm { width: min(360px, 86vw); height: clamp(150px, 22vh, 210px); }
+}
