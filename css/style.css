@@ -1699,15 +1699,37 @@ html body #app-content #page-home #intro-section {
   .cc-section-3d-sm { width: min(360px, 86vw); height: clamp(150px, 22vh, 210px); }
 }
 
-/* Animated down-arrow cue at the bottom of EVERY section */
+/* Prominent glowing "next section" button at the bottom of EVERY section.
+   Big circular glass control so it's obviously visible + clickable. */
 .section-arrow {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 0; width: max-content; margin: 22px auto 0; text-decoration: none;
+  display: flex; align-items: center; justify-content: center;
+  width: 58px; height: 58px; margin: 30px auto 4px;
+  border-radius: 999px; text-decoration: none; cursor: pointer;
+  background: radial-gradient(circle at 50% 35%, rgba(143,211,244,0.22), rgba(143,211,244,0.06) 70%);
+  border: 1.5px solid rgba(143,211,244,0.55);
+  box-shadow: 0 0 22px rgba(143,211,244,0.35), inset 0 0 14px rgba(143,211,244,0.12);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  position: relative; z-index: 5;
+  animation: secArrowPulse 2.2s ease-in-out infinite;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
-.section-arrow svg { width: 24px; height: 24px; stroke: var(--accent); fill: none; stroke-width: 2; }
-.section-arrow .cc-ar { animation: ccArrow 1.8s ease-in-out infinite; }
-.section-arrow .cc-ar:nth-child(2) { animation-delay: 0.2s; margin-top: -13px; opacity: 0.5; }
-.section-arrow:hover svg { stroke: var(--text-primary); }
+/* stack the two chevrons tightly inside the circle */
+.section-arrow svg {
+  width: 26px; height: 26px; stroke: #BFE9FB; fill: none; stroke-width: 2.4;
+  filter: drop-shadow(0 0 4px rgba(143,211,244,0.8));
+}
+.section-arrow .cc-ar { animation: ccArrow 1.6s ease-in-out infinite; }
+.section-arrow .cc-ar:nth-child(2) { animation-delay: 0.25s; margin-top: -16px; opacity: 0.55; }
+.section-arrow:hover {
+  transform: translateY(3px) scale(1.06);
+  border-color: rgba(143,211,244,0.95);
+  box-shadow: 0 0 32px rgba(143,211,244,0.6), inset 0 0 18px rgba(143,211,244,0.2);
+}
+.section-arrow:hover svg { stroke: #FFFFFF; }
+@keyframes secArrowPulse {
+  0%,100% { box-shadow: 0 0 18px rgba(143,211,244,0.3), inset 0 0 12px rgba(143,211,244,0.1); }
+  50%     { box-shadow: 0 0 30px rgba(143,211,244,0.55), inset 0 0 16px rgba(143,211,244,0.18); }
+}
 
 /* ── Big soft feather between the hero and the next section ──
    A tall transparent→dark→transparent gradient straddling the fold so the
