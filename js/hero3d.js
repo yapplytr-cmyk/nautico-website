@@ -123,6 +123,9 @@
 
       pivot = new THREE.Group();
       pivot.add(loaded);
+      // Per-boat base orientation so each model starts at a flattering angle
+      // (the Viking GLB faces away by default → rotate it to a side profile).
+      pivot.userData.baseYaw = (typeof opts.baseYaw === 'number') ? opts.baseYaw : 0;
       scene.add(pivot);
       ready3d = true;
       container.classList.add('hero3d-loaded');
@@ -160,8 +163,9 @@
         var targetPitch = py * 0.22;
         curYaw += (targetYaw - curYaw) * 0.05;    // slow, smooth easing
         curPitch += (targetPitch - curPitch) * 0.05;
-        // very slow idle drift layered under the steer
-        pivot.rotation.y = curYaw + Math.sin(now / 7000) * 0.18;
+        // very slow idle drift layered under the steer, around each boat's
+        // flattering base angle (so the Viking stays side-on, not stern-on)
+        pivot.rotation.y = (pivot.userData.baseYaw || 0) + curYaw + Math.sin(now / 7000) * 0.18;
         pivot.rotation.x = curPitch;
         pivot.position.y = Math.sin(now / 2200) * 0.04;  // soft bob
       }
@@ -196,7 +200,12 @@
     var nodes = document.querySelectorAll('[data-boat3d]');
     nodes.forEach(function (n) {
       if (n.id === 'hero3d') return;
-      specs.push({ id: n.id, url: n.getAttribute('data-boat3d'), fit: parseFloat(n.getAttribute('data-fit')) || 5.4 });
+      specs.push({
+        id: n.id,
+        url: n.getAttribute('data-boat3d'),
+        fit: parseFloat(n.getAttribute('data-fit')) || 5.4,
+        baseYaw: parseFloat(n.getAttribute('data-base-yaw')) || 0
+      });
     });
     specs.forEach(function (s) { bootOne(s, 0); });
   }
