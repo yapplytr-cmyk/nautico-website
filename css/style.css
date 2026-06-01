@@ -1553,3 +1553,81 @@ html[data-theme="dark"] .theme-toggle-knob {
 .section-reveal.in-view { opacity: 1; transform: translateY(0); }
 /* respect reduced motion */
 @media (prefers-reduced-motion: reduce) { .section-reveal { opacity: 1; transform: none; transition: none; } }
+
+/* ═══════════════════════════════════════════════════════════════
+   FLUID SECTION TRANSITIONS — soft gradient bleed between sections
+   so the page flows like liquid instead of hard color cuts.
+═══════════════════════════════════════════════════════════════ */
+#page-home .section,
+#page-home #problems-section,
+#page-home #features-section,
+#page-home #cta-section,
+#page-home .screenshots-section,
+#page-home .hero { position: relative; }
+
+/* Feathered top + bottom edges that fade each section into the next */
+#page-home .section::before,
+#page-home #problems-section::before,
+#page-home #features-section::before,
+#page-home .screenshots-section::before,
+#page-home #cta-section::before,
+#page-home .hero::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 160px;
+  pointer-events: none; z-index: 1;
+}
+/* top feather: fade IN from the previous section's color */
+#page-home .section::before,
+#page-home #problems-section::before,
+#page-home #features-section::before,
+#page-home .screenshots-section::before,
+#page-home #cta-section::before {
+  top: -1px;
+  background: linear-gradient(to bottom, var(--cc-prev-bg, var(--bg-primary)) 0%, transparent 100%);
+}
+/* hero bottom feather → melts the hero into the page */
+#page-home .hero::after {
+  bottom: -1px;
+  background: linear-gradient(to top, var(--bg-primary) 0%, transparent 100%);
+}
+
+/* DARK MODE: everything black, so the feather is black→transparent.
+   A single fixed aurora layer breathes behind ALL sections → continuous,
+   liquid motion as you scroll (no per-section seams). */
+html[data-theme="dark"] #page-home {
+  position: relative;
+  background:
+    radial-gradient(60% 40% at 20% 12%, rgba(143,211,244,0.07) 0%, transparent 60%),
+    radial-gradient(55% 38% at 82% 42%, rgba(167,139,250,0.07) 0%, transparent 60%),
+    radial-gradient(60% 40% at 30% 78%, rgba(46,204,154,0.05) 0%, transparent 60%),
+    #000 !important;
+}
+/* Make every home section transparent in dark mode so the page-level
+   aurora shows through continuously — kills the flat per-section fills. */
+html[data-theme="dark"] #page-home .section,
+html[data-theme="dark"] #page-home #problems-section,
+html[data-theme="dark"] #page-home #features-section,
+html[data-theme="dark"] #page-home #cta-section,
+html[data-theme="dark"] #page-home .screenshots-section,
+html[data-theme="dark"] #page-home .hero { background: transparent !important; }
+/* feather edges become black→transparent so any residual seams melt away */
+html[data-theme="dark"] #page-home .section::before,
+html[data-theme="dark"] #page-home #problems-section::before,
+html[data-theme="dark"] #page-home #features-section::before,
+html[data-theme="dark"] #page-home .screenshots-section::before,
+html[data-theme="dark"] #page-home #cta-section::before {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%);
+}
+/* slow drifting aurora behind the whole page for living, fluid motion */
+html[data-theme="dark"] #page-home::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(40% 30% at 50% 0%, rgba(143,211,244,0.06), transparent 70%),
+    radial-gradient(45% 32% at 70% 60%, rgba(167,139,250,0.05), transparent 70%);
+  animation: ccPageDrift 24s ease-in-out infinite;
+}
+@keyframes ccPageDrift {
+  0%,100% { transform: translateY(0) scale(1); opacity: 0.8; }
+  50%     { transform: translateY(-30px) scale(1.06); opacity: 1; }
+}
+/* keep real content above the aurora */
+#page-home .section-inner, #page-home .hero-content, #page-home .hero-visual { position: relative; z-index: 2; }
