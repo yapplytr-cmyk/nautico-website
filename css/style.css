@@ -374,7 +374,7 @@ a:hover { color: #9DD8EF; }
 /* ══ SCREENSHOTS SECTION ══ */
 .screenshots-section {
   padding: 80px 24px 60px;
-  background: var(--bg-secondary);
+  background: transparent;
   overflow: hidden;
 }
 .screenshots-inner { max-width: var(--max-width); margin: 0 auto; }
@@ -585,7 +585,7 @@ a:hover { color: #9DD8EF; }
 
 /* ══ SECTIONS ══ */
 .section { padding: 70px 24px; }
-.section-dark { background: var(--bg-secondary); }
+.section-dark { background: transparent; }
 .section-inner { max-width: var(--max-width); margin: 0 auto; }
 .section-inner.center { text-align: center; }
 .section-label {
@@ -1451,7 +1451,8 @@ html[data-theme="dark"] .theme-toggle-knob {
   color: var(--text-muted); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
   animation: ccPulse 1.4s ease-in-out infinite;
 }
-.cc-hero-3d.hero3d-loaded .cc-hero-3d-loading { display: none; }
+.cc-hero-3d.hero3d-loaded .cc-hero-3d-loading,
+.cc-section-3d.hero3d-loaded .cc-hero-3d-loading { display: none; }
 @keyframes ccPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 0.85; } }
 .cc-hero-inner { position: relative; z-index: 5; }
 .cc-hero-sub {
@@ -1642,3 +1643,26 @@ html[data-theme="dark"] body {
 /* 3D boat canvases must be fully transparent — no box, no backing */
 .cc-hero-3d, .cc-section-3d { background: transparent !important; border: none !important; }
 .cc-hero-3d canvas, .cc-section-3d canvas { background: transparent !important; display: block; }
+
+/* ═══════════════════════════════════════════════════════════════
+   FINAL OVERRIDE — guarantee ONE continuous page (both themes).
+   Every home-page surface is transparent; only <body> paints colour.
+   High specificity + !important so nothing above can re-add a seam.
+═══════════════════════════════════════════════════════════════ */
+html body #app-content #page-home,
+html body #app-content #page-home .cc-hero,
+html body #app-content #page-home .hero,
+html body #app-content #page-home .section,
+html body #app-content #page-home .section-dark,
+html body #app-content #page-home .section-cta,
+html body #app-content #page-home #problems-section,
+html body #app-content #page-home #features-section,
+html body #app-content #page-home #screenshots-section,
+html body #app-content #page-home .screenshots-section,
+html body #app-content #page-home #cta-section,
+html body #app-content #page-home #intro-section {
+  background: transparent !important;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+}
