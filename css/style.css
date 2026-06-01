@@ -1370,17 +1370,16 @@ html[data-theme="dark"] {
 }
 /* Pure-black sections in dark mode (kill the teal section tints) */
 html[data-theme="dark"] body,
+/* Dark mode: ALL home surfaces transparent so the single fixed body
+   background shows through continuously — no per-section fills, no bands. */
 html[data-theme="dark"] .section,
 html[data-theme="dark"] .section-dark,
 html[data-theme="dark"] #page-home,
-html[data-theme="dark"] .page { background: #000000 !important; }
-html[data-theme="dark"] .cc-hero {
-  background:
-    radial-gradient(130% 90% at 50% 0%, rgba(143,211,244,0.10) 0%, transparent 45%),
-    radial-gradient(100% 80% at 50% 100%, rgba(167,139,250,0.08) 0%, transparent 55%),
-    #000000 !important;
-}
-html[data-theme="dark"] .navbar { background: rgba(0,0,0,0.85) !important; }
+html[data-theme="dark"] .page,
+html[data-theme="dark"] .cc-hero,
+html[data-theme="dark"] .hero,
+html[data-theme="dark"] .screenshots-section { background: transparent !important; }
+html[data-theme="dark"] .navbar { background: rgba(0,0,0,0.7) !important; }
 html { transition: background 0.5s ease; }
 body { transition: background 0.5s ease, color 0.5s ease; }
 
@@ -1416,10 +1415,7 @@ html[data-theme="dark"] .theme-toggle-knob {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   overflow: hidden; text-align: center;
   padding: 80px 24px 120px;   /* extra bottom pad reserves the scroll-cue zone */
-  background:
-    radial-gradient(120% 90% at 50% -10%, var(--intro-accent) 0%, transparent 8%),
-    radial-gradient(140% 100% at 50% 0%, rgba(126,200,227,0.10) 0%, transparent 45%),
-    linear-gradient(180deg, var(--intro-grad-1) 0%, var(--intro-grad-2) 55%, var(--intro-grad-3) 100%);
+  background: transparent;    /* inherit the ONE universal page background */
 }
 /* 3D boat — BIG in-flow block between the brand and the tagline */
 .cc-hero-3d {
@@ -1427,21 +1423,21 @@ html[data-theme="dark"] .theme-toggle-knob {
   width: min(960px, 96vw);
   height: clamp(340px, 52vh, 640px);
   margin: 4px auto 0;
-  cursor: grab;
+ 
   opacity: 0; transform: translateY(10px);
   transition: opacity 1s ease, transform 1s ease;
 }
-.cc-hero-3d:active { cursor: grabbing; }
+
 /* Section 3D boat showcases (Viking / center console) */
 .cc-section-3d {
   position: relative; z-index: 2;
   width: min(820px, 94vw);
   height: clamp(280px, 40vh, 460px);
-  margin: 28px auto 6px; cursor: grab;
+  margin: 28px auto 6px;
   opacity: 0; transform: translateY(14px);
   transition: opacity 1s ease, transform 1s ease;
 }
-.cc-section-3d:active { cursor: grabbing; }
+
 .cc-section-3d.hero3d-loaded { opacity: 1; transform: translateY(0); }
 .cc-section-3d canvas { width: 100% !important; height: 100% !important; display: block; }
 .cc-section-3d-cap {
@@ -1573,81 +1569,19 @@ html[data-theme="dark"] .theme-toggle-knob {
 @media (prefers-reduced-motion: reduce) { .section-reveal { opacity: 1; transform: none; transition: none; } }
 
 /* ═══════════════════════════════════════════════════════════════
-   FLUID SECTION TRANSITIONS — soft gradient bleed between sections
-   so the page flows like liquid instead of hard color cuts.
+   ONE CONTINUOUS PAGE — every home section is transparent and shares
+   the single fixed body background. No per-section fills, no feather
+   gradients, no seams. The whole site reads as one surface.
 ═══════════════════════════════════════════════════════════════ */
+#page-home,
 #page-home .section,
+#page-home .section-dark,
 #page-home #problems-section,
 #page-home #features-section,
 #page-home #cta-section,
 #page-home .screenshots-section,
-#page-home .hero { position: relative; }
-
-/* Feathered top + bottom edges that fade each section into the next */
-#page-home .section::before,
-#page-home #problems-section::before,
-#page-home #features-section::before,
-#page-home .screenshots-section::before,
-#page-home #cta-section::before,
-#page-home .hero::after {
-  content: ""; position: absolute; left: 0; right: 0; height: 160px;
-  pointer-events: none; z-index: 1;
-}
-/* top feather: fade IN from the previous section's color */
-#page-home .section::before,
-#page-home #problems-section::before,
-#page-home #features-section::before,
-#page-home .screenshots-section::before,
-#page-home #cta-section::before {
-  top: -1px;
-  background: linear-gradient(to bottom, var(--cc-prev-bg, var(--bg-primary)) 0%, transparent 100%);
-}
-/* hero bottom feather → melts the hero into the page */
-#page-home .hero::after {
-  bottom: -1px;
-  background: linear-gradient(to top, var(--bg-primary) 0%, transparent 100%);
-}
-
-/* DARK MODE: everything black, so the feather is black→transparent.
-   A single fixed aurora layer breathes behind ALL sections → continuous,
-   liquid motion as you scroll (no per-section seams). */
-html[data-theme="dark"] #page-home {
-  position: relative;
-  background:
-    radial-gradient(60% 40% at 20% 12%, rgba(143,211,244,0.07) 0%, transparent 60%),
-    radial-gradient(55% 38% at 82% 42%, rgba(167,139,250,0.07) 0%, transparent 60%),
-    radial-gradient(60% 40% at 30% 78%, rgba(46,204,154,0.05) 0%, transparent 60%),
-    #000 !important;
-}
-/* Make every home section transparent in dark mode so the page-level
-   aurora shows through continuously — kills the flat per-section fills. */
-html[data-theme="dark"] #page-home .section,
-html[data-theme="dark"] #page-home #problems-section,
-html[data-theme="dark"] #page-home #features-section,
-html[data-theme="dark"] #page-home #cta-section,
-html[data-theme="dark"] #page-home .screenshots-section,
-html[data-theme="dark"] #page-home .hero { background: transparent !important; }
-/* feather edges become black→transparent so any residual seams melt away */
-html[data-theme="dark"] #page-home .section::before,
-html[data-theme="dark"] #page-home #problems-section::before,
-html[data-theme="dark"] #page-home #features-section::before,
-html[data-theme="dark"] #page-home .screenshots-section::before,
-html[data-theme="dark"] #page-home #cta-section::before {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%);
-}
-/* slow drifting aurora behind the whole page for living, fluid motion */
-html[data-theme="dark"] #page-home::after {
-  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(40% 30% at 50% 0%, rgba(143,211,244,0.06), transparent 70%),
-    radial-gradient(45% 32% at 70% 60%, rgba(167,139,250,0.05), transparent 70%);
-  animation: ccPageDrift 24s ease-in-out infinite;
-}
-@keyframes ccPageDrift {
-  0%,100% { transform: translateY(0) scale(1); opacity: 0.8; }
-  50%     { transform: translateY(-30px) scale(1.06); opacity: 1; }
-}
-/* keep real content above the aurora */
+#page-home .hero,
+#page-home .cc-hero { background: transparent !important; position: relative; }
 #page-home .section-inner, #page-home .hero-content, #page-home .hero-visual { position: relative; z-index: 2; }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1704,3 +1638,7 @@ html[data-theme="dark"] body {
     #000 !important;
   background-attachment: fixed !important;
 }
+
+/* 3D boat canvases must be fully transparent — no box, no backing */
+.cc-hero-3d, .cc-section-3d { background: transparent !important; border: none !important; }
+.cc-hero-3d canvas, .cc-section-3d canvas { background: transparent !important; display: block; }

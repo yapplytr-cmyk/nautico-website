@@ -93,36 +93,13 @@
     // Plays once on load: sweep along the side → past the engines (stern) →
     // around the bow (front) → settle to the hero 3/4 framing.
     var SETTLE = { pos: new THREE.Vector3(0, 1.5, 9.0), look: new THREE.Vector3(0, 0, 0) };
-    var keys = [
-      { t: 0.00, pos: new THREE.Vector3(6.5, 0.6, 4.0),  look: new THREE.Vector3(0, 0, 0) },   // side-on, close
-      { t: 0.30, pos: new THREE.Vector3(1.5, 0.5, -7.5), look: new THREE.Vector3(0, 0.2, 0) }, // behind → engines
-      { t: 0.58, pos: new THREE.Vector3(-2.0, 1.2, 8.0), look: new THREE.Vector3(0, 0, 0) },   // swing to bow
-      { t: 1.00, pos: SETTLE.pos.clone(),                look: SETTLE.look.clone() }           // settle hero
-    ];
-    var introDur = 5.2;             // seconds of cinematic
-    var introT = 0;                 // 0..1
-    var introDone = false;
+    // Camera holds a single calm hero framing the whole time.
+    camera.position.copy(SETTLE.pos);
+    camera.lookAt(SETTLE.look);
 
-    // ── Interaction (mouse hover / touch) ──
-    var pointer = { x: 0, y: 0, active: false };
-    var targetYaw = 0, targetPitch = 0, curYaw = 0, curPitch = 0;
-
-    function onMove(clientX, clientY) {
-      var r = container.getBoundingClientRect();
-      var nx = ((clientX - r.left) / r.width) * 2 - 1;   // -1..1
-      var ny = ((clientY - r.top) / r.height) * 2 - 1;
-      pointer.x = Math.max(-1, Math.min(1, nx));
-      pointer.y = Math.max(-1, Math.min(1, ny));
-      pointer.active = true;
-      // boat turns toward the cursor direction
-      targetYaw = pointer.x * 0.7;
-      targetPitch = pointer.y * 0.28;
-    }
-    container.addEventListener('mousemove', function (e) { onMove(e.clientX, e.clientY); });
-    container.addEventListener('mouseleave', function () { pointer.active = false; targetYaw = 0; targetPitch = 0; });
-    container.addEventListener('touchstart', function (e) { if (e.touches[0]) onMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
-    container.addEventListener('touchmove', function (e) { if (e.touches[0]) onMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
-    container.addEventListener('touchend', function () { pointer.active = false; targetYaw = 0; targetPitch = 0; });
+    // Smooth entrance: the boat eases up + fades in, then drifts slowly.
+    var entrance = 0;               // 0..1
+    var curYaw = 0, curPitch = 0;   // eased rotation
 
     makeLoader().load(opts.url, function (gltf) {
       var loaded = gltf.scene || (gltf.scenes && gltf.scenes[0]);
@@ -163,27 +140,6 @@
     }
     window.addEventListener('resize', resize);
 
-    // Only play the cinematic when the boat is on-screen (saves work + feels intentional)
-    var onScreen = true;
-    try {
-      var io = new IntersectionObserver(function (ents) { ents.forEach(function (e) { onScreen = e.isIntersecting; }); }, { threshold: 0.05 });
-      io.observe(container);
-    } catch (e) {}
-
-    var _tmpPos = new THREE.Vector3(), _tmpLook = new THREE.Vector3();
-    function sampleIntro(t) {
-      // find surrounding keyframes
-      var a = keys[0], b = keys[keys.length - 1];
-      for (var i = 0; i < keys.length - 1; i++) {
-        if (t >= keys[i].t && t <= keys[i + 1].t) { a = keys[i]; b = keys[i + 1]; break; }
-      }
-      var span = (b.t - a.t) || 1;
-      var lt = (t - a.t) / span;
-      var e = lt < 0.5 ? 4 * lt * lt * lt : 1 - Math.pow(-2 * lt + 2, 3) / 2; // easeInOutCubic
-      _tmpPos.lerpVectors(a.pos, b.pos, e);
-      _tmpLook.lerpVectors(a.look, b.look, e);
-    }
-
     var t0 = performance.now();
     function animate(now) {
       requestAnimationFrame(animate);
@@ -191,27 +147,38 @@
       holo.uniforms.uTime.value = now / 1000;
 
       if (ready3d) {
-        if (!introDone) {
-          introT = Math.min(1, introT + dt / introDur);
-          sampleIntro(introT);
-          camera.position.copy(_tmpPos);
-          camera.lookAt(_tmpLook);
-          if (introT >= 1) { introDone = true; }
-        } else {
-          // settled: hold the hero camera, let the BOAT respond to pointer
-          camera.position.lerp(SETTLE.pos, 0.06);
-          camera.lookAt(SETTLE.look);
-          curYaw += (targetYaw - curYaw) * 0.08;
-          curPitch += (targetPitch - curPitch) * 0.08;
-          // slow idle spin layered under the pointer steer
-          pivot.rotation.y = curYaw + (pointer.active ? 0 : now / 9000);
-          pivot.rotation.x = curPitch;
-          pivot.position.y = Math.sin(now / 1400) * 0.05;
+        // gentle entrance (slow scale-in)
+        if (entrance < 1) {
+          entrance = Math.min(1, entrance + dt * 0.45);
+          var e = 1 - Math.pow(1 - entrance, 3);  // easeOutCubic
+          pivot.scale.setScalar(0.9 + 0.1 * e);
         }
+        // GLOBAL pointer steer: NauticoPointer.x/y are -1..1 across the page.
+        var px = (window.NauticoPointer && window.NauticoPointer.x) || 0;
+        var py = (window.NauticoPointer && window.NauticoPointer.y) || 0;
+        var targetYaw = px * 0.6;                 // boat turns toward cursor
+        var targetPitch = py * 0.22;
+        curYaw += (targetYaw - curYaw) * 0.05;    // slow, smooth easing
+        curPitch += (targetPitch - curPitch) * 0.05;
+        // very slow idle drift layered under the steer
+        pivot.rotation.y = curYaw + Math.sin(now / 7000) * 0.18;
+        pivot.rotation.x = curPitch;
+        pivot.position.y = Math.sin(now / 2200) * 0.04;  // soft bob
       }
       renderer.render(scene, camera);
     }
     requestAnimationFrame(animate);
+  }
+
+  // ── Global pointer tracking (whole page → all boats follow it) ──
+  if (!window.NauticoPointer) {
+    window.NauticoPointer = { x: 0, y: 0 };
+    var setP = function (cx, cy) {
+      window.NauticoPointer.x = (cx / window.innerWidth) * 2 - 1;
+      window.NauticoPointer.y = (cy / window.innerHeight) * 2 - 1;
+    };
+    window.addEventListener('mousemove', function (e) { setP(e.clientX, e.clientY); }, { passive: true });
+    window.addEventListener('touchmove', function (e) { if (e.touches[0]) setP(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
   }
 
   // Boot each declared viewer once THREE + the container are ready.
