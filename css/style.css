@@ -1421,28 +1421,40 @@ html[data-theme="dark"] .theme-toggle-knob {
     radial-gradient(140% 100% at 50% 0%, rgba(126,200,227,0.10) 0%, transparent 45%),
     linear-gradient(180deg, var(--intro-grad-1) 0%, var(--intro-grad-2) 55%, var(--intro-grad-3) 100%);
 }
-/* 3D boat fills the hero, behind the text */
+/* 3D boat — an IN-FLOW block between the brand and the tagline */
 .cc-hero-3d {
-  position: absolute; inset: 0; z-index: 1;
-  width: 100%; height: 100%;
-  opacity: 0; transition: opacity 1.2s ease;
+  position: relative; z-index: 2;
+  width: min(720px, 92vw);
+  height: clamp(240px, 38vh, 460px);
+  margin: 6px auto 4px;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 1s ease, transform 1s ease;
 }
-.cc-hero-3d.hero3d-loaded { opacity: 1; }
+.cc-hero-3d.hero3d-loaded { opacity: 1; transform: translateY(0); }
 .cc-hero-3d canvas { width: 100% !important; height: 100% !important; display: block; }
-.cc-hero-inner { position: relative; z-index: 5; pointer-events: none; }
-.cc-hero-inner .cc-enter-btn, .cc-hero-inner a { pointer-events: auto; }
+.cc-hero-3d-loading {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+  animation: ccPulse 1.4s ease-in-out infinite;
+}
+.cc-hero-3d.hero3d-loaded .cc-hero-3d-loading { display: none; }
+@keyframes ccPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 0.85; } }
+.cc-hero-inner { position: relative; z-index: 5; }
 .cc-hero-sub {
   max-width: 540px; margin: 0 auto 32px; color: var(--text-secondary);
   font-size: clamp(15px, 2.2vw, 18px); line-height: 1.6;
   opacity: 0; animation: ccUp 1s ease-out 0.6s forwards;
 }
 .cc-enter-btn { display: inline-block; text-decoration: none; }
-/* Scroll cue at the bottom of the hero */
+/* Scroll cue at the bottom of the hero — kept horizontally centered.
+   (Uses its own keyframe so the fade-in transform can't clobber translateX.) */
 .cc-scroll-cue {
-  position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
-  z-index: 6; text-decoration: none; display: flex; flex-direction: column; align-items: center;
-  opacity: 0; animation: ccUp 1s ease-out 1.3s forwards;
+  position: absolute; bottom: 26px; left: 0; right: 0; margin: 0 auto;
+  width: max-content; z-index: 6; text-decoration: none;
+  display: flex; flex-direction: column; align-items: center;
+  opacity: 0; animation: ccCueIn 1s ease-out 1.3s forwards;
 }
+@keyframes ccCueIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
 /* Starfield (twinkling) */
 .cc-stars, .cc-stars2, .cc-stars3 { position: absolute; inset: 0; pointer-events: none; }
@@ -1535,3 +1547,9 @@ html[data-theme="dark"] .theme-toggle-knob {
   .cc-hero-3d { opacity: 0; }
   .cc-hero-3d.hero3d-loaded { opacity: 0.9; }
 }
+
+/* ── Section fade-in reveal (Rival-style scroll feel) ── */
+.section-reveal { opacity: 0; transform: translateY(48px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); will-change: opacity, transform; }
+.section-reveal.in-view { opacity: 1; transform: translateY(0); }
+/* respect reduced motion */
+@media (prefers-reduced-motion: reduce) { .section-reveal { opacity: 1; transform: none; transition: none; } }

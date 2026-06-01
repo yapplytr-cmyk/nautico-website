@@ -70,18 +70,21 @@
         <div class="cc-aurora a1"></div>
         <div class="cc-aurora a2"></div>
 
-        <!-- Big 3D boat -->
-        <div class="cc-hero-3d" id="hero3d"></div>
-
         <div class="cc-hero-inner">
           <div class="cc-brand">N A U T I C O</div>
+
+          <!-- Big 3D boat — sits BETWEEN brand and tagline -->
+          <div class="cc-hero-3d" id="hero3d">
+            <div class="cc-hero-3d-loading" id="hero3d-loading">Loading vessel…</div>
+          </div>
+
           <h1 class="cc-tagline">Enter your<br><span class="cc-grad">command center</span></h1>
           <p class="cc-hero-sub">Your entire vessel — expenses, voyages, maintenance and live nautical charts — in one app.</p>
-          <a href="#problems-section" class="cc-enter-btn scroll-to" data-target="problems-section">Discover Nautico</a>
+          <a href="#intro-section" class="cc-enter-btn scroll-to" data-target="intro-section">Discover Nautico</a>
         </div>
 
-        <!-- Scroll cue -->
-        <a href="#problems-section" class="cc-scroll-cue scroll-to" data-target="problems-section" aria-label="Scroll down">
+        <!-- Scroll cue (horizontally centered) -->
+        <a href="#intro-section" class="cc-scroll-cue scroll-to" data-target="intro-section" aria-label="Scroll down">
           <div class="cc-arrows" aria-hidden="true">
             <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -92,7 +95,7 @@
       </section>
 
       <!-- Hero -->
-      <div class="hero">
+      <div class="hero" id="intro-section">
         <!-- Floating nautical graphics -->
         <div class="hero-bg-elements" aria-hidden="true">
           <!-- Large compass rose — top left -->

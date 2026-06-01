@@ -183,6 +183,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.anim-in').forEach(el => animObserver.observe(el));
+
+  // ── Section fade-in reveal (Rival-style) ──
+  // Tag the major home-page blocks so each fades up as it scrolls into view.
+  var revealTargets = document.querySelectorAll(
+    '#page-home .hero, #page-home .section, #page-home #problems-section, ' +
+    '#page-home #features-section, #page-home #screenshots-section, #page-home #cta-section'
+  );
+  revealTargets.forEach(function (el) {
+    if (el.classList.contains('cc-hero')) return; // hero animates on its own
+    el.classList.add('section-reveal');
+  });
+  var sectionObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        sectionObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  revealTargets.forEach(function (el) { if (!el.classList.contains('cc-hero')) sectionObserver.observe(el); });
 });
 
 // Handle browser back/forward

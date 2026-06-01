@@ -109,7 +109,9 @@
       scene.add(model);
       container.classList.add('hero3d-loaded');
     }, undefined, function (err) {
-      console.log('Nautico hero3d load failed', err && err.message);
+      console.error('Nautico hero3d GLB load failed:', err);
+      var l = document.getElementById('hero3d-loading');
+      if (l) l.textContent = '3D unavailable';
       container.classList.add('hero3d-failed');
     });
 
