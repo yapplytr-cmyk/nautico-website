@@ -1559,22 +1559,22 @@ html[data-theme="dark"] .theme-toggle-knob {
 #page-home .cc-hero ~ * { position: relative; z-index: 2; }
 /* ── 3D boats on mobile: smaller, full-width, fits phone screens ── */
 @media (max-width: 768px) {
-  .cc-hero { min-height: 92vh; padding: 76px 16px 96px; }
+  .cc-hero { min-height: 92vh; padding: 76px 14px 96px; }
   .cc-hero-3d {
     width: 100%;
-    height: clamp(220px, 34vh, 320px);
+    height: clamp(320px, 46vh, 440px);
     margin: 2px auto 0;
   }
   .cc-hero-3d.hero3d-loaded { opacity: 1; }
   .cc-section-3d {
     width: 100%;
-    height: clamp(200px, 30vh, 300px);
+    height: clamp(300px, 42vh, 420px);
     margin: 18px auto 4px;
   }
 }
 @media (max-width: 480px) {
-  .cc-hero-3d { height: clamp(190px, 30vh, 270px); }
-  .cc-section-3d { height: clamp(180px, 28vh, 250px); }
+  .cc-hero-3d { height: clamp(300px, 44vh, 400px); }
+  .cc-section-3d { height: clamp(280px, 40vh, 380px); }
 }
 
 /* ── Section fade-in reveal (Rival-style scroll feel) ── */

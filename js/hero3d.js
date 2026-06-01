@@ -79,8 +79,7 @@
     container.appendChild(renderer.domElement);
 
     var scene = new THREE.Scene();
-    // Narrower phone viewport → wider FOV + pull camera back so the whole hull fits.
-    var camera = new THREE.PerspectiveCamera(isMobile ? 40 : 32, W / H, 0.1, 1000);
+    var camera = new THREE.PerspectiveCamera(isMobile ? 34 : 32, W / H, 0.1, 1000);
 
     var holo = makeHolo();
     var backMat = new THREE.MeshBasicMaterial({
@@ -94,7 +93,7 @@
     // ── Cinematic camera keyframes (pos + lookAt), eased over time ──
     // Plays once on load: sweep along the side → past the engines (stern) →
     // around the bow (front) → settle to the hero 3/4 framing.
-    var SETTLE = { pos: new THREE.Vector3(0, 1.5, isMobile ? 10.5 : 9.0), look: new THREE.Vector3(0, 0, 0) };
+    var SETTLE = { pos: new THREE.Vector3(0, 1.4, isMobile ? 8.4 : 9.0), look: new THREE.Vector3(0, 0, 0) };
     // Camera holds a single calm hero framing the whole time.
     camera.position.copy(SETTLE.pos);
     camera.lookAt(SETTLE.look);
@@ -110,8 +109,8 @@
       var box = new THREE.Box3().setFromObject(loaded);
       var sz = box.getSize(new THREE.Vector3());
       var maxDim = Math.max(sz.x, sz.y, sz.z) || 1;
-      // Smaller fit on phones so the whole hull stays inside the narrow frame.
-      var fit = (opts.fit || 6.0) * (isMobile ? 0.78 : 1);
+      // On phones keep the boat LARGE (only a touch smaller than desktop).
+      var fit = (opts.fit || 6.0) * (isMobile ? 1.06 : 1);
       loaded.scale.setScalar(fit / maxDim);
       box.setFromObject(loaded);
       loaded.position.sub(box.getCenter(new THREE.Vector3())); // centre at origin
