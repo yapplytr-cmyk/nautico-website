@@ -1710,3 +1710,11 @@ html body #app-content #page-home #intro-section {
   background: linear-gradient(to bottom, transparent 0%, rgba(2,3,8,0.6) 45%, transparent 100%);
 }
 #page-home #intro-section { position: relative; }
+
+/* Floating particles — fixed full-page canvas behind everything (Rival-style) */
+#cc-particles {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+}
+/* keep all real content above the particle canvas */
+#app-content, .navbar, .cc-progress, footer { position: relative; z-index: 1; }

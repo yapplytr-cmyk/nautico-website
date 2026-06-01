@@ -16,6 +16,9 @@
 </head>
 <body>
 
+  <!-- ══ FLOATING PARTICLES (drift across the whole page, Rival-style) ══ -->
+  <canvas id="cc-particles" aria-hidden="true"></canvas>
+
   <!-- ══ SCROLL PROGRESS DOTS (grow toward the download CTA) ══ -->
   <div class="cc-progress" id="cc-progress" aria-hidden="true">
     <a class="cc-pdot" data-target="cc-hero" href="#home"></a>
@@ -216,6 +219,10 @@
             </div>
           </div>
         </div>
+        <a href="#problems-section" class="section-arrow scroll-to" data-target="problems-section" aria-label="Next">
+          <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
       </div>
 
       <!-- Wave Divider -->
@@ -1112,6 +1119,62 @@
     });
 
     // (Command-center is now the in-flow page hero; no overlay reveal needed.)
+  })();
+  </script>
+
+  <!-- ══ FLOATING PARTICLES (Rival-style rising glow dots) ══ -->
+  <script>
+  (function () {
+    var c = document.getElementById('cc-particles');
+    if (!c) return;
+    var ctx = c.getContext('2d');
+    var parts = [];
+    function isDark() { return document.documentElement.getAttribute('data-theme') !== 'light'; }
+    function resize() { c.width = window.innerWidth; c.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+
+    var COUNT = Math.min(70, Math.round(window.innerWidth / 22));
+    for (var i = 0; i < COUNT; i++) {
+      parts.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: -0.12 - Math.random() * 0.30,
+        size: 1 + Math.random() * 2,
+        alpha: 0.08 + Math.random() * 0.30,
+        hue: Math.random(),                 // 0..1 blend between accent colours
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: 0.008 + Math.random() * 0.018
+      });
+    }
+
+    function tick() {
+      requestAnimationFrame(tick);
+      ctx.clearRect(0, 0, c.width, c.height);
+      var dark = isDark();
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i];
+        p.x += p.vx; p.y += p.vy; p.pulse += p.pulseSpeed;
+        if (p.y < -12) { p.y = c.height + 12; p.x = Math.random() * c.width; }
+        if (p.x < -12) p.x = c.width + 12;
+        if (p.x > c.width + 12) p.x = -12;
+        var a = p.alpha * (0.5 + 0.5 * Math.sin(p.pulse));
+        // blend teal ↔ violet for a subtle galaxy feel
+        var r = Math.round(143 + (167 - 143) * p.hue);
+        var g = Math.round(211 + (139 - 211) * p.hue);
+        var b = Math.round(244 + (250 - 244) * p.hue);
+        if (!dark) { r = 126; g = 200; b = 227; }   // teal in light mode
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a.toFixed(3) + ')';
+        ctx.shadowColor = 'rgba(' + r + ',' + g + ',' + b + ',' + (a * 0.8).toFixed(3) + ')';
+        ctx.shadowBlur = 6;
+        ctx.fill();
+      }
+      ctx.shadowBlur = 0;
+    }
+    tick();
   })();
   </script>
 </body>
