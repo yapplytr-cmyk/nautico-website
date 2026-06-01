@@ -721,6 +721,29 @@ a:hover { color: #9DD8EF; }
 }
 .feat-panel-graphic .card-orbit { display: block; }
 
+/* ── Viking 3D lives INSIDE the solution box, as a contained left column ──
+   The box (border + glass bg) moves to .feat-panels; the Viking and the
+   active panel sit side by side inside it. Properly contained → never
+   overflows or warps. The Viking re-angles per solution, always rotating. */
+.feat-panel-graphic { display: none !important; }   /* Viking replaces the icon */
+.feat-panels {
+  display: flex; align-items: center; gap: 28px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 30px; min-height: 0;
+}
+.feat-panel {                       /* panels are now plain rows inside the box */
+  background: none; border: none; border-radius: 0; padding: 0;
+  flex: 1; min-width: 0; gap: 36px;
+}
+.feat-viking-3d {
+  flex: 0 0 240px; width: 240px; height: 300px; margin: 0; align-self: center;
+}
+.feat-viking-3d .cc-hero-3d-loading { font-size: 12px; }
+@media (max-width: 768px) {
+  .feat-panels { flex-direction: column; gap: 12px; padding: 18px; }
+  .feat-viking-3d { flex: none; width: min(300px, 80%); height: 170px; }
+}
+
 /* Info (middle) */
 .feat-panel-info { flex: 1; min-width: 0; }
 .feat-panel-info .card-tag { display: inline-block; margin-bottom: 10px; }
@@ -1731,14 +1754,28 @@ html body #app-content #page-home #intro-section {
   50%     { box-shadow: 0 0 30px rgba(143,211,244,0.55), inset 0 0 16px rgba(143,211,244,0.18); }
 }
 
-/* ── Big soft feather between the hero and the next section ──
-   A tall transparent→dark→transparent gradient straddling the fold so the
-   transition reads as a long, soft gradient — never a hard line. */
-#page-home .cc-hero::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -160px;
-  height: 320px; pointer-events: none; z-index: 1;
-  background: linear-gradient(to bottom, transparent 0%, rgba(2,3,8,0.6) 45%, transparent 100%);
+/* ── NO feather/overlay at the hero→section fold ──
+   The hero and every section are transparent; only <body> paints colour,
+   as ONE continuous vertical gradient spanning the whole page. Any band
+   drawn here (light OR dark) shows up as a seam against that gradient, so
+   we paint nothing and let the single body gradient flow through. */
+#page-home .cc-hero::after { content: none !important; background: none !important; }
+
+/* The hero clips its contents (overflow:hidden). Its star + aurora glows
+   must fade to nothing BEFORE the bottom edge, otherwise the clip leaves a
+   faint horizontal glow-edge right under the Discover arrows. Fade the
+   decorative layers out over the lower third so the clip happens where they
+   are already fully transparent → the fold reads as one continuous colour. */
+#page-home .cc-hero .cc-stars,
+#page-home .cc-hero .cc-stars2,
+#page-home .cc-hero .cc-stars3,
+#page-home .cc-hero .cc-aurora {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 96%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 96%);
 }
+/* Lift the bottom-right aurora fully inside the hero so its bright centre is
+   nowhere near the fold (it used to sit 25% BELOW the hero, centred on the seam). */
+#page-home .cc-hero .cc-aurora.a2 { bottom: 12% !important; }
 #page-home #intro-section { position: relative; }
 
 /* Floating particles — fixed full-page canvas behind everything (Rival-style) */
