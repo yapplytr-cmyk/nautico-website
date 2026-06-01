@@ -1521,9 +1521,9 @@ html[data-theme="dark"] .theme-toggle-knob {
 @keyframes ccDrift { from { transform: translateY(0); } to { transform: translateY(-600px); } }
 
 /* Soft aurora glows */
-.cc-aurora { position: absolute; width: 56vw; height: 56vw; border-radius: 50%; filter: blur(120px); opacity: 0.16; pointer-events: none; will-change: transform; }
-.cc-aurora.a1 { top: -28%; left: -14%; background: var(--intro-accent); animation: ccFloat 16s ease-in-out infinite; }
-.cc-aurora.a2 { top: 18%; right: -16%; background: var(--intro-accent-2); animation: ccFloat 20s ease-in-out infinite reverse; }
+/* Aurora glow circles removed by request — kept hidden so any cached markup
+   never renders them. */
+.cc-aurora { display: none !important; }
 @keyframes ccFloat { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,-30px) scale(1.1); } }
 
 .cc-inner { position: relative; z-index: 5; text-align: center; padding: 0 24px; }
