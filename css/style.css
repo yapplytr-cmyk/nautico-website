@@ -218,27 +218,37 @@ a:hover { color: #9DD8EF; }
 }
 
 @media (max-width: 768px) {
+  /* MOBILE: nothing in the top bar except the burger circle. Everything —
+     links, theme switch and language — lives inside the burger menu. */
   .navbar { padding: 10px 12px; padding-top: calc(10px + env(safe-area-inset-top, 0px)); }
   .nav-inner { gap: 8px; justify-content: flex-end; }
-  /* links drop down as a floating liquid-glass panel (the menu opens from the
-     hamburger circle); theme + language + hamburger stay as glass circles */
+  /* the burger menu = a floating liquid-glass panel holding everything */
   .nav-links {
-    display: none; position: absolute; top: calc(100% + 12px); left: 0; right: 0;
-    flex-direction: column; align-items: stretch; gap: 6px;
+    display: none; position: absolute; top: calc(100% + 12px); right: 0;
+    width: min(280px, 78vw);
+    flex-direction: column; align-items: stretch; gap: 8px;
     background: rgba(255,255,255,0.08);
     border: 1px solid rgba(255,255,255,0.16);
     -webkit-backdrop-filter: blur(24px) saturate(1.7);
             backdrop-filter: blur(24px) saturate(1.7);
-    border-radius: 22px; padding: 12px;
+    border-radius: 22px; padding: 14px;
     box-shadow: 0 18px 44px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.16);
   }
   .nav-links.open { display: flex; animation: navMenuIn 0.32s cubic-bezier(0.16,1,0.3,1); }
-  .nav-link { padding: 11px 16px; border-radius: 14px; text-align: center; }
+  .nav-link { padding: 12px 16px; border-radius: 14px; text-align: center; }
   .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.07); }
   .nav-login-btn { text-align: center; }
+  /* theme switch + language sit inside the menu, centered */
+  .nav-links .theme-toggle { margin: 4px auto 2px; }
+  .nav-links .lang-switcher { margin: 0 auto; position: relative; }
+  .nav-links .lang-btn { width: 100%; justify-content: center; }
+  .nav-links .lang-dropdown {
+    position: static; width: 100%; margin-top: 8px; box-shadow: none;
+    background: rgba(255,255,255,0.05); display: none; opacity: 1; visibility: visible; transform: none;
+  }
+  .nav-links .lang-switcher.open .lang-dropdown { display: block; }
+  /* only the burger shows in the top bar */
   .nav-hamburger { display: flex; }
-  .lang-switcher { margin-left: 2px; }
-  .lang-dropdown { right: 0; left: auto; }
 }
 @keyframes navMenuIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 

@@ -11,7 +11,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png" />
-  <link rel="stylesheet" href="css/style.css?v=9" />
+  <link rel="stylesheet" href="css/style.css?v=10" />
   <!-- Start fetching the hero 3D model immediately so it's ready sooner -->
   <link rel="preload" href="assets/boat-midnight.glb" as="fetch" crossorigin="anonymous" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -50,24 +50,24 @@
         <a href="#pricing" class="nav-link" data-route="pricing" data-i18n="nav_pricing">Pricing</a>
         <a href="#contact" class="nav-link" data-route="contact" data-i18n="nav_contact">Contact</a>
         <a href="#login" class="nav-link nav-login-btn" data-route="login" data-i18n="nav_login">Log In</a>
-      </div>
-      <div class="theme-toggle" id="theme-toggle" role="button" aria-label="Toggle theme" title="Toggle light / dark">
-        <div class="theme-toggle-knob" id="theme-knob">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#2A1A00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="theme-icon"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/></svg>
+        <div class="theme-toggle" id="theme-toggle" role="button" aria-label="Toggle theme" title="Toggle light / dark">
+          <div class="theme-toggle-knob" id="theme-knob">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2A1A00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="theme-icon"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/></svg>
+          </div>
         </div>
-      </div>
-      <div class="lang-switcher" id="lang-switcher">
-        <button class="lang-btn" id="lang-btn" aria-label="Language">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-          <span id="lang-current">EN</span>
-        </button>
-        <div class="lang-dropdown" id="lang-dropdown">
-          <button class="lang-option active" data-lang="en" onclick="setLanguage('en')">English</button>
-          <button class="lang-option" data-lang="ru" onclick="setLanguage('ru')">Русский</button>
-          <button class="lang-option" data-lang="tr" onclick="setLanguage('tr')">Türkçe</button>
-          <button class="lang-option" data-lang="fr" onclick="setLanguage('fr')">Français</button>
-          <button class="lang-option" data-lang="it" onclick="setLanguage('it')">Italiano</button>
-          <button class="lang-option" data-lang="es" onclick="setLanguage('es')">Español</button>
+        <div class="lang-switcher" id="lang-switcher">
+          <button class="lang-btn" id="lang-btn" aria-label="Language">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+            <span id="lang-current">EN</span>
+          </button>
+          <div class="lang-dropdown" id="lang-dropdown">
+            <button class="lang-option active" data-lang="en" onclick="setLanguage('en')">English</button>
+            <button class="lang-option" data-lang="ru" onclick="setLanguage('ru')">Русский</button>
+            <button class="lang-option" data-lang="tr" onclick="setLanguage('tr')">Türkçe</button>
+            <button class="lang-option" data-lang="fr" onclick="setLanguage('fr')">Français</button>
+            <button class="lang-option" data-lang="it" onclick="setLanguage('it')">Italiano</button>
+            <button class="lang-option" data-lang="es" onclick="setLanguage('es')">Español</button>
+          </div>
         </div>
       </div>
       <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
@@ -936,10 +936,10 @@
   <script src="assets/vendor/three.min.js"></script>
   <script src="assets/vendor/GLTFLoader.js"></script>
   <script src="assets/vendor/DRACOLoader.js"></script>
-  <script src="js/hero3d.js?v=9"></script>
+  <script src="js/hero3d.js?v=10"></script>
 
-  <script src="js/i18n.js?v=9"></script>
-  <script src="js/app.js?v=9"></script>
+  <script src="js/i18n.js?v=10"></script>
+  <script src="js/app.js?v=10"></script>
 
   <!-- Language switcher dropdown toggle -->
   <script>
