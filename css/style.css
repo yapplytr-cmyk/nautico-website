@@ -840,7 +840,7 @@ a:hover { color: #9DD8EF; }
 .feat-viking-3d .cc-hero-3d-loading { font-size: 11px; }
 @media (max-width: 768px) {
   .feat-panels { flex-direction: column; gap: 10px; padding: 16px; }
-  .feat-viking-3d { flex: none; width: min(180px, 52%); height: 130px; }
+  .feat-viking-3d { flex: none; width: min(240px, 66%); height: 178px; }
 }
 
 /* Info (middle) */
@@ -1311,54 +1311,35 @@ a:hover { color: #9DD8EF; }
   .section-flow-btn { margin-top: 16px; }
   .section-flow-btn .btn { padding: 10px 22px; font-size: 0.88rem; }
 
-  /* ── Problem section (mobile): ONE card at a time + prev/next buttons ──
-     A single full-width card per view eliminates the stretch gaps. Content is
-     vertically centred so the card always looks balanced and tidy. */
+  /* ── Problem section (mobile): clean VERTICAL stack of compact animated
+     glass boxes. No carousel, no stretch → never a gap. Each box animates in
+     on scroll (via .anim-in) and matches the rest of the site. ── */
   .problem-grid {
-    display: flex; grid-template-columns: none;
-    gap: 0; overflow-x: auto; overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    align-items: flex-start;   /* do NOT stretch cards to equal height (that caused the gap) */
+    display: flex; flex-direction: column; gap: 14px;
+    grid-template-columns: none; overflow: visible;
   }
-  .problem-grid::-webkit-scrollbar { display: none; }
   .problem-card-animated {
-    flex: 0 0 100%; width: 100%; height: auto;     /* size to content — no empty gap */
-    scroll-snap-align: center;
-    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-    text-align: center;
-    padding: 24px 22px; border-radius: 18px;
+    width: 100%; flex: none;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    padding: 22px 20px; border-radius: 18px;
     background: var(--bg-card); border: 1px solid var(--border);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.32);
+    box-shadow: 0 8px 26px rgba(0,0,0,0.28);
   }
-  .problem-card-animated:hover { transform: none; box-shadow: 0 12px 30px rgba(0,0,0,0.32); }
+  .problem-card-animated:hover { transform: none; box-shadow: 0 8px 26px rgba(0,0,0,0.28); }
   .problem-card-animated::before { display: none; }
-  .card-illustration { width: 54px; height: 54px; margin: 0 auto 14px; }
-  .card-icon-circle { width: 54px; height: 54px; margin: 0; animation: none; }
-  .card-icon-circle svg { width: 27px; height: 27px; }
+  .card-illustration { width: 50px; height: 50px; margin: 0 auto 12px; }
+  .card-icon-circle { width: 50px; height: 50px; margin: 0; animation: none; }
+  .card-icon-circle svg { width: 25px; height: 25px; }
   .card-orbit { display: none; }
-  .card-tag { font-size: 0.62rem; padding: 3px 11px; margin-bottom: 10px; border-radius: 11px; }
-  .card-title { font-size: 1.1rem; margin-bottom: 8px; line-height: 1.25; }
-  .card-desc { display: block; font-size: 0.85rem; line-height: 1.5; margin-bottom: 16px; opacity: 0.88; max-width: 280px; }
-  .card-bullets { gap: 9px; max-width: 250px; margin: 0 auto; width: 100%; align-items: flex-start; text-align: left; }
-  .card-bullet { font-size: 0.82rem; gap: 10px; align-items: center; }
-  .card-bullet-icon { width: 26px; height: 26px; border-radius: 7px; font-size: 0.74rem; flex-shrink: 0; }
+  .card-tag { font-size: 0.6rem; padding: 3px 11px; margin-bottom: 9px; border-radius: 11px; }
+  .card-title { font-size: 1.05rem; margin-bottom: 7px; line-height: 1.25; }
+  .card-desc { display: block; font-size: 0.83rem; line-height: 1.5; margin-bottom: 14px; opacity: 0.86; max-width: 300px; }
+  .card-bullets { gap: 8px; max-width: 260px; margin: 0 auto; width: 100%; align-items: flex-start; text-align: left; }
+  .card-bullet { font-size: 0.8rem; gap: 9px; align-items: center; }
+  .card-bullet-icon { width: 24px; height: 24px; border-radius: 7px; font-size: 0.72rem; flex-shrink: 0; }
 
-  /* prev / next + dots */
-  .problem-nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 18px; }
-  .problem-nav-btn {
-    width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(143,211,244,0.10); border: 1px solid rgba(143,211,244,0.42);
-    color: var(--accent); cursor: pointer; -webkit-tap-highlight-color: transparent;
-    transition: transform 0.2s ease, background 0.2s ease;
-  }
-  .problem-nav-btn:active { transform: scale(0.88); background: rgba(143,211,244,0.22); }
-  .problem-nav-btn svg { width: 20px; height: 20px; }
-  .problem-dots { display: flex; gap: 9px; }
-  .problem-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(143,211,244,0.3); transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease; }
-  .problem-dot.active { background: var(--accent); transform: scale(1.45); box-shadow: 0 0 10px var(--accent-glow); }
+  /* carousel controls no longer used on mobile */
+  .problem-nav { display: none !important; }
 
   /* ── Solution / Feature Explorer: compact for iPhone ── */
   .feat-tabs { gap: 5px; margin-bottom: 14px; }
@@ -1414,7 +1395,7 @@ a:hover { color: #9DD8EF; }
   #page-home #intro-section > .section-arrow { bottom: 12px; }
 
   /* ── Viking inside the Solution box: small + centered above the text ── */
-  .feat-viking-3d { width: min(170px, 50%); height: 120px; margin: 0 auto; }
+  .feat-viking-3d { width: min(225px, 62%); height: 165px; margin: 0 auto; }
 
   /* hero 3D a touch tighter so the brand + tagline fit one screen */
   .cc-hero { min-height: 90vh; padding: 56px 14px 128px; }
