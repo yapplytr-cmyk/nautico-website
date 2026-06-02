@@ -45,16 +45,7 @@ const routes = {
   dashboard: 'page-dashboard'
 };
 
-// Resolve the current route from the clean path (/pricing) — falls back to the
-// legacy #hash and finally to 'home'. Unknown paths → home.
-function routeFromUrl() {
-  var path = (window.location.pathname || '/').replace(/^\/+|\/+$/g, '');
-  if (!path && window.location.hash) path = window.location.hash.replace('#', '');
-  if (!path) return 'home';
-  return routes[path] ? path : 'home';
-}
-
-function navigate(route, skipPush) {
+function navigate(route) {
   // Hide all pages
   document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
 
@@ -89,7 +80,7 @@ function navigate(route, skipPush) {
 
   // Update URL with a clean path (no hash). Skipped on back/forward so we don't
   // add duplicate history entries.
-  if (!skipPush) history.pushState(null, '', '/' + route);
+  history.pushState(null, '', '#' + route);
 
 
   // If navigating to dashboard, check auth
@@ -163,9 +154,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Contact form
   document.getElementById('contact-form')?.addEventListener('submit', handleContact);
 
-  // Handle initial route from the clean URL path (e.g. /pricing). Legacy
-  // #hash links still resolve too.
-  navigate(routeFromUrl());
+  // Handle initial route from URL hash
+  const hash = window.location.hash.replace('#', '') || 'home';
+  navigate(hash);
 
   // Check for existing session
   checkSession();
@@ -298,14 +289,18 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 });
 
-// Handle browser back/forward (don't push a new entry)
+// Handle browser back/forward
 window.addEventListener('popstate', () => {
-  navigate(routeFromUrl(), true);
+  const hash = window.location.hash.replace('#', '') || 'home';
+  navigate(hash);
 });
 
-// Legacy support: if anyone lands on an old #hash link, convert it to a clean path
+// Fallback: handle hashchange (catches cases where click listeners don't fire)
 window.addEventListener('hashchange', () => {
-  if (window.location.hash) navigate(routeFromUrl());
+  const hash = window.location.hash.replace('#', '') || 'home';
+  if (routes[hash]) {
+    navigate(hash);
+  }
 });
 
 // ── Auth ──
