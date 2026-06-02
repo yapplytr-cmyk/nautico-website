@@ -120,10 +120,10 @@ a:hover { color: #9DD8EF; }
   box-shadow: 0 6px 20px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.18);
   transition: transform 0.2s ease, background 0.25s ease, box-shadow 0.25s ease, color 0.2s ease;
 }
-.nav-links { display: flex; align-items: center; gap: 4px; }
+.nav-links { display: flex; align-items: center; gap: 3px; }
 .nav-link {
-  color: var(--text-secondary); font-size: 0.88rem; font-weight: 600; text-decoration: none;
-  padding: 10px 18px; border-radius: 999px; text-align: center;
+  color: var(--text-secondary); font-size: 0.84rem; font-weight: 600; text-decoration: none;
+  padding: 7px 14px; border-radius: 999px; text-align: center;
   background: transparent; border: 1px solid transparent;
   transition: color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
@@ -1463,7 +1463,7 @@ html[data-theme="dark"] .screenshots-section { background: transparent !importan
 /* Navbar is now a transparent floating pill — the page background flows behind
    it. The top safe-area strip is covered by the solid body::before fill. */
 html[data-theme="dark"] .navbar { background: transparent !important; }
-html[data-theme="dark"] .nav-inner { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.13); }
+html[data-theme="dark"] .nav-inner { background: none !important; border: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 html { transition: background 0.5s ease; }
 body { transition: background 0.5s ease, color 0.5s ease; }
 
@@ -1890,8 +1890,11 @@ html body #app-content #page-home #intro-section {
 /* keep all real content above the particle canvas (navbar stays on top) */
 #app-content, footer { position: relative; z-index: 1; }
 .cc-progress { z-index: 80; }
-/* navbar: pinned to the very top, above everything, flush under the notch */
+/* navbar: pinned to the top, above everything, with breathing room so the
+   glass items don't touch the browser's top edge */
 .navbar {
   z-index: 200 !important;
-  padding-top: env(safe-area-inset-top, 0px);
+  background: transparent !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+  padding-top: calc(20px + env(safe-area-inset-top, 0px));
 }
