@@ -90,49 +90,61 @@ a:hover { color: #9DD8EF; }
 }
 @keyframes btn-spin { to { transform: rotate(360deg); } }
 
-/* ══ NAVBAR — floating liquid-glass pill (no full-width bar; the page
-   background flows continuously behind it, app-style) ══ */
+/* ══ NAVBAR — NO bar, NO logo. Each item is its own floating liquid-glass
+   circle/pill (app-style): blurred glass, soft glow, inset highlight. They
+   fade + drift in on first load. ══ */
 .navbar {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   background: transparent; border: none;
   padding: 14px 16px;
   padding-top: calc(14px + env(safe-area-inset-top, 0px));
-  pointer-events: none;                 /* only the pill captures clicks */
+  pointer-events: none;                 /* only the glass items capture clicks */
 }
 .nav-inner {
-  pointer-events: auto;
-  max-width: 1060px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 9px 12px 9px 18px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.15);
-  -webkit-backdrop-filter: blur(22px) saturate(1.7);
-          backdrop-filter: blur(22px) saturate(1.7);
-  box-shadow: 0 10px 34px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.16);
   position: relative;
-  animation: navFloat 6s ease-in-out infinite;   /* gentle liquid motion */
-  transition: box-shadow 0.3s ease, transform 0.3s ease, background 0.3s ease;
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: flex-end; gap: 10px;
+  background: none; border: none; padding: 0; box-shadow: none;
 }
-@keyframes navFloat {
-  0%,100% { box-shadow: 0 10px 30px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.14); }
-  50%     { box-shadow: 0 14px 40px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.20); }
+.nav-inner > * { pointer-events: auto; }
+.nav-brand { display: none !important; }   /* logo removed — unnecessary */
+
+/* Shared liquid-glass look for every nav item (matches the app's circles) */
+.nav-link, .lang-btn, .theme-toggle, .nav-hamburger {
+  background: rgba(255,255,255,0.10) !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.6); backdrop-filter: blur(20px) saturate(1.6);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.18);
+  transition: transform 0.2s ease, background 0.25s ease, box-shadow 0.25s ease, color 0.2s ease;
 }
-.nav-inner > * { position: relative; z-index: 1; }
-.nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.nav-logo-img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; display: block; }
-.nav-brand-text { font-size: 1.12rem; font-weight: 700; color: var(--text-primary); letter-spacing: 0.5px; line-height: 1; }
-.nav-links { display: flex; align-items: center; gap: 26px; }
-.nav-link { color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; text-decoration: none; }
-.nav-link:hover, .nav-link.active { color: var(--text-primary); }
+.nav-links { display: flex; align-items: center; gap: 10px; }
+.nav-link {
+  color: var(--text-secondary); font-size: 0.88rem; font-weight: 600; text-decoration: none;
+  padding: 10px 18px; border-radius: 999px;
+}
+.nav-link:hover { color: var(--text-primary); transform: translateY(-1px);
+  box-shadow: 0 9px 26px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.24); }
+.nav-link.active { color: var(--text-primary); }
 .nav-login-btn {
-  background: rgba(126,200,227,0.16); border: 1px solid rgba(126,200,227,0.4);
-  padding: 7px 18px; border-radius: 999px; color: var(--accent) !important;
-  transition: background 0.2s ease;
+  background: rgba(126,200,227,0.18) !important; border: 1px solid rgba(126,200,227,0.42) !important;
+  color: var(--accent) !important;
 }
-.nav-login-btn:hover { background: rgba(126,200,227,0.28); }
-.nav-hamburger { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 6px; }
-.nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text-primary); border-radius: 2px; transition: all 0.3s; }
+.nav-login-btn:hover { background: rgba(126,200,227,0.30) !important; }
+.nav-hamburger {
+  display: none; width: 44px; height: 44px; border-radius: 50%;
+  cursor: pointer; align-items: center; justify-content: center; flex-direction: column; gap: 5px; padding: 0;
+}
+.nav-hamburger span { display: block; width: 18px; height: 2px; background: var(--text-primary); border-radius: 2px; transition: all 0.3s; }
+
+/* fade + drift in on first load, staggered per item */
+.nav-link, .theme-toggle, .lang-switcher, .nav-hamburger { animation: navItemIn 0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.nav-links .nav-link:nth-child(1) { animation-delay: 0.05s; }
+.nav-links .nav-link:nth-child(2) { animation-delay: 0.12s; }
+.nav-links .nav-link:nth-child(3) { animation-delay: 0.19s; }
+.nav-links .nav-link:nth-child(4) { animation-delay: 0.26s; }
+.theme-toggle { animation-delay: 0.33s; }
+.lang-switcher { animation-delay: 0.40s; }
+@keyframes navItemIn { from { opacity: 0; transform: translateY(-10px) scale(0.88); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
 /* ── Language Switcher ── */
 .lang-switcher {
@@ -207,9 +219,9 @@ a:hover { color: #9DD8EF; }
 
 @media (max-width: 768px) {
   .navbar { padding: 10px 12px; padding-top: calc(10px + env(safe-area-inset-top, 0px)); }
-  .nav-inner { padding: 8px 10px 8px 14px; gap: 8px; }
-  .nav-brand-text { display: none; }     /* logo only — save room in the pill */
-  /* links drop down as a floating liquid-glass panel under the pill */
+  .nav-inner { gap: 8px; justify-content: flex-end; }
+  /* links drop down as a floating liquid-glass panel (the menu opens from the
+     hamburger circle); theme + language + hamburger stay as glass circles */
   .nav-links {
     display: none; position: absolute; top: calc(100% + 12px); left: 0; right: 0;
     flex-direction: column; align-items: stretch; gap: 6px;
