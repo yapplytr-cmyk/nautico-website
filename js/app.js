@@ -244,12 +244,13 @@ document.addEventListener('DOMContentLoaded', () => {
         d.classList.toggle('active', i === activeIdx);
         d.classList.toggle('passed', i < activeIdx);
       });
-      // floating chevron: point at the next section. Hidden on the hero (which
-      // has its own "Discover Nautico" cue) and on the last section.
+      // floating chevron: point at the next section. Hidden on the hero (its own
+      // cue), on the last section, AND whenever we're near the page bottom.
       if (nextBtn) {
         var isLast = activeIdx >= sections.length - 1;
+        var nearBottom = (window.scrollY + window.innerHeight) >= (document.documentElement.scrollHeight - 120);
         nextBtn._target = sections[activeIdx + 1] || null;
-        nextBtn.classList.toggle('visible', activeIdx >= 1 && !isLast);
+        nextBtn.classList.toggle('visible', activeIdx >= 1 && !isLast && !nearBottom);
       }
     }
     window.addEventListener('scroll', update, { passive: true });

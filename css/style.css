@@ -467,10 +467,10 @@ a:hover { color: #9DD8EF; }
 .hero-phone-screen img,
 .screenshot-img,
 .feat-phone img {
-  transform: scale(1.10);
-  transform-origin: 50% 70%;
+  transform: scale(1.05);
+  transform-origin: 50% 68%;
 }
-.demo-video { transform: scale(1.10); transform-origin: 50% 70%; }
+.demo-video { transform: scale(1.05); transform-origin: 50% 68%; }
 .demo-video-row {
   position: relative;
   display: flex;
@@ -1210,7 +1210,9 @@ a:hover { color: #9DD8EF; }
     min-height: auto;
   }
   .hero-bg-elements { display: none; }  /* hide floating SVGs on small screens */
-  .hero-visual, .hero-visual-wide { flex: none; order: -1; }
+  /* phones sit below the text on mobile — give them clear breathing room so
+     they don't crowd the 'try Premium' trust line above them */
+  .hero-visual, .hero-visual-wide { flex: none; order: -1; margin-top: 26px; }
   .hero-3phones {
     width: min(82vw, 300px);
     height: 214px;
@@ -1513,9 +1515,13 @@ html[data-theme="dark"] .theme-toggle-knob {
    upper/mid of the hero and faded out by the mask (below) well before the fold
    so the colour is rich up top but the transition into the next section stays
    soft and seamless — never a hard line. */
-.cc-aurora { position: absolute; width: 58vw; height: 58vw; border-radius: 50%; filter: blur(100px); opacity: 0.22; pointer-events: none; will-change: transform; }
-.cc-aurora.a1 { top: -22%; left: -12%; background: var(--intro-accent); animation: ccFloat 16s ease-in-out infinite; }
-.cc-aurora.a2 { top: 14%; right: -14%; background: var(--intro-accent-2); animation: ccFloat 20s ease-in-out infinite reverse; }
+/* Two soft gradient glow circles — cyan + violet (the original galaxy header
+   colours). Built from radial-gradients (NOT filter:blur) so they're soft and
+   GPU-cheap → smooth on mobile, no hard-edged disc. Faded by the mask below so
+   the fold stays seamless. */
+.cc-aurora { position: absolute; width: 74vw; height: 74vw; border-radius: 50%; opacity: 0.55; pointer-events: none; will-change: transform; }
+.cc-aurora.a1 { top: -26%; left: -20%; background: radial-gradient(circle, rgba(126,200,227,0.55), rgba(126,200,227,0) 66%); animation: ccFloat 16s ease-in-out infinite; }
+.cc-aurora.a2 { top: 4%; right: -24%; background: radial-gradient(circle, rgba(167,139,250,0.55), rgba(167,139,250,0) 66%); animation: ccFloat 20s ease-in-out infinite reverse; }
 @keyframes ccFloat { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,-30px) scale(1.1); } }
 
 .cc-inner { position: relative; z-index: 5; text-align: center; padding: 0 24px; }
@@ -1592,9 +1598,9 @@ html[data-theme="dark"] .theme-toggle-knob {
 #page-home .cc-hero ~ * { position: relative; z-index: 2; }
 /* ── 3D boats on mobile: smaller, full-width, fits phone screens ── */
 @media (max-width: 768px) {
-  /* Huge blurred aurora discs are expensive on mobile GPUs and render as an
-     "odd circle". Drop them on phones — stars + particles + gradient remain. */
-  .cc-aurora { display: none !important; }
+  /* Aurora glows now use cheap radial-gradients (no blur filter), so they're
+     smooth on phones — keep them visible. Slightly softer on small screens. */
+  .cc-aurora { opacity: 0.42; }
   .cc-hero { min-height: 92vh; padding: 76px 14px 96px; }
   .cc-hero-3d {
     width: 100%;
@@ -1729,7 +1735,7 @@ html body #app-content #page-home #intro-section {
   box-shadow: none !important;
 }
 
-/* Center-console boat sitting on top of the final CTA headline */
+/* ── Final CTA section — finished, premium composition ── */
 .cc-cta-3d {
   width: min(560px, 92vw);
   height: clamp(220px, 32vh, 360px);
@@ -1737,6 +1743,25 @@ html body #app-content #page-home #intro-section {
 }
 @media (max-width: 768px) {
   .cc-cta-3d { width: min(420px, 88vw); height: clamp(180px, 26vh, 280px); }
+}
+/* soft radial glow behind the CTA so the closing screen feels intentional */
+#cta-section { position: relative; padding-bottom: 110px; overflow: hidden; }
+#cta-section::before {
+  content: ""; position: absolute; left: 50%; top: 42%; transform: translate(-50%,-50%);
+  width: min(760px, 120vw); height: min(760px, 120vw); pointer-events: none; z-index: 0;
+  background: radial-gradient(circle, rgba(126,200,227,0.16), rgba(167,139,250,0.08) 45%, transparent 70%);
+}
+#cta-section .section-inner { position: relative; z-index: 1; }
+.cta-eyebrow {
+  display: inline-block; font-size: 0.78rem; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+  opacity: 0.9;
+}
+.cta-trust { justify-content: center; margin-top: 22px; }
+@media (max-width: 520px) {
+  #cta-section { padding-bottom: 84px; }
+  .cta-eyebrow { font-size: 0.68rem; letter-spacing: 1.5px; margin-bottom: 8px; }
+  .cta-trust { gap: 12px 18px; margin-top: 18px; }
 }
 
 /* Small Viking render that lives inside the Solution explorer — compact */

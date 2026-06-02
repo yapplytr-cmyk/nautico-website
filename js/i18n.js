@@ -110,8 +110,12 @@ var I18N = {
 
     // CTA SECTION
     cta_title: "Ready to take control?",
+    cta_eyebrow: "Your command center awaits",
     cta_subtitle: "Join yacht owners who've simplified their ownership with Nautico. Free to use — try Premium free for 7 days.",
     cta_btn: "Download on the App Store",
+    cta_trust_free: "Free to use",
+    cta_trust_trial: "7-day Premium trial",
+    cta_trust_cancel: "Cancel anytime",
 
     // PRICING PAGE
     price_title: "Simple, Transparent Pricing",
