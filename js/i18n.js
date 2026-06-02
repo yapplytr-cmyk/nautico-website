@@ -43,7 +43,7 @@ var I18N = {
     prob_cta: "See How We Solve It",
 
     // FEATURES SECTION
-    feat_label: "The Solution",
+    feat_label: "Features",
     feat_title: "Everything you need. One app.",
     feat_subtitle: "Nautico replaces your spreadsheets, paper logs, and guesswork with a single, intelligent platform designed for yacht owners.",
     feat_tab_money: "Money",

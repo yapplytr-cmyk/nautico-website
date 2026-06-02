@@ -835,7 +835,17 @@ a:hover { color: #9DD8EF; }
 .feat-viking-3d .cc-hero-3d-loading { font-size: 11px; }
 @media (max-width: 768px) {
   .feat-panels { flex-direction: column; gap: 10px; padding: 16px; }
-  .feat-viking-3d { flex: none; width: min(240px, 66%); height: 178px; }
+  .feat-viking-3d { flex: none; width: min(300px, 82%); height: 220px; }
+  /* Features section: center ALL text on mobile */
+  #features-section .section-inner { text-align: center; }
+  #features-section .section-label,
+  #features-section .section-title,
+  #features-section .section-subtitle { margin-left: auto; margin-right: auto; }
+  #features-section .feat-panel-info,
+  #features-section .feat-panel-info .card-title,
+  #features-section .feat-panel-info .card-desc { text-align: center; }
+  #features-section .feat-panel-info .card-tag { display: inline-block; }
+  #features-section .feat-panel-info .card-bullets { align-items: center; text-align: center; margin-left: auto; margin-right: auto; }
 }
 
 /* Info (middle) */
@@ -1390,7 +1400,7 @@ a:hover { color: #9DD8EF; }
   #page-home #intro-section > .section-arrow { bottom: 12px; }
 
   /* ── Viking inside the Solution box: small + centered above the text ── */
-  .feat-viking-3d { width: min(225px, 62%); height: 165px; margin: 0 auto; }
+  .feat-viking-3d { width: min(285px, 78%); height: 205px; margin: 0 auto; }
 
   /* hero 3D a touch tighter so the brand + tagline fit one screen */
   .cc-hero { min-height: 90vh; padding: 56px 14px 128px; }

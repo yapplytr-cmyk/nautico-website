@@ -11,7 +11,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png" />
-  <link rel="stylesheet" href="css/style.css?v=17" />
+  <link rel="stylesheet" href="css/style.css?v=18" />
   <!-- Start fetching the hero 3D model immediately so it's ready sooner -->
   <link rel="preload" href="assets/boat-midnight.glb" as="fetch" crossorigin="anonymous" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -36,7 +36,6 @@
   <div class="cc-progress" id="cc-progress" aria-hidden="true">
     <a class="cc-pdot" data-target="cc-hero" href="#home"></a>
     <a class="cc-pdot" data-target="intro-section" href="#intro-section"></a>
-    <a class="cc-pdot" data-target="problems-section" href="#problems-section"></a>
     <a class="cc-pdot" data-target="features-section" href="#features-section"></a>
     <a class="cc-pdot" data-target="screenshots-section" href="#screenshots-section"></a>
     <a class="cc-pdot cc-pdot-cta" data-target="cta-section" href="#cta-section"></a>
@@ -226,129 +225,18 @@
             </div>
           </div>
         </div>
-        <a href="#problems-section" class="section-arrow scroll-to" data-target="problems-section" aria-label="Next">
+        <a href="#features-section" class="section-arrow scroll-to" data-target="features-section" aria-label="Next">
           <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </a>
       </div>
 
-      <!-- Wave Divider -->
-      <div class="wave-divider">
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0,30 C360,55 720,5 1080,30 C1260,42 1380,35 1440,30 L1440,60 L0,60 Z" fill="#13303D"/>
-        </svg>
-      </div>
-
-      <!-- Problems Section -->
-      <div class="section section-dark" id="problems-section">
-        <div class="section-inner">
-          <div class="section-label anim-in" data-i18n="prob_label">The Problem</div>
-          <h2 class="section-title anim-in" data-i18n="prob_title">Yacht ownership shouldn't feel like a second job</h2>
-          <p class="section-subtitle anim-in" data-i18n="prob_subtitle">Most owners juggle spreadsheets, paper logs, and scattered receipts just to keep track of their vessel. Sound familiar?</p>
-          <div class="problem-grid">
-
-            <div class="problem-card-animated anim-in">
-              <div class="card-illustration">
-                <div class="card-icon-circle problem-cost">
-                  <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
-                    <line x1="4" y1="4" x2="20" y2="20" stroke="#F87171" stroke-width="2" opacity="0.5"/>
-                  </svg>
-                  <div class="card-orbit">
-                    <div class="card-orbit-dot d1"></div>
-                    <div class="card-orbit-dot d2"></div>
-                    <div class="card-orbit-dot d3"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="card-tag problem-cost-tag" data-i18n="prob_tag_1">Financial</span>
-              <h3 class="card-title" data-i18n="prob_card_1_title">Hidden Costs Pile Up</h3>
-              <p class="card-desc" data-i18n="prob_card_1_desc">Fuel, docking, maintenance, insurance — expenses come from everywhere with no clear picture of total cost.</p>
-              <div class="card-bullets">
-                <div class="card-bullet"><div class="card-bullet-icon red">💸</div><span data-i18n="prob_card_1_b1">No consolidated expense tracking</span></div>
-                <div class="card-bullet"><div class="card-bullet-icon red">📊</div><span data-i18n="prob_card_1_b2">Surprise bills every season</span></div>
-                <div class="card-bullet"><div class="card-bullet-icon red">🧾</div><span data-i18n="prob_card_1_b3">Scattered receipts & invoices</span></div>
-              </div>
-            </div>
-
-            <div class="problem-card-animated anim-in">
-              <div class="card-illustration">
-                <div class="card-icon-circle problem-maint">
-                  <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
-                  </svg>
-                  <div class="card-orbit">
-                    <div class="card-orbit-dot d1"></div>
-                    <div class="card-orbit-dot d2"></div>
-                    <div class="card-orbit-dot d3"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="card-tag problem-maint-tag" data-i18n="prob_tag_2">Maintenance</span>
-              <h3 class="card-title" data-i18n="prob_card_2_title">Maintenance Gets Missed</h3>
-              <p class="card-desc" data-i18n="prob_card_2_desc">Without automated reminders based on your vessel's specs, critical service tasks fall through the cracks.</p>
-              <div class="card-bullets">
-                <div class="card-bullet"><div class="card-bullet-icon amber">🔧</div><span data-i18n="prob_card_2_b1">Engine hours tracked manually</span></div>
-                <div class="card-bullet"><div class="card-bullet-icon amber">⚠️</div><span data-i18n="prob_card_2_b2">Missed service deadlines</span></div>
-                <div class="card-bullet"><div class="card-bullet-icon amber">📝</div><span data-i18n="prob_card_2_b3">Paper-based maintenance logs</span></div>
-              </div>
-            </div>
-
-            <div class="problem-card-animated anim-in">
-              <div class="card-illustration">
-                <div class="card-icon-circle problem-hub">
-                  <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#C084FC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6"/>
-                    <line x1="9" y1="15" x2="15" y2="15" opacity="0.5"/><line x1="9" y1="11" x2="13" y2="11" opacity="0.5"/>
-                  </svg>
-                  <div class="card-orbit">
-                    <div class="card-orbit-dot d1"></div>
-                    <div class="card-orbit-dot d2"></div>
-                    <div class="card-orbit-dot d3"></div>
-                  </div>
-                </div>
-              </div>
-              <span class="card-tag problem-hub-tag" data-i18n="prob_tag_3">Organization</span>
-              <h3 class="card-title" data-i18n="prob_card_3_title">No Central Hub</h3>
-              <p class="card-desc" data-i18n="prob_card_3_desc">Voyage logs, documents, fuel data, and crew info are scattered across apps, emails, and notebooks.</p>
-              <div class="card-bullets">
-                <div class="card-bullet"><div class="card-bullet-icon violet">📁</div><span data-i18n="prob_card_3_b1">Files across five different apps</span></div>
-                <div class="card-bullet"><div class="card-bullet-icon violet">📍</div><span data-i18n="prob_card_3_b2">No single source of truth</span></div>
-                <div class="card-bullet"><div class="card-bullet-icon violet">🔍</div><span data-i18n="prob_card_3_b3">Hours wasted searching for info</span></div>
-              </div>
-            </div>
-
-          </div>
-          <!-- Mobile-only prev/next + dots to step through the problems -->
-          <div class="problem-nav" id="problem-nav" aria-hidden="true">
-            <button class="problem-nav-btn" id="prob-prev" aria-label="Previous problem">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
-            <div class="problem-dots" id="prob-dots"></div>
-            <button class="problem-nav-btn" id="prob-next" aria-label="Next problem">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-          </div>
-          <a href="#features-section" class="section-arrow scroll-to" data-target="features-section" aria-label="Next">
-            <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </a>
-        </div>
-      </div>
-
-      <!-- Wave Divider -->
-      <div class="wave-divider wave-divider-flip">
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0,30 C360,55 720,5 1080,30 C1260,42 1380,35 1440,30 L1440,60 L0,60 Z" fill="#13303D"/>
-        </svg>
-      </div>
 
       <!-- Features Section -->
       <div class="section" id="features-section">
         <div class="section-inner">
-          <div class="section-label anim-in" data-i18n="feat_label">The Solution</div>
+          <div class="section-label anim-in" data-i18n="feat_label">Features</div>
           <h2 class="section-title anim-in" data-i18n="feat_title">Everything you need. One app.</h2>
           <p class="section-subtitle anim-in" data-i18n="feat_subtitle">Nautico replaces your spreadsheets, paper logs, and guesswork with a single, intelligent platform designed for yacht owners.</p>
           <!-- 3D Viking showcase -->
@@ -373,7 +261,7 @@
             <div class="feat-panels">
               <!-- Small Viking 3D render — lives INSIDE the solution box, on the
                    left where the icon used to be. Re-angles per solution, always rotating. -->
-              <div class="cc-section-3d cc-section-3d-sm feat-viking-3d" id="boat-viking" data-boat3d="assets/boat-viking.glb" data-fit="4.4" data-base-yaw="-1.57">
+              <div class="cc-section-3d cc-section-3d-sm feat-viking-3d" id="boat-viking" data-boat3d="assets/boat-viking.glb" data-fit="5.6" data-base-yaw="-1.57">
                 <div class="cc-hero-3d-loading">Loading vessel…</div>
               </div>
               <div class="feat-panel active" data-panel="0">
@@ -978,10 +866,10 @@
   <script src="assets/vendor/three.min.js"></script>
   <script src="assets/vendor/GLTFLoader.js"></script>
   <script src="assets/vendor/DRACOLoader.js"></script>
-  <script src="js/hero3d.js?v=17"></script>
+  <script src="js/hero3d.js?v=18"></script>
 
-  <script src="js/i18n.js?v=17"></script>
-  <script src="js/app.js?v=17"></script>
+  <script src="js/i18n.js?v=18"></script>
+  <script src="js/app.js?v=18"></script>
 
   <!-- Language switcher dropdown toggle -->
   <script>
