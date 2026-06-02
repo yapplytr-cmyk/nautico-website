@@ -1491,7 +1491,13 @@ html[data-theme="dark"] .theme-toggle-knob {
 /* Soft aurora glows */
 /* Aurora glow circles removed by request — kept hidden so any cached markup
    never renders them. */
-.cc-aurora { display: none !important; }
+/* Soft aurora colour glows — the original galaxy-header look. Kept in the
+   upper/mid of the hero and faded out by the mask (below) well before the fold
+   so the colour is rich up top but the transition into the next section stays
+   soft and seamless — never a hard line. */
+.cc-aurora { position: absolute; width: 58vw; height: 58vw; border-radius: 50%; filter: blur(100px); opacity: 0.22; pointer-events: none; will-change: transform; }
+.cc-aurora.a1 { top: -22%; left: -12%; background: var(--intro-accent); animation: ccFloat 16s ease-in-out infinite; }
+.cc-aurora.a2 { top: 14%; right: -14%; background: var(--intro-accent-2); animation: ccFloat 20s ease-in-out infinite reverse; }
 @keyframes ccFloat { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,-30px) scale(1.1); } }
 
 .cc-inner { position: relative; z-index: 5; text-align: center; padding: 0 24px; }
