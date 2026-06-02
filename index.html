@@ -11,7 +11,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png" />
-  <link rel="stylesheet" href="css/style.css?v=13" />
+  <link rel="stylesheet" href="css/style.css?v=14" />
   <!-- Start fetching the hero 3D model immediately so it's ready sooner -->
   <link rel="preload" href="assets/boat-midnight.glb" as="fetch" crossorigin="anonymous" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -490,8 +490,50 @@
           function featNav(dir) {
             var cur = _getCurrentFeat();
             var next = (cur + dir + _featTotal) % _featTotal;
-            switchFeatTab(next, dir);
+            if (window._scrollFeatToCenter) window._scrollFeatToCenter(next);
+            else switchFeatTab(next, dir);
           }
+          // ── Solution feature SCROLL-WHEEL: the focused feature sits centred,
+          //    the rest fade + shrink symmetrically toward both sides. ──
+          (function () {
+            var wrap = document.querySelector('.feat-tabs');
+            if (!wrap) return;
+            var tabs = [].slice.call(wrap.querySelectorAll('.feat-tab'));
+            if (!tabs.length) return;
+            var lastIdx = -1, raf = null;
+            function paint() {
+              var wr = wrap.getBoundingClientRect();
+              var cx = wr.left + wr.width / 2, nearest = 0, nd = Infinity;
+              tabs.forEach(function (t, i) {
+                var r = t.getBoundingClientRect();
+                var d = Math.abs((r.left + r.width / 2) - cx);
+                var n = Math.min(1, d / (wr.width * 0.42));   // 0 at centre → 1 at edge
+                t.style.opacity = (1 - n * 0.72).toFixed(3);
+                t.style.transform = 'scale(' + (1 - n * 0.26).toFixed(3) + ')';
+                if (d < nd) { nd = d; nearest = i; }
+              });
+              if (nearest !== lastIdx) {
+                lastIdx = nearest;
+                switchFeatTab(parseInt(tabs[nearest].getAttribute('data-feat')) || 0);
+              }
+            }
+            function onScroll() { if (raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(paint); }
+            wrap.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', onScroll);
+            window._scrollFeatToCenter = function (featIdx) {
+              var t = wrap.querySelector('.feat-tab[data-feat="' + featIdx + '"]');
+              if (!t) return;
+              var wr = wrap.getBoundingClientRect(), r = t.getBoundingClientRect();
+              wrap.scrollBy({ left: (r.left + r.width / 2) - (wr.left + wr.width / 2), behavior: 'smooth' });
+            };
+            tabs.forEach(function (t) {
+              t.addEventListener('click', function () {
+                window._scrollFeatToCenter(parseInt(t.getAttribute('data-feat')) || 0);
+              });
+            });
+            setTimeout(function () { if (window._scrollFeatToCenter) window._scrollFeatToCenter(0); paint(); }, 100);
+            window.addEventListener('load', function () { setTimeout(paint, 220); });
+          })();
           // Swipe left/right across the solution box to change feature (but NOT
           // when the gesture starts on the Viking 3D, which rotates on touch).
           (function () {
@@ -936,10 +978,10 @@
   <script src="assets/vendor/three.min.js"></script>
   <script src="assets/vendor/GLTFLoader.js"></script>
   <script src="assets/vendor/DRACOLoader.js"></script>
-  <script src="js/hero3d.js?v=13"></script>
+  <script src="js/hero3d.js?v=14"></script>
 
-  <script src="js/i18n.js?v=13"></script>
-  <script src="js/app.js?v=13"></script>
+  <script src="js/i18n.js?v=14"></script>
+  <script src="js/app.js?v=14"></script>
 
   <!-- Language switcher dropdown toggle -->
   <script>
