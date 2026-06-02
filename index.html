@@ -23,6 +23,14 @@
   <!-- ══ FLOATING PARTICLES (drift across the whole page, Rival-style) ══ -->
   <canvas id="cc-particles" aria-hidden="true"></canvas>
 
+  <!-- ══ PERSISTENT "NEXT SECTION" CHEVRON — always pinned to the bottom of the
+       screen on the home page so it's never hidden below a tall section ══ -->
+  <a id="cc-next" class="cc-next" href="#" aria-label="Next section">
+    <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </a>
+
   <!-- ══ SCROLL PROGRESS DOTS (grow toward the download CTA) ══ -->
   <div class="cc-progress" id="cc-progress" aria-hidden="true">
     <a class="cc-pdot" data-target="cc-hero" href="#home"></a>

@@ -1747,26 +1747,30 @@ html body #app-content #page-home #intro-section {
   .cc-section-3d-sm { width: min(240px, 64vw); height: clamp(115px, 16vh, 150px); }
 }
 
-/* "Next section" cue at the bottom of EVERY section — IDENTICAL style to the
-   hero scroll cue (.cc-arrows): a soft stack of thin animated chevrons.
-   No circle, no glow box — same look everywhere for consistency. */
-.section-arrow {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 0; width: max-content; margin: 30px auto 4px; text-decoration: none; cursor: pointer;
-  position: relative; z-index: 5;
-  transition: transform 0.25s ease, opacity 0.25s ease;
+/* The inline per-section arrows are replaced by ONE persistent floating chevron
+   (#cc-next) pinned to the bottom of the viewport, so the "next" cue is never
+   hidden below a tall section. Hide the inline ones. */
+.section-arrow { display: none !important; }
+
+/* ── Persistent "next section" chevron — fixed at the bottom-centre of the
+   screen on the home page. Same thin 3-chevron look as the hero cue. ── */
+.cc-next {
+  position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(8px);
+  z-index: 90; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-decoration: none; cursor: pointer; padding: 6px 22px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.45s ease, transform 0.45s ease;
 }
-.section-arrow svg { width: 26px; height: 26px; stroke: var(--intro-accent); fill: none; stroke-width: 2; }
-.section-arrow .cc-ar { animation: ccArrow 1.8s ease-in-out infinite; }
-.section-arrow .cc-ar:nth-child(2) { animation-delay: 0.2s; margin-top: -14px; opacity: 0.6; }
-.section-arrow .cc-ar:nth-child(3) { animation-delay: 0.4s; margin-top: -14px; opacity: 0.3; }
-.section-arrow:hover { transform: translateY(3px); }
-.section-arrow:hover svg { stroke: var(--text-primary); }
-/* The intro section ("This is Nautico") is a flex ROW, so a normal-flow arrow
-   gets pushed to the side / up. Pin it to the bottom-centre instead. */
-#page-home #intro-section { position: relative; }
-#page-home #intro-section > .section-arrow {
-  position: absolute; left: 0; right: 0; bottom: 18px; margin: 0 auto;
+.cc-next.visible { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.cc-next svg { width: 28px; height: 28px; stroke: var(--intro-accent); fill: none; stroke-width: 2; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5)); }
+.cc-next .cc-ar { animation: ccArrow 1.8s ease-in-out infinite; }
+.cc-next .cc-ar:nth-child(2) { animation-delay: 0.2s; margin-top: -15px; opacity: 0.6; }
+.cc-next .cc-ar:nth-child(3) { animation-delay: 0.4s; margin-top: -15px; opacity: 0.3; }
+.cc-next:hover { transform: translateX(-50%) translateY(4px); }
+.cc-next:hover svg { stroke: var(--text-primary); }
+@media (max-width: 768px) {
+  .cc-next { bottom: calc(18px + env(safe-area-inset-bottom, 0px)); padding: 6px 18px; }
+  .cc-next svg { width: 26px; height: 26px; }
 }
 
 /* The hero→fold feather is defined below (a soft transparent→dark→transparent

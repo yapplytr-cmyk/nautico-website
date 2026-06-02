@@ -210,19 +210,30 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!rail) return;
     var dots = [].slice.call(rail.querySelectorAll('.cc-pdot'));
     var sections = dots.map(function (d) { return document.getElementById(d.getAttribute('data-target')); });
+    var nextBtn = document.getElementById('cc-next');
+    function scrollToSection(t) {
+      if (!t) return;
+      var nh = (document.getElementById('navbar') || {}).offsetHeight || 60;
+      window.scrollTo({ top: t.getBoundingClientRect().top + window.pageYOffset - nh - 8, behavior: 'smooth' });
+    }
     // smooth-scroll on dot click
     dots.forEach(function (d) {
       d.addEventListener('click', function (e) {
-        var t = document.getElementById(d.getAttribute('data-target'));
-        if (t) { e.preventDefault(); var nh = (document.getElementById('navbar') || {}).offsetHeight || 60; window.scrollTo({ top: t.getBoundingClientRect().top + window.pageYOffset - nh - 8, behavior: 'smooth' }); }
+        e.preventDefault(); scrollToSection(document.getElementById(d.getAttribute('data-target')));
       });
     });
+    // persistent floating chevron → always jumps to the NEXT section
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function (e) {
+        e.preventDefault(); scrollToSection(nextBtn._target);
+      });
+    }
     function update() {
       // only show the rail on the home page
       var home = document.getElementById('page-home');
       var onHome = home && home.offsetParent !== null;
       rail.classList.toggle('visible', !!onHome);
-      if (!onHome) return;
+      if (!onHome) { if (nextBtn) nextBtn.classList.remove('visible'); return; }
       var mid = window.scrollY + window.innerHeight * 0.45;
       var activeIdx = 0;
       for (var i = 0; i < sections.length; i++) {
@@ -233,6 +244,13 @@ document.addEventListener('DOMContentLoaded', () => {
         d.classList.toggle('active', i === activeIdx);
         d.classList.toggle('passed', i < activeIdx);
       });
+      // floating chevron: point at the next section. Hidden on the hero (which
+      // has its own "Discover Nautico" cue) and on the last section.
+      if (nextBtn) {
+        var isLast = activeIdx >= sections.length - 1;
+        nextBtn._target = sections[activeIdx + 1] || null;
+        nextBtn.classList.toggle('visible', activeIdx >= 1 && !isLast);
+      }
     }
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
