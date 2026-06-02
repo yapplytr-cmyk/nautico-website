@@ -32,6 +32,15 @@
 html { scroll-behavior: smooth; background: #000000; }
 html:not([data-theme="dark"]) { background: #103040; }
 html, body { min-height: 100%; }
+/* Bulletproof: paint a SOLID bar over the exact top safe-area (notch/status
+   bar) so iPhone never shows a white/frosted strip there. Sits above the
+   navbar. Zero height on devices without a notch. */
+body::before {
+  content: ""; position: fixed; top: 0; left: 0; right: 0;
+  height: env(safe-area-inset-top, 0px);
+  background: #000000; z-index: 300; pointer-events: none;
+}
+html:not([data-theme="dark"]) body::before { background: #103040; }
 
 body {
   font-family: 'Inter', -apple-system, 'SF Pro Text', 'Helvetica Neue', system-ui, sans-serif;
@@ -717,8 +726,12 @@ a:hover { color: #9DD8EF; }
 }
 .feat-panel.active { display: flex; }
 @keyframes featPanelIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes featPanelInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 /* Graphic (left) */
@@ -1242,25 +1255,25 @@ a:hover { color: #9DD8EF; }
   }
   .problem-grid::-webkit-scrollbar { display: none; }
   .problem-card-animated {
-    flex: 0 0 82%; max-width: 300px;
+    flex: 0 0 76%; max-width: 270px;
     scroll-snap-align: center;
     display: flex; flex-direction: column; align-items: center; text-align: center;
-    padding: 22px 18px; border-radius: 18px;
+    padding: 18px 16px; border-radius: 16px;
     background: var(--bg-card); border: 1px solid var(--border);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.32);
   }
-  .problem-card-animated:hover { transform: none; box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
+  .problem-card-animated:hover { transform: none; box-shadow: 0 10px 26px rgba(0,0,0,0.32); }
   .problem-card-animated::before { display: none; }
-  .card-illustration { width: 56px; height: 56px; margin: 0 auto 12px; }
-  .card-icon-circle { width: 56px; height: 56px; margin: 0; animation: none; }
-  .card-icon-circle svg { width: 28px; height: 28px; }
+  .card-illustration { width: 46px; height: 46px; margin: 0 auto 10px; }
+  .card-icon-circle { width: 46px; height: 46px; margin: 0; animation: none; }
+  .card-icon-circle svg { width: 23px; height: 23px; }
   .card-orbit { display: none; }
-  .card-tag { font-size: 0.62rem; padding: 3px 10px; margin-bottom: 8px; border-radius: 12px; }
-  .card-title { font-size: 1.02rem; margin-bottom: 8px; }
-  .card-desc { display: block; font-size: 0.82rem; line-height: 1.5; margin-bottom: 12px; }
-  .card-bullets { gap: 6px; max-width: none; margin: 0; width: 100%; align-items: flex-start; text-align: left; }
-  .card-bullet { font-size: 0.78rem; gap: 8px; }
-  .card-bullet-icon { width: 24px; height: 24px; border-radius: 6px; font-size: 0.7rem; }
+  .card-tag { font-size: 0.58rem; padding: 3px 9px; margin-bottom: 7px; border-radius: 11px; }
+  .card-title { font-size: 0.95rem; margin-bottom: 6px; line-height: 1.25; }
+  .card-desc { display: block; font-size: 0.76rem; line-height: 1.45; margin-bottom: 10px; opacity: 0.85; }
+  .card-bullets { gap: 5px; max-width: none; margin: 0; width: 100%; align-items: flex-start; text-align: left; }
+  .card-bullet { font-size: 0.72rem; gap: 7px; }
+  .card-bullet-icon { width: 21px; height: 21px; border-radius: 6px; font-size: 0.64rem; flex-shrink: 0; }
 
   /* ── Solution / Feature Explorer: compact for iPhone ── */
   .feat-tabs { gap: 5px; margin-bottom: 14px; }
@@ -1372,7 +1385,10 @@ html[data-theme="dark"] .page,
 html[data-theme="dark"] .cc-hero,
 html[data-theme="dark"] .hero,
 html[data-theme="dark"] .screenshots-section { background: transparent !important; }
-html[data-theme="dark"] .navbar { background: rgba(0,0,0,0.7) !important; }
+/* Nearly-opaque so the bar (and the notch/safe-area it fills) reads as solid
+   dark on iPhone — a translucent blur over the empty top safe-area renders
+   frosted/light ("white bar"). */
+html[data-theme="dark"] .navbar { background: rgba(0,0,0,0.92) !important; }
 html { transition: background 0.5s ease; }
 body { transition: background 0.5s ease, color 0.5s ease; }
 
@@ -1558,19 +1574,19 @@ html[data-theme="dark"] .theme-toggle-knob {
   .cc-hero { min-height: 92vh; padding: 76px 14px 96px; }
   .cc-hero-3d {
     width: 100%;
-    height: clamp(320px, 46vh, 440px);
+    height: clamp(240px, 36vh, 340px);
     margin: 2px auto 0;
   }
   .cc-hero-3d.hero3d-loaded { opacity: 1; }
   .cc-section-3d {
     width: 100%;
-    height: clamp(300px, 42vh, 420px);
-    margin: 18px auto 4px;
+    height: clamp(240px, 34vh, 340px);
+    margin: 14px auto 4px;
   }
 }
 @media (max-width: 480px) {
-  .cc-hero-3d { height: clamp(300px, 44vh, 400px); }
-  .cc-section-3d { height: clamp(280px, 40vh, 380px); }
+  .cc-hero-3d { height: clamp(230px, 34vh, 320px); }
+  .cc-section-3d { height: clamp(220px, 32vh, 320px); }
 }
 
 /* ── Section fade-in reveal (Rival-style scroll feel) ── */

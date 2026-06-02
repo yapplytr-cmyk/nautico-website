@@ -72,8 +72,10 @@
 
     var isMobile = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
     var W = container.clientWidth || 600, H = container.clientHeight || 460;
-    var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !isMobile, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1.25 : 2)); // much lighter on phones
+    var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
+    // Render at the device's real pixel density (capped) so the boat is CRISP on
+    // retina iPhones. Earlier we capped at 1.25 which made it look blurry.
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 2.5 : 2));
     renderer.setSize(W, H);
     renderer.outputEncoding = THREE.sRGBEncoding;
     container.appendChild(renderer.domElement);
@@ -160,8 +162,9 @@
       var box = new THREE.Box3().setFromObject(loaded);
       var sz = box.getSize(new THREE.Vector3());
       var maxDim = Math.max(sz.x, sz.y, sz.z) || 1;
-      // On phones keep the boat LARGE (only a touch smaller than desktop).
-      var fit = (opts.fit || 6.0) * (isMobile ? 1.06 : 1);
+      // On phones the boat should be a touch SMALLER than desktop so it doesn't
+      // dominate the screen (was oversized at 1.06).
+      var fit = (opts.fit || 6.0) * (isMobile ? 0.82 : 1);
       loaded.scale.setScalar(fit / maxDim);
       box.setFromObject(loaded);
       loaded.position.sub(box.getCenter(new THREE.Vector3())); // centre at origin

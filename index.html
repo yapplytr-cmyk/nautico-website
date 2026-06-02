@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
   <meta name="theme-color" content="#000000" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Nautico — Smart Yacht Management</title>
   <meta name="description" content="Nautico is the all-in-one yacht management app. Track expenses, plan voyages, monitor maintenance, and navigate with live nautical charts." />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
@@ -464,7 +465,7 @@
             var active = document.querySelector('.feat-tab.active');
             return active ? parseInt(active.getAttribute('data-feat')) : 0;
           }
-          function switchFeatTab(idx) {
+          function switchFeatTab(idx, dir) {
             document.querySelectorAll('.feat-tab').forEach(function(t) { t.classList.remove('active'); });
             var tab = document.querySelector('.feat-tab[data-feat="' + idx + '"]');
             if (tab) tab.classList.add('active');
@@ -474,7 +475,9 @@
               panel.classList.add('active');
               panel.style.animation = 'none';
               panel.offsetHeight;
-              panel.style.animation = 'featPanelIn 0.4s ease';
+              // slide in from the side you're heading toward (Rival-style switch)
+              var anim = (dir === -1) ? 'featPanelInLeft' : 'featPanelIn';
+              panel.style.animation = anim + ' 0.42s cubic-bezier(0.16,1,0.3,1)';
             }
             // Swing the Viking 3D to a fresh viewing angle per solution
             // (it keeps continuously rotating; this just shifts the base view).
@@ -487,8 +490,26 @@
           function featNav(dir) {
             var cur = _getCurrentFeat();
             var next = (cur + dir + _featTotal) % _featTotal;
-            switchFeatTab(next);
+            switchFeatTab(next, dir);
           }
+          // Swipe left/right across the solution box to change feature (but NOT
+          // when the gesture starts on the Viking 3D, which rotates on touch).
+          (function () {
+            var box = document.querySelector('.feat-panels');
+            if (!box) return;
+            var x0 = null, y0 = null;
+            box.addEventListener('touchstart', function (e) {
+              if (e.target.closest && e.target.closest('#boat-viking')) { x0 = null; return; }
+              x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+            }, { passive: true });
+            box.addEventListener('touchend', function (e) {
+              if (x0 === null) return;
+              var dx = e.changedTouches[0].clientX - x0;
+              var dy = e.changedTouches[0].clientY - y0;
+              x0 = null;
+              if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) featNav(dx < 0 ? 1 : -1);
+            }, { passive: true });
+          })();
           </script>
           <div class="section-flow-btn">
             <a href="#screenshots-section" class="btn btn-primary scroll-to" data-target="screenshots-section">
@@ -519,51 +540,15 @@
             <h2 class="screenshots-title" data-i18n="ss_title">Designed for yacht owners, by yacht owners</h2>
             <p class="screenshots-subtitle" data-i18n="ss_subtitle">Explore every feature of Nautico with a visual walkthrough of the app's core screens.</p>
           </div>
-          <!-- Live Demo Video + CTA Arrow -->
+          <!-- Live Demo Video — clean: just the phone + caption -->
           <div class="demo-video-wrap">
-            <div class="demo-video-row">
-              <div class="demo-video-phone">
-                <video class="demo-video" autoplay muted loop playsinline>
-                  <source src="screenshots/app-demo.mp4" type="video/mp4" />
-                </video>
-              </div>
-              <!-- Arrow trigger (desktop only) -->
-              <div class="demo-cta-trigger" id="demo-cta-trigger">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-              </div>
-              <!-- Animated CTA panel -->
-              <div class="demo-cta-panel" id="demo-cta-panel">
-                <div class="demo-cta-content">
-                  <div class="demo-cta-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                  </div>
-                  <h3 class="demo-cta-title" data-i18n="demo_cta_title">Ready to try it?</h3>
-                  <p class="demo-cta-desc" data-i18n="demo_cta_desc">Get Nautico on your iPhone and start managing your vessel today.</p>
-                  <a href="https://apps.apple.com/tr/app/nautico/id6761394669" target="_blank" class="btn btn-primary btn-lg btn-appstore" style="justify-content:center;text-align:center;gap:8px;">
-                    <svg width="20" height="24" viewBox="0 0 814 1000" fill="currentColor"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57.8-155.5-127.4c-58.3-81.2-105.9-207.6-105.9-328.2 0-193.1 125.7-295.7 249.4-295.7 65.7 0 120.3 43.2 161.4 43.2 39.2 0 100.4-45.8 174.7-45.8 28.2 0 130 2.6 197 97.9zm-135.3-174.3c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.9 32.4-54.2 83.6-54.2 135.5 0 7.8.7 15.6 1.3 18.2 2.6.3 6.3.6 10.2.6 45.9.1 101.7-30.3 138.6-70.7z"/></svg>
-                    <span data-i18n="demo_cta_btn">Download on the App Store</span>
-                  </a>
-                </div>
-              </div>
+            <div class="demo-video-phone">
+              <video class="demo-video" autoplay muted loop playsinline>
+                <source src="screenshots/app-demo.mp4" type="video/mp4" />
+              </video>
             </div>
             <p class="demo-video-caption" data-i18n="ss_video_caption">Live App Walkthrough</p>
-            <a href="#screenshots-container" class="demo-scroll-arrow scroll-to" data-target="screenshots-container" aria-label="Scroll to screenshots">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg>
-            </a>
           </div>
-          <!-- Inline CTA arrow toggle — guaranteed available -->
-          <script>
-          (function() {
-            var trigger = document.getElementById('demo-cta-trigger');
-            var panel = document.getElementById('demo-cta-panel');
-            if (trigger && panel) {
-              trigger.addEventListener('click', function() {
-                var isOpen = panel.classList.toggle('open');
-                trigger.classList.toggle('active', isOpen);
-              });
-            }
-          })();
-          </script>
           <!-- Auto-play video when scrolled into view (iOS fix) -->
           <script>
           (function() {
@@ -628,17 +613,6 @@
               <div class="screenshot-caption" data-i18n="ss_cap_alerts">Smart Alerts</div>
             </div>
           </div>
-          <div class="section-flow-btn">
-            <a href="#cta-section" class="btn btn-primary scroll-to" data-target="cta-section">
-              <span data-i18n="ss_cta">Get Started</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:6px"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
-            </a>
-          </div>
-          <a href="#cta-section" class="section-arrow scroll-to" data-target="cta-section" aria-label="Next">
-            <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </a>
         </div>
       </div>
 
