@@ -29,17 +29,19 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 /* html paints behind the body — with viewport-fit=cover it fills the notch /
    status-bar safe area on iPhone, so it MUST match the site colour (never white). */
-html { scroll-behavior: smooth; background: #000000; }
+/* html paints behind the body / in the notch + status-bar safe area. It must
+   match the HERO's top colour so the very top continues the hero background —
+   never a black (or white) bar. */
+html { scroll-behavior: smooth; background: #060912; }
 html:not([data-theme="dark"]) { background: #103040; }
 html, body { min-height: 100%; }
-/* Bulletproof: paint a SOLID bar over the exact top safe-area (notch/status
-   bar) so iPhone never shows a white/frosted strip there. Sits above the
-   navbar. Zero height on devices without a notch. */
+/* Fill the exact top safe-area (notch/status bar) with the hero's top colour so
+   it blends seamlessly into the hero gradient. Zero height without a notch. */
 body::before {
   content: ""; position: fixed; top: 0; left: 0; right: 0;
   height: constant(safe-area-inset-top, 0px);   /* older iOS */
   height: env(safe-area-inset-top, 0px);          /* iOS 11.2+ */
-  background: #000000; z-index: 300; pointer-events: none;
+  background: #060912; z-index: 300; pointer-events: none;
 }
 html:not([data-theme="dark"]) body::before { background: #103040; }
 
