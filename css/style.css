@@ -37,7 +37,8 @@ html, body { min-height: 100%; }
    navbar. Zero height on devices without a notch. */
 body::before {
   content: ""; position: fixed; top: 0; left: 0; right: 0;
-  height: env(safe-area-inset-top, 0px);
+  height: constant(safe-area-inset-top, 0px);   /* older iOS */
+  height: env(safe-area-inset-top, 0px);          /* iOS 11.2+ */
   background: #000000; z-index: 300; pointer-events: none;
 }
 html:not([data-theme="dark"]) body::before { background: #103040; }
