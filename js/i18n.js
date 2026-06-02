@@ -15,7 +15,7 @@ var I18N = {
     hero_title_2: "In the Palm of Your Hand",
     hero_subtitle: "From bow to stern — track expenses, log voyages, schedule maintenance, and navigate with live nautical charts. One app, every sea mile.",
     hero_cta: "Discover More",
-    hero_trust_trial: "30-day free trial",
+    hero_trust_trial: "Free to use — try Premium 7 days free",
     hero_trust_cancel: "Cancel anytime",
 
     // PROBLEMS SECTION
@@ -110,18 +110,18 @@ var I18N = {
 
     // CTA SECTION
     cta_title: "Ready to take control?",
-    cta_subtitle: "Join yacht owners who've simplified their ownership with Nautico. Start your 30-day free trial today.",
+    cta_subtitle: "Join yacht owners who've simplified their ownership with Nautico. Free to use — try Premium free for 7 days.",
     cta_btn: "Download on the App Store",
 
     // PRICING PAGE
     price_title: "Simple, Transparent Pricing",
-    price_subtitle: "Both plans include a 30-day free trial. No charge until your trial ends.",
+    price_subtitle: "Nautico is free to use. Both Premium plans include a 7-day free trial — no charge until your trial ends.",
     price_monthly: "Monthly",
     price_yearly: "Yearly",
     price_monthly_desc: "Billed monthly after trial",
     price_yearly_desc: "$59.94/yr — Save 50%",
     price_badge: "Most Popular",
-    price_f1: "30-day free trial",
+    price_f1: "7-day free Premium trial",
     price_f2: "All features included",
     price_f3: "Unlimited vessels",
     price_f4: "Cloud-synced data",
@@ -131,7 +131,7 @@ var I18N = {
     price_cta: "Start Free Trial",
     price_faq_title: "Frequently Asked Questions",
     price_faq1_q: "How does the free trial work?",
-    price_faq1_a: "Both monthly and yearly plans come with a 30-day free trial. You won't be charged until the trial ends. Cancel anytime during the 30 days and pay nothing.",
+    price_faq1_a: "Nautico is free to use with core features. Both monthly and yearly Premium plans come with a 7-day free trial. You won't be charged until the trial ends. Cancel anytime during the 7 days and pay nothing.",
     price_faq2_q: "Can I switch plans later?",
     price_faq2_a: "Yes. You can switch between monthly and yearly at any time from your account settings or through the App Store.",
     price_faq3_q: "Is my data safe?",
@@ -211,7 +211,7 @@ var I18N = {
     terms_h2: "2. License Grant",
     terms_p2: "Nautico grants you a limited, non-exclusive, non-transferable, revocable license to use the App for personal, non-commercial purposes on Apple-branded devices that you own or control, subject to the Apple Media Services Terms and Conditions.",
     terms_h3: "3. Subscriptions & Payments",
-    terms_p3: "Nautico offers auto-renewable subscription plans (Monthly and Yearly), each with a 30-day free trial. Payment is charged to your Apple ID account at confirmation of purchase. Subscriptions automatically renew unless cancelled at least 24 hours before the end of the current billing period. You can manage or cancel your subscription in your Apple ID Account Settings. Any unused portion of a free trial is forfeited upon purchasing a subscription.",
+    terms_p3: "Nautico is free to use with core features and offers optional auto-renewable Premium subscription plans (Monthly and Yearly), each with a 7-day free trial. Payment is charged to your Apple ID account at confirmation of purchase. Subscriptions automatically renew unless cancelled at least 24 hours before the end of the current billing period. You can manage or cancel your subscription in your Apple ID Account Settings. Any unused portion of a free trial is forfeited upon purchasing a subscription.",
     terms_h4: "4. User Accounts",
     terms_p4: "You may create an account to sync your data across devices. You are responsible for maintaining the confidentiality of your login credentials. You may delete your account at any time from the Settings page within the App, which will permanently remove all your data from our servers.",
     terms_h5: "5. User Conduct",
@@ -275,7 +275,7 @@ var I18N = {
     hero_title_2: "У Вас в Руках",
     hero_subtitle: "От носа до кормы — отслеживайте расходы, ведите журналы плаваний, планируйте техническое обслуживание и навигируйте с интерактивными морскими картами. Один час, одно приложение.",
     hero_cta: "Узнать больше",
-    hero_trust_trial: "Бесплатный пробный период 30 дней",
+    hero_trust_trial: "Бесплатный пробный период 7 дней",
     hero_trust_cancel: "Отмена в любой момент",
 
     // PROBLEMS SECTION
@@ -370,18 +370,18 @@ var I18N = {
 
     // CTA SECTION
     cta_title: "Готовы взять контроль?",
-    cta_subtitle: "Присоединитесь к яхтсменам, которые упростили управление с помощью Nautico. Начните бесплатный пробный период на 30 дней сегодня.",
+    cta_subtitle: "Присоединитесь к яхтсменам, которые упростили управление с помощью Nautico. Начните бесплатный пробный период на 7 дней сегодня.",
     cta_btn: "Скачать из App Store",
 
     // PRICING PAGE
     price_title: "Простые и прозрачные цены",
-    price_subtitle: "Оба плана предусматривают 30-дневный бесплатный пробный период. Платёж начинается только после окончания пробного периода.",
+    price_subtitle: "Оба плана предусматривают 7-дневный бесплатный пробный период. Платёж начинается только после окончания пробного периода.",
     price_monthly: "Ежемесячно",
     price_yearly: "Ежегодно",
     price_monthly_desc: "Оплата ежемесячно после окончания пробного периода",
     price_yearly_desc: "$59,94/год — Сэкономьте 50%",
     price_badge: "Самый популярный",
-    price_f1: "30-дневный бесплатный пробный период",
+    price_f1: "7-дневный бесплатный пробный период",
     price_f2: "Все функции включены",
     price_f3: "Неограниченное количество судов",
     price_f4: "Синхронизация данных в облаке",
@@ -391,7 +391,7 @@ var I18N = {
     price_cta: "Начать Бесплатный Пробный Период",
     price_faq_title: "Часто Задаваемые Вопросы",
     price_faq1_q: "Как работает бесплатный пробный период?",
-    price_faq1_a: "Оба тарифа включают 30-дневный бесплатный пробный период. Вам не будут выставляться счета до окончания пробного периода. Вы можете отменить в любой момент в течение 30 дней и не платить ничего.",
+    price_faq1_a: "Оба тарифа включают 7-дневный бесплатный пробный период. Вам не будут выставляться счета до окончания пробного периода. Вы можете отменить в любой момент в течение 7 дней и не платить ничего.",
     price_faq2_q: "Можно ли позже переключиться на другой тариф?",
     price_faq2_a: "Да. Вы можете переключаться между ежемесячным и ежегодным тарифами в любой момент в настройках своего аккаунта или через App Store.",
     price_faq3_q: "Безопасны ли мои данные?",
@@ -507,7 +507,7 @@ var I18N = {
     hero_title_2: "Avucunuzun İçinde",
     hero_subtitle: "Baş taraftan kıç tarafa kadar — harcamalarınızı takip edin, seferlerinizi kaydedin, bakımlarınızı planlayın ve canlı deniz haritalarıyla yolunuzu bulun. Tek uygulama, her deniz mili.",
     hero_cta: "Keşfetmeye Başla",
-    hero_trust_trial: "30 gün ücretsiz deneme",
+    hero_trust_trial: "7 gün ücretsiz deneme",
     hero_trust_cancel: "İstediğiniz zaman iptal edin",
 
     // PROBLEMS SECTION
@@ -602,18 +602,18 @@ var I18N = {
 
     // CTA SECTION
     cta_title: "Kontrolü elinize almaya hazır mısınız?",
-    cta_subtitle: "Nautico ile tekne sahipliğini kolaylaştıran binlerce kullanıcıya katılın. 30 günlük ücretsiz denemenizi bugün başlatın.",
+    cta_subtitle: "Nautico ile tekne sahipliğini kolaylaştıran binlerce kullanıcıya katılın. 7 günlük ücretsiz denemenizi bugün başlatın.",
     cta_btn: "App Store'dan İndir",
 
     // PRICING PAGE
     price_title: "Basit ve Şeffaf Fiyatlandırma",
-    price_subtitle: "Her iki plan da 30 günlük ücretsiz deneme içerir. Deneme süresi dolana kadar ücret alınmaz.",
+    price_subtitle: "Her iki plan da 7 günlük ücretsiz deneme içerir. Deneme süresi dolana kadar ücret alınmaz.",
     price_monthly: "Aylık",
     price_yearly: "Yıllık",
     price_monthly_desc: "Denemeden sonra aylık faturalandırılır",
     price_yearly_desc: "$59,94/yıl — %50 tasarruf edin",
     price_badge: "En Popüler",
-    price_f1: "30 gün ücretsiz deneme",
+    price_f1: "7 gün ücretsiz deneme",
     price_f2: "Tüm özellikler dahil",
     price_f3: "Sınırsız tekne",
     price_f4: "Bulut senkronizasyonlu veriler",
@@ -623,7 +623,7 @@ var I18N = {
     price_cta: "Ücretsiz Denemeyi Başlat",
     price_faq_title: "Sıkça Sorulan Sorular",
     price_faq1_q: "Ücretsiz deneme nasıl işliyor?",
-    price_faq1_a: "Hem aylık hem yıllık planlar 30 günlük ücretsiz denemeyle başlar. Deneme bitene kadar herhangi bir ücret alınmaz. 30 gün içinde iptal ederseniz hiçbir ödeme yapmazsınız.",
+    price_faq1_a: "Hem aylık hem yıllık planlar 7 günlük ücretsiz denemeyle başlar. Deneme bitene kadar herhangi bir ücret alınmaz. 7 gün içinde iptal ederseniz hiçbir ödeme yapmazsınız.",
     price_faq2_q: "Sonradan plan değiştirebilir miyim?",
     price_faq2_a: "Evet. Hesap ayarlarınızdan veya App Store üzerinden aylık ve yıllık plan arasında istediğiniz zaman geçiş yapabilirsiniz.",
     price_faq3_q: "Verilerim güvende mi?",
@@ -739,7 +739,7 @@ var I18N = {
     hero_title_2: "Au Creux de Votre Main",
     hero_subtitle: "De l'avant à l'arrière — suivez les dépenses, consignez les voyages, planifiez l'entretien et naviguez avec des cartes marines en direct. Une application, chaque mille marin.",
     hero_cta: "Découvrir plus",
-    hero_trust_trial: "Essai gratuit de 30 jours",
+    hero_trust_trial: "Essai gratuit de 7 jours",
     hero_trust_cancel: "Annuler à tout moment",
 
     // PROBLEMS SECTION
@@ -834,18 +834,18 @@ var I18N = {
 
     // CTA SECTION
     cta_title: "Prêt à prendre le contrôle ?",
-    cta_subtitle: "Rejoignez les plaisanciers qui ont simplifié leur gestion avec Nautico. Commencez votre essai gratuit de 30 jours aujourd'hui.",
+    cta_subtitle: "Rejoignez les plaisanciers qui ont simplifié leur gestion avec Nautico. Commencez votre essai gratuit de 7 jours aujourd'hui.",
     cta_btn: "Télécharger sur l'App Store",
 
     // PRICING PAGE
     price_title: "Tarification simple et transparente",
-    price_subtitle: "Les deux plans incluent un essai gratuit de 30 jours. Aucun frais jusqu'à la fin de l'essai.",
+    price_subtitle: "Les deux plans incluent un essai gratuit de 7 jours. Aucun frais jusqu'à la fin de l'essai.",
     price_monthly: "Mensuel",
     price_yearly: "Annuel",
     price_monthly_desc: "Facturé mensuellement après l'essai",
     price_yearly_desc: "$59,94/an — Économisez 50%",
     price_badge: "Le plus populaire",
-    price_f1: "Essai gratuit de 30 jours",
+    price_f1: "Essai gratuit de 7 jours",
     price_f2: "Toutes les fonctionnalités incluses",
     price_f3: "Navires illimités",
     price_f4: "Données synchronisées en nuage",
@@ -855,7 +855,7 @@ var I18N = {
     price_cta: "Commencer l'Essai Gratuit",
     price_faq_title: "Questions fréquemment posées",
     price_faq1_q: "Comment fonctionne l'essai gratuit ?",
-    price_faq1_a: "Les plans mensuel et annuel bénéficient d'un essai gratuit de 30 jours. Aucun frais tant que l'essai n'est pas terminé. Annulez à tout moment pendant la période d'essai et ne payez rien.",
+    price_faq1_a: "Les plans mensuel et annuel bénéficient d'un essai gratuit de 7 jours. Aucun frais tant que l'essai n'est pas terminé. Annulez à tout moment pendant la période d'essai et ne payez rien.",
     price_faq2_q: "Puis-je changer de plan ultérieurement ?",
     price_faq2_a: "Oui. Vous pouvez basculer entre mensuel et annuel à tout moment à partir des paramètres de votre compte ou via l'App Store.",
     price_faq3_q: "Mes données sont-elles sûres ?",
@@ -971,7 +971,7 @@ var I18N = {
     hero_title_2: "Nel Palmo della Tua Mano",
     hero_subtitle: "Da prua a poppa — traccia le spese, registra i viaggi, pianifica la manutenzione e naviga con carte nautiche in diretta. Un'app, ogni miglio marino.",
     hero_cta: "Scopri di più",
-    hero_trust_trial: "Prova gratuita di 30 giorni",
+    hero_trust_trial: "Prova gratuita di 7 giorni",
     hero_trust_cancel: "Annulla in qualsiasi momento",
 
     // PROBLEMS SECTION
@@ -1066,18 +1066,18 @@ var I18N = {
 
     // CTA SECTION
     cta_title: "Pronto a prendere il controllo?",
-    cta_subtitle: "Unisciti ai diportisti che hanno semplificato la loro gestione con Nautico. Inizia la tua prova gratuita di 30 giorni oggi.",
+    cta_subtitle: "Unisciti ai diportisti che hanno semplificato la loro gestione con Nautico. Inizia la tua prova gratuita di 7 giorni oggi.",
     cta_btn: "Scarica dall'App Store",
 
     // PRICING PAGE
     price_title: "Prezzi semplici e trasparenti",
-    price_subtitle: "Entrambi i piani includono una prova gratuita di 30 giorni. Nessun addebito fino al termine della prova.",
+    price_subtitle: "Entrambi i piani includono una prova gratuita di 7 giorni. Nessun addebito fino al termine della prova.",
     price_monthly: "Mensile",
     price_yearly: "Annuale",
     price_monthly_desc: "Fatturato mensilmente dopo la prova",
     price_yearly_desc: "$59,94/anno — Risparmia il 50%",
     price_badge: "Il più popolare",
-    price_f1: "Prova gratuita di 30 giorni",
+    price_f1: "Prova gratuita di 7 giorni",
     price_f2: "Tutte le funzioni incluse",
     price_f3: "Imbarcazioni illimitate",
     price_f4: "Dati sincronizzati nel cloud",
@@ -1087,7 +1087,7 @@ var I18N = {
     price_cta: "Inizia Prova Gratuita",
     price_faq_title: "Domande frequenti",
     price_faq1_q: "Come funziona la prova gratuita?",
-    price_faq1_a: "Entrambi i piani mensile e annuale includono una prova gratuita di 30 giorni. Non Le verranno addebitati costi fino al termine della prova. Annulli in qualsiasi momento durante i 30 giorni e non paghi nulla.",
+    price_faq1_a: "Entrambi i piani mensile e annuale includono una prova gratuita di 7 giorni. Non Le verranno addebitati costi fino al termine della prova. Annulli in qualsiasi momento durante i 7 giorni e non paghi nulla.",
     price_faq2_q: "Posso cambiare piano in seguito?",
     price_faq2_a: "Sì. Può passare da mensile a annuale in qualsiasi momento dalle impostazioni del Suo account o tramite l'App Store.",
     price_faq3_q: "I Miei dati sono al sicuro?",
@@ -1203,7 +1203,7 @@ var I18N = {
     hero_title_2: "En la Palma de Tu Mano",
     hero_subtitle: "De proa a popa — realice seguimiento de gastos, registre viajes, planifique mantenimiento y navegue con cartas náuticas en directo. Una aplicación, cada milla marina.",
     hero_cta: "Descubre más",
-    hero_trust_trial: "Prueba gratuita de 30 días",
+    hero_trust_trial: "Prueba gratuita de 7 días",
     hero_trust_cancel: "Cancele en cualquier momento",
 
     // PROBLEMS SECTION
@@ -1298,18 +1298,18 @@ var I18N = {
 
     // CTA SECTION
     cta_title: "¿Listo para tomar el control?",
-    cta_subtitle: "Únete a los navegantes que han simplificado su gestión con Nautico. Inicia tu prueba gratuita de 30 días hoy.",
+    cta_subtitle: "Únete a los navegantes que han simplificado su gestión con Nautico. Inicia tu prueba gratuita de 7 días hoy.",
     cta_btn: "Descargar en la App Store",
 
     // PRICING PAGE
     price_title: "Precios simples y transparentes",
-    price_subtitle: "Ambos planes incluyen una prueba gratuita de 30 días. Sin cargo hasta que termine la prueba.",
+    price_subtitle: "Ambos planes incluyen una prueba gratuita de 7 días. Sin cargo hasta que termine la prueba.",
     price_monthly: "Mensual",
     price_yearly: "Anual",
     price_monthly_desc: "Facturado mensualmente después de la prueba",
     price_yearly_desc: "$59,94/año — Ahorre 50%",
     price_badge: "El más popular",
-    price_f1: "Prueba gratuita de 30 días",
+    price_f1: "Prueba gratuita de 7 días",
     price_f2: "Todas las características incluidas",
     price_f3: "Embarcaciones ilimitadas",
     price_f4: "Datos sincronizados en la nube",
@@ -1319,7 +1319,7 @@ var I18N = {
     price_cta: "Comenzar prueba gratuita",
     price_faq_title: "Preguntas frecuentes",
     price_faq1_q: "¿Cómo funciona la prueba gratuita?",
-    price_faq1_a: "Los planes mensual y anual incluyen una prueba gratuita de 30 días. No se le cobrará hasta que termine la prueba. Cancele en cualquier momento durante los 30 días y no pague nada.",
+    price_faq1_a: "Los planes mensual y anual incluyen una prueba gratuita de 7 días. No se le cobrará hasta que termine la prueba. Cancele en cualquier momento durante los 7 días y no pague nada.",
     price_faq2_q: "¿Puedo cambiar de plan más tarde?",
     price_faq2_a: "Sí. Puede cambiar entre mensual y anual en cualquier momento desde la configuración de su cuenta o a través de la App Store.",
     price_faq3_q: "¿Mis datos están seguros?",

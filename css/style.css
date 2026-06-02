@@ -450,6 +450,18 @@ a:hover { color: #9DD8EF; }
   object-fit: cover;
   transform: scale(1.03);
 }
+
+/* ── Zoom every app screenshot + the demo video slightly so the iPhone status
+   bar captured at the top of each image is cropped out of the phone frame.
+   Origin sits below centre so the crop comes off the TOP. ── */
+.hero-phone-screen, .screenshot-content, .feat-phone, .demo-video-phone { overflow: hidden; }
+.hero-phone-screen img,
+.screenshot-img,
+.feat-phone img {
+  transform: scale(1.10);
+  transform-origin: 50% 70%;
+}
+.demo-video { transform: scale(1.10); transform-origin: 50% 70%; }
 .demo-video-row {
   position: relative;
   display: flex;
@@ -1177,33 +1189,33 @@ a:hover { color: #9DD8EF; }
   /* ── Hero: graphic smaller & ABOVE text, no dead space ── */
   .hero {
     flex-direction: column-reverse;  /* phones above text */
-    padding: 80px 16px 56px;         /* reserve room for the bottom arrow cue */
-    gap: 16px;
+    padding: 66px 16px 44px;         /* compact so the whole section fits one screen */
+    gap: 10px;
     min-height: auto;
   }
   .hero-bg-elements { display: none; }  /* hide floating SVGs on small screens */
   .hero-visual, .hero-visual-wide { flex: none; order: -1; }
   .hero-3phones {
-    width: min(88vw, 340px);
-    height: 260px;
+    width: min(82vw, 300px);
+    height: 214px;
   }
   .hero-phone {
-    width: 110px; height: 230px;
-    border-radius: 20px; border-width: 2px;
+    width: 96px; height: 196px;
+    border-radius: 18px; border-width: 2px;
   }
   .hero-phone-center {
-    width: 130px; height: 265px;
-    border-radius: 24px;
+    width: 114px; height: 226px;
+    border-radius: 22px;
   }
-  .hero-phone-left { top: 20px; }
-  .hero-phone-right { top: 20px; }
-  .hero-title { font-size: 1.7rem; margin-bottom: 10px; }
-  .hero-subtitle { font-size: 0.95rem; margin-bottom: 18px; line-height: 1.5; }
-  .hero-badge { margin-bottom: 12px; font-size: 0.72rem; padding: 5px 12px; }
-  .hero-cta-row { margin-bottom: 14px; }
-  .hero-cta-row .btn { padding: 12px 24px; font-size: 0.9rem; }
-  .hero-trust { gap: 12px; }
-  .hero-trust-item { font-size: 0.78rem; }
+  .hero-phone-left { top: 16px; }
+  .hero-phone-right { top: 16px; }
+  .hero-title { font-size: 1.42rem; margin-bottom: 8px; }
+  .hero-subtitle { font-size: 0.86rem; margin-bottom: 12px; line-height: 1.45; }
+  .hero-badge { margin-bottom: 8px; font-size: 0.68rem; padding: 4px 11px; }
+  .hero-cta-row { margin-bottom: 10px; gap: 10px; }
+  .hero-cta-row .btn { padding: 11px 20px; font-size: 0.86rem; }
+  .hero-trust { gap: 10px; }
+  .hero-trust-item { font-size: 0.74rem; }
 
   /* ── Wave dividers tighter ── */
   .wave-divider svg { height: 24px; }
@@ -1216,97 +1228,37 @@ a:hover { color: #9DD8EF; }
   .section-flow-btn { margin-top: 16px; }
   .section-flow-btn .btn { padding: 10px 22px; font-size: 0.88rem; }
 
-  /* ── Problem section: premium accordion layout (mobile) ── */
-  .problem-grid { gap: 0; grid-template-columns: 1fr; }
+  /* ── Problem section (mobile): side-swipe carousel of compact cards ──
+     Horizontal scroll-snap row; the next card peeks in so it's obviously
+     swipeable. Each card is a smaller self-contained glass box. */
+  .problem-grid {
+    display: flex; grid-template-columns: none;
+    gap: 14px; overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px 14px 18px;
+    margin: 0 -14px;                 /* bleed to the screen edges */
+    scrollbar-width: none;
+  }
+  .problem-grid::-webkit-scrollbar { display: none; }
   .problem-card-animated {
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    border-radius: 0;
-    text-align: left;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(126,200,227,0.08);
-    overflow: hidden;
+    flex: 0 0 82%; max-width: 300px;
+    scroll-snap-align: center;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    padding: 22px 18px; border-radius: 18px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.35);
   }
-  .problem-card-animated:first-child {
-    border-top: 1px solid rgba(126,200,227,0.08);
-  }
-  .problem-card-animated:hover {
-    transform: none;
-    box-shadow: none;
-    border-color: rgba(126,200,227,0.08);
-  }
+  .problem-card-animated:hover { transform: none; box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
   .problem-card-animated::before { display: none; }
-
-  /* Accordion header row */
-  .problem-card-animated .card-accordion-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 16px 4px;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .card-illustration {
-    width: 44px; height: 44px;
-    margin: 0;
-    flex-shrink: 0;
-  }
-  .card-icon-circle {
-    width: 44px; height: 44px;
-    margin: 0;
-    animation: none;
-  }
-  .card-icon-circle svg { width: 22px; height: 22px; }
+  .card-illustration { width: 56px; height: 56px; margin: 0 auto 12px; }
+  .card-icon-circle { width: 56px; height: 56px; margin: 0; animation: none; }
+  .card-icon-circle svg { width: 28px; height: 28px; }
   .card-orbit { display: none; }
-  .card-tag { font-size: 0.6rem; padding: 2px 8px; margin-bottom: 2px; border-radius: 12px; }
-  .card-title { font-size: 0.95rem; margin-bottom: 0; }
-  .card-desc { display: none; }
-
-  /* Accordion chevron */
-  .problem-card-animated .accordion-chevron {
-    display: flex;
-    margin-left: auto;
-    flex-shrink: 0;
-    width: 28px; height: 28px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: rgba(126,200,227,0.06);
-    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), background 0.3s;
-  }
-  .problem-card-animated .accordion-chevron svg {
-    width: 14px; height: 14px;
-    stroke: rgba(126,200,227,0.5);
-    transition: stroke 0.3s;
-  }
-  .problem-card-animated.accordion-open .accordion-chevron {
-    transform: rotate(180deg);
-    background: rgba(126,200,227,0.12);
-  }
-  .problem-card-animated.accordion-open .accordion-chevron svg {
-    stroke: rgba(126,200,227,0.8);
-  }
-
-  /* Accordion body (hidden by default) */
-  .problem-card-animated .accordion-body {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;
-    opacity: 0;
-  }
-  .problem-card-animated.accordion-open .accordion-body {
-    max-height: 200px;
-    opacity: 1;
-  }
-
-  .card-bullets {
-    margin: 0 0 16px 58px;
-    gap: 6px;
-    max-width: none;
-    margin-right: 12px;
-  }
+  .card-tag { font-size: 0.62rem; padding: 3px 10px; margin-bottom: 8px; border-radius: 12px; }
+  .card-title { font-size: 1.02rem; margin-bottom: 8px; }
+  .card-desc { display: block; font-size: 0.82rem; line-height: 1.5; margin-bottom: 12px; }
+  .card-bullets { gap: 6px; max-width: none; margin: 0; width: 100%; align-items: flex-start; text-align: left; }
   .card-bullet { font-size: 0.78rem; gap: 8px; }
   .card-bullet-icon { width: 24px; height: 24px; border-radius: 6px; font-size: 0.7rem; }
 
@@ -1735,6 +1687,16 @@ html body #app-content #page-home #intro-section {
   border-top: 0 !important;
   border-bottom: 0 !important;
   box-shadow: none !important;
+}
+
+/* Center-console boat sitting on top of the final CTA headline */
+.cc-cta-3d {
+  width: min(560px, 92vw);
+  height: clamp(220px, 32vh, 360px);
+  margin: 0 auto -6px;
+}
+@media (max-width: 768px) {
+  .cc-cta-3d { width: min(420px, 88vw); height: clamp(180px, 26vh, 280px); }
 }
 
 /* Small Viking render that lives inside the Solution explorer — compact */
