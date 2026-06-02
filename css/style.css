@@ -35,15 +35,10 @@
 html { scroll-behavior: smooth; background: #060912; }
 html:not([data-theme="dark"]) { background: #103040; }
 html, body { min-height: 100%; }
-/* Fill the exact top safe-area (notch/status bar) with the hero's top colour so
-   it blends seamlessly into the hero gradient. Zero height without a notch. */
-body::before {
-  content: ""; position: fixed; top: 0; left: 0; right: 0;
-  height: constant(safe-area-inset-top, 0px);   /* older iOS */
-  height: env(safe-area-inset-top, 0px);          /* iOS 11.2+ */
-  background: #060912; z-index: 300; pointer-events: none;
-}
-html:not([data-theme="dark"]) body::before { background: #103040; }
+/* NO solid safe-area strip — it covered the particles/glow at the very top and
+   created a visible seam. With viewport-fit=cover the hero's own gradient +
+   particles flow continuously into the notch area, so the top is one smooth
+   piece. (theme-color #060912 tints the iOS status bar to match.) */
 
 body {
   font-family: 'Inter', -apple-system, 'SF Pro Text', 'Helvetica Neue', system-ui, sans-serif;
