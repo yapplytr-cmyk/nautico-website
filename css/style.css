@@ -1417,7 +1417,7 @@ a:hover { color: #9DD8EF; }
   .feat-viking-3d { width: min(170px, 50%); height: 120px; margin: 0 auto; }
 
   /* hero 3D a touch tighter so the brand + tagline fit one screen */
-  .cc-hero { min-height: 90vh; padding: 70px 14px 80px; }
+  .cc-hero { min-height: 90vh; padding: 56px 14px 128px; }
   .cc-hero-3d { height: clamp(260px, 40vh, 360px); }
   .cc-tagline { font-size: clamp(1.7rem, 8vw, 2.3rem); }
   .cc-hero-sub { font-size: 0.9rem; }
@@ -1508,7 +1508,7 @@ html[data-theme="dark"] .theme-toggle-knob {
   min-height: 100vh; min-height: 100svh;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   overflow: hidden; text-align: center;
-  padding: 80px 24px 120px;   /* extra bottom pad reserves the scroll-cue zone */
+  padding: 64px 24px 170px;   /* less top + more bottom => content sits higher, full chevron shows */
   background: transparent;    /* inherit the ONE universal page background */
 }
 /* 3D boat — BIG in-flow block between the brand and the tagline */
@@ -1558,7 +1558,7 @@ html[data-theme="dark"] .theme-toggle-knob {
 /* Scroll cue at the bottom of the hero — kept horizontally centered.
    (Uses its own keyframe so the fade-in transform can't clobber translateX.) */
 .cc-scroll-cue {
-  position: absolute; bottom: 26px; left: 0; right: 0; margin: 0 auto;
+  position: absolute; bottom: calc(42px + env(safe-area-inset-bottom, 0px)); left: 0; right: 0; margin: 0 auto;
   width: max-content; z-index: 6; text-decoration: none;
   display: flex; flex-direction: column; align-items: center;
   opacity: 0; animation: ccCueIn 1s ease-out 1.3s forwards;
@@ -1600,8 +1600,10 @@ html[data-theme="dark"] .theme-toggle-knob {
   text-shadow: 0 0 30px rgba(126,200,227,0.4);
 }
 .cc-tagline {
-  font-size: clamp(28px, 6vw, 52px); font-weight: 800; line-height: 1.05;
-  letter-spacing: -0.5px; color: var(--text-primary);
+  /* same font family + weight as the NAUTICO brand mark up top */
+  font-family: 'Inter', -apple-system, 'SF Pro Text', 'Helvetica Neue', system-ui, sans-serif;
+  font-size: clamp(28px, 6vw, 52px); font-weight: 700; line-height: 1.08;
+  letter-spacing: 0.5px; color: var(--text-primary);
   opacity: 0; animation: ccUp 1s ease-out 0.45s forwards; margin-bottom: 40px;
 }
 .cc-tagline .cc-grad {
@@ -1666,7 +1668,7 @@ html[data-theme="dark"] .theme-toggle-knob {
   /* Aurora glows now use cheap radial-gradients (no blur filter), so they're
      smooth on phones — keep them visible. Slightly softer on small screens. */
   .cc-aurora { opacity: 0.42; }
-  .cc-hero { min-height: 92vh; padding: 76px 14px 96px; }
+  .cc-hero { min-height: 92vh; padding: 60px 14px 132px; }
   .cc-hero-3d {
     width: 100%;
     height: clamp(240px, 36vh, 340px);
