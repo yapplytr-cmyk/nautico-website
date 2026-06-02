@@ -256,6 +256,35 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', update);
     update();
   })();
+
+  // ── Problem section: one-card carousel with prev/next + dots (mobile) ──
+  (function () {
+    var grid = document.querySelector('#problems-section .problem-grid');
+    var prev = document.getElementById('prob-prev');
+    var next = document.getElementById('prob-next');
+    var dotsWrap = document.getElementById('prob-dots');
+    if (!grid || !dotsWrap) return;
+    var cards = [].slice.call(grid.querySelectorAll('.problem-card-animated'));
+    if (!cards.length) return;
+    var dots = cards.map(function (_, i) {
+      var d = document.createElement('span');
+      d.className = 'problem-dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', function () { go(i); });
+      dotsWrap.appendChild(d);
+      return d;
+    });
+    function curIdx() { return Math.round(grid.scrollLeft / grid.clientWidth); }
+    function go(i) {
+      i = Math.max(0, Math.min(cards.length - 1, i));
+      grid.scrollTo({ left: i * grid.clientWidth, behavior: 'smooth' });
+    }
+    if (prev) prev.addEventListener('click', function () { go(curIdx() - 1); });
+    if (next) next.addEventListener('click', function () { go(curIdx() + 1); });
+    grid.addEventListener('scroll', function () {
+      var c = curIdx();
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === c); });
+    }, { passive: true });
+  })();
 });
 
 // Handle browser back/forward
