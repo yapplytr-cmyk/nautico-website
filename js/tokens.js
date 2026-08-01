@@ -29,6 +29,14 @@
     { id: "elite", name: "Elite", price_try: 1999, tokens_per_month: 120 }
   ];
 
+  /* Single-language UI: follow the website's language switch (i18n.js). */
+  function lang() {
+    try { if (typeof getLanguage === "function") return getLanguage() === "tr" ? "tr" : "en"; } catch (e) {}
+    try { return (localStorage.getItem("nautico-lang") === "tr") ? "tr" : "en"; } catch (e) {}
+    return "en";
+  }
+  function tr2(en, tr) { return lang() === "tr" ? tr : en; }
+
   function esc(v) {
     return String(v == null ? "" : v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
@@ -70,17 +78,17 @@
   var WEB_DISCOUNT = 0.8;
   function webPrice(p) { return Math.round(priceOf(p) * WEB_DISCOUNT); }
   function packCard(p, featured, kind) {
-    var buyLabel = kind === "plan" ? "Üye Ol — Become a Member" : "Satın Al — Purchase";
+    var buyLabel = kind === "plan" ? tr2("Become a Member", "Üye Ol") : tr2("Purchase", "Satın Al");
     return (
       '<div class="tk-card' + (featured ? " tk-card--featured" : "") + '">' +
       (featured ? '<span class="tk-flag">Most popular</span>' : "") +
       TOKEN_SVG +
-      '<div class="tk-tokens">' + esc(p.tokens || p.tokens_per_month) + '<span>tokens' + (p.tokens_per_month ? "/mo" : "") + "</span></div>" +
+      '<div class="tk-tokens">' + esc(p.tokens || p.tokens_per_month) + '<span>' + tr2("tokens", "jeton") + (p.tokens_per_month ? tr2("/mo", "/ay") : "") + "</span></div>" +
       '<div class="tk-name">' + esc(p.name) + "</div>" +
-      '<div class="tk-price"><s class="tk-price-app">' + tl(priceOf(p)) + "</s> " + tl(webPrice(p)) + (p.tokens_per_month ? '<span>/ay</span>' : "") + "</div>" +
-      '<div class="tk-webdeal">Web fiyatı — App Store\'dan %20 daha ucuz</div>' +
+      '<div class="tk-price"><s class="tk-price-app">' + tl(priceOf(p)) + "</s> " + tl(webPrice(p)) + (p.tokens_per_month ? "<span>" + tr2("/mo", "/ay") + "</span>" : "") + "</div>" +
+      '<div class="tk-webdeal">' + tr2("Web price — 20% cheaper than the App Store", "Web fiyatı — App Store\'dan %20 daha ucuz") + "</div>" +
       '<button type="button" class="btn btn-primary tk-buy" data-buy-kind="' + kind + '" data-buy-id="' + esc(p.id) + '">' + buyLabel + "</button>" +
-      '<a class="tk-app-link" href="' + APP_URL + '" target="_blank" rel="noopener">or buy in the app</a>' +
+      '<a class="tk-app-link" href="' + APP_URL + '" target="_blank" rel="noopener">' + tr2("or buy in the app", "veya uygulamadan satın al") + '</a>' +
       "</div>"
     );
   }
@@ -115,7 +123,7 @@
     var row = (kind === "plan" ? (window.__tkPlans || []) : (window.__tkPacks || []))
       .filter(function (r) { return r.id === id; })[0] || { name: id, tokens: "", price: 0 };
     var oldLabel = btn ? btn.textContent : "";
-    if (btn) { btn.disabled = true; btn.textContent = "Hazırlanıyor…"; }
+    if (btn) { btn.disabled = true; btn.textContent = tr2("Preparing…", "Hazırlanıyor…"); }
     try {
       var body = { userId: user.id, userEmail: user.email || "" };
       if (kind === "plan") body.planId = id; else body.packId = id;
@@ -139,14 +147,14 @@
       ov.innerHTML =
         '<div class="tk-co-card">' +
           '<button type="button" class="tk-co-x" aria-label="Close">&times;</button>' +
-          '<h3 class="tk-co-title">' + (kind === "plan" ? "Üyelik — " : "Jeton — ") + esc(row.name || id) + "</h3>" +
+          '<h3 class="tk-co-title">' + (kind === "plan" ? tr2("Membership — ", "Üyelik — ") : tr2("Tokens — ", "Jeton — ")) + esc(row.name || id) + "</h3>" +
           '<div class="tk-co-row"><span>' + esc(row.tokens || row.tokens_per_month || "") +
-            (kind === "plan" ? " tokens/ay" : " tokens") + "</span><strong>" + tl(amount) +
-            (kind === "plan" ? "/ay" : "") + "</strong></div>" +
-          '<div class="tk-co-deal">Web fiyatı — App Store\'dan %20 daha ucuz</div>' +
+            (kind === "plan" ? " " + tr2("tokens/mo", "jeton/ay") : " " + tr2("tokens", "jeton")) + "</span><strong>" + tl(amount) +
+            (kind === "plan" ? tr2("/mo", "/ay") : "") + "</strong></div>" +
+          '<div class="tk-co-deal">' + tr2("Web price — 20% cheaper than the App Store", "Web fiyatı — App Store\'dan %20 daha ucuz") + "</div>" +
           '<div id="tk-payment-element" style="margin:14px 0;"></div>' +
           '<div class="tk-co-err" id="tk-co-err"></div>' +
-          '<button type="button" class="btn btn-primary btn-full" id="tk-co-pay">' + "Öde — Pay " + tl(amount) + "</button>" +
+          '<button type="button" class="btn btn-primary btn-full" id="tk-co-pay">' + tr2("Pay ", "Öde ") + tl(amount) + "</button>" +
         "</div>";
       document.body.appendChild(ov);
       ov.addEventListener("click", function (e) { if (e.target === ov) closeCheckoutModal(); });
@@ -163,7 +171,7 @@
       var payBtn = document.getElementById("tk-co-pay");
       payBtn.addEventListener("click", async function () {
         payBtn.disabled = true;
-        payBtn.textContent = "İşleniyor…";
+        payBtn.textContent = tr2("Processing…", "İşleniyor…");
         var errEl = document.getElementById("tk-co-err");
         if (errEl) errEl.textContent = "";
         var result = await stripe.confirmPayment({
@@ -172,9 +180,9 @@
           redirect: "if_required"
         });
         if (result && result.error) {
-          if (errEl) errEl.textContent = result.error.message || "Ödeme başarısız — tekrar deneyin.";
+          if (errEl) errEl.textContent = result.error.message || tr2("Payment failed — try again.", "Ödeme başarısız — tekrar deneyin.");
           payBtn.disabled = false;
-          payBtn.textContent = "Öde — Pay " + tl(amount);
+          payBtn.textContent = tr2("Pay ", "Öde ") + tl(amount);
           return;
         }
         /* Success — swap in the success panel, refresh balance shortly */
@@ -183,10 +191,10 @@
           card.innerHTML =
             '<div style="text-align:center;padding:18px 6px;">' +
               '<div style="font-size:2.2rem;margin-bottom:8px;">✓</div>' +
-              '<h3 class="tk-co-title">Ödeme alındı!</h3>' +
+              '<h3 class="tk-co-title">' + tr2("Payment received!", "Ödeme alındı!") + '</h3>' +
               '<p style="opacity:.75;font-size:.9rem;margin:6px 0 16px;">' +
-                (kind === "plan" ? "Üyeliğiniz aktifleşiyor — jetonlar hesabınıza ekleniyor." : "Jetonlar hesabınıza ekleniyor.") + "</p>" +
-              '<button type="button" class="btn btn-primary" id="tk-co-done">Tamam</button>' +
+                (kind === "plan" ? tr2("Your membership is activating — tokens are being added to your account.", "Üyeliğiniz aktifleşiyor — jetonlar hesabınıza ekleniyor.") : tr2("Tokens are being added to your account.", "Jetonlar hesabınıza ekleniyor.")) + "</p>" +
+              '<button type="button" class="btn btn-primary" id="tk-co-done">' + tr2("Done", "Tamam") + '</button>' +
             "</div>";
           card.querySelector("#tk-co-done").addEventListener("click", function () {
             closeCheckoutModal();
@@ -266,13 +274,13 @@
     window.__tkPlans = plans;
     root.innerHTML =
       (balance != null
-        ? '<div class="tk-balance">' + TOKEN_SVG + '<span>Your balance <strong>' + esc(balance) + " tokens</strong></span></div>"
+        ? '<div class="tk-balance">' + TOKEN_SVG + '<span>' + tr2("Your balance", "Bakiyeniz") + ' <strong>' + esc(balance) + " " + tr2("tokens", "jeton") + "</strong></span></div>"
         : "") +
-      '<h2 class="tk-h">Token packs</h2>' +
+      '<h2 class="tk-h">' + tr2("Token packs", "Jeton paketleri") + '</h2>' +
       '<div class="tk-grid">' + packs.map(function (p, i) { return packCard(p, i === 1, "pack"); }).join("") + "</div>" +
-      '<h2 class="tk-h">Memberships <span class="tk-sub">monthly tokens + verified badge</span></h2>' +
+      '<h2 class="tk-h">' + tr2("Memberships", "Üyelikler") + ' <span class="tk-sub">' + tr2("monthly tokens + verified badge", "aylık jeton + onaylı rozet") + "</span></h2>" +
       '<div class="tk-grid">' + plans.map(function (p, i) { return packCard(p, i === 1, "plan"); }).join("") + "</div>" +
-      '<p class="tk-note">Pay securely by card, or buy in the Nautico iOS app. Tokens are spent when you bid on a job; posting jobs is free.</p>';
+      '<p class="tk-note">' + tr2("Pay securely by card, or buy in the Nautico iOS app. Tokens are spent when you bid on a job; posting jobs is free.", "Kartla güvenle ödeyin veya Nautico iOS uygulamasından satın alın. Jetonlar bir işe teklif verirken harcanır; ilan vermek ücretsizdir.") + "</p>";
 
     if (!root.dataset.tkBound) {
       root.dataset.tkBound = "1";

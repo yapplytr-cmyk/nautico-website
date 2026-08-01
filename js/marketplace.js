@@ -48,6 +48,11 @@
   function ready() { if (!window.sb && typeof initSupabase === "function") initSupabase(); return !!window.sb; }
 
   function root() { return document.getElementById("marketplace-root"); }
+  function mktLang() {
+    try { if (typeof getLanguage === "function") return getLanguage() === "tr" ? "tr" : "en"; } catch (e) {}
+    try { return (localStorage.getItem("nautico-lang") === "tr") ? "tr" : "en"; } catch (e) {}
+    return "en";
+  }
 
   /* ── shared helpers (bids / reviews / profiles) ── */
   function starSvg(on) {
@@ -177,7 +182,7 @@
         "<p>Post a job on your vessel — local marine pros bid. Accept the best offer and track the work to completion.</p>" +
         '<div class="mkt-actions">' +
           '<button class="btn btn-primary" id="mkt-post-btn">Post a job</button>' +
-          '<a class="btn btn-outline" href="https://apps.apple.com/tr/app/nautico/id6761394669" target="_blank">Get the app to bid</a>' +
+
         "</div>" +
       "</div>" +
       '<div class="mkt-chips">' + chips + "</div>" +
@@ -299,7 +304,7 @@
             (canAccept ? '<button class="btn mkt-accept-btn" data-accept="' + esc(b.id) + '">Accept bid</button>' : "") +
             "</div>";
         }).join("")
-      : '<div class="mkt-empty">No bids yet — pros bid from the Nautico app.</div>';
+      : '<div class="mkt-empty">' + (mktLang() === "tr" ? "Henüz teklif yok — ilk teklifi sen ver." : "No bids yet — be the first to bid.") + "</div>";
 
     var bidFormHtml = "";
     if (canBid) {
