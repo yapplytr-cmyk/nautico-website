@@ -221,6 +221,8 @@ function ensureStyles() {
   s.id = "nx-listing-wizard-styles";
   s.textContent = `
 .nx-lw { max-width: 480px; margin: 0 auto; padding: 1.5rem 1rem 2rem;
+  display: flex; flex-direction: column; justify-content: center;
+  min-height: calc(100vh - 140px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   --lw-accent: var(--sea-blue, #1B6FA8);
   --lw-line: var(--border-color, rgba(255,255,255,0.12));
   --lw-bg: var(--input-bg, var(--bg-secondary, #0D1F34));
@@ -228,7 +230,9 @@ function ensureStyles() {
   --lw-text: var(--text-primary, #E2EEF8);
   --lw-dim: var(--text-secondary, #8BBAD6);
 }
-.nx-lw .wizard-progress { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; margin-bottom: 1.5rem; }
+.nx-lw .wizard-progress { display: flex !important; flex-direction: column; align-items: center; gap: 0.6rem;
+  margin: 0 0 1.5rem; width: 100%; height: auto !important; background: none !important;
+  border: none !important; border-radius: 0 !important; overflow: visible !important; }
 .nx-lw .wizard-dots { display: flex; gap: 8px; align-items: center; }
 .nx-lw .wizard-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lw-line); transition: background 250ms, transform 250ms; }
 .nx-lw .wizard-dot--active { background: var(--lw-accent); transform: scale(1.3); }
@@ -298,6 +302,118 @@ function ensureStyles() {
 @keyframes lwBodyIn { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: translateX(0); } }
 `;
   document.head.appendChild(s);
+}
+
+
+/* ═══ Image optimizer — Yapply optimizeMarketplaceImageFile, verbatim port.
+   iPhone photos (3–8MB) are re-encoded on a canvas: longest side ≤1024px,
+   quality steps 0.68→0.30, scale steps 1→0.5, until the file is ≤400KB.
+   Nothing sane ever gets rejected for size. ═══ */
+const MAX_IMAGE_UPLOAD_BYTES = 400 * 1024;
+const MAX_IMAGE_DIMENSION = 1024;
+const IMAGE_COMPRESSION_QUALITY = 0.68;
+
+function readFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
+
+function loadImageFromDataUrl(dataUrl) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error("Image could not be decoded."));
+    image.src = dataUrl;
+  });
+}
+
+function canvasToBlob(canvas, mimeType, quality) {
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => resolve(blob || null), mimeType, quality);
+  });
+}
+
+function replaceFileExtension(filename, extension) {
+  const safeExtension = String(extension || "").replace(/^\./, "");
+  if (!safeExtension) return filename;
+  const sourceName = String(filename || "image");
+  const dotIndex = sourceName.lastIndexOf(".");
+  const baseName = dotIndex > 0 ? sourceName.slice(0, dotIndex) : sourceName;
+  return baseName + "." + safeExtension;
+}
+
+function getImageCompressionMimeType(fileType, canvas) {
+  if (fileType === "image/jpeg" || fileType === "image/webp") return fileType;
+  if (fileType === "image/png") {
+    const webpCandidate = canvas.toDataURL("image/webp", IMAGE_COMPRESSION_QUALITY);
+    if (webpCandidate.startsWith("data:image/webp")) return "image/webp";
+  }
+  return fileType || "image/jpeg";
+}
+
+function getExtensionForMimeType(mimeType) {
+  if (mimeType === "image/webp") return "webp";
+  if (mimeType === "image/png") return "png";
+  return "jpg";
+}
+
+async function optimizeImageFile(file, { maxBytes = MAX_IMAGE_UPLOAD_BYTES, maxDimension = MAX_IMAGE_DIMENSION } = {}) {
+  if (!(file instanceof File)) return null;
+  const fileType = String(file.type || "").toLowerCase();
+  if (!fileType.startsWith("image/")) return file;
+  if (fileType === "image/svg+xml" || fileType === "image/gif") {
+    return file.size <= maxBytes ? file : null;
+  }
+
+  const sourceDataUrl = await readFileAsDataUrl(file);
+  const image = await loadImageFromDataUrl(sourceDataUrl);
+  const naturalWidth = Number(image.naturalWidth || image.width || 0);
+  const naturalHeight = Number(image.naturalHeight || image.height || 0);
+  if (!naturalWidth || !naturalHeight) return file.size <= maxBytes ? file : null;
+
+  const longestSide = Math.max(naturalWidth, naturalHeight);
+  const baseScale = longestSide > maxDimension ? maxDimension / longestSide : 1;
+  const mimeType = getImageCompressionMimeType(fileType, document.createElement("canvas"));
+  const qualitySteps = [IMAGE_COMPRESSION_QUALITY, 0.55, 0.42, 0.30];
+  const scaleSteps = [1, 0.85, 0.7, 0.5];
+
+  if (file.size <= maxBytes && baseScale >= 1) return file;
+
+  let smallestCandidate = null;
+  for (const scaleStep of scaleSteps) {
+    const width = Math.max(1, Math.round(naturalWidth * baseScale * scaleStep));
+    const height = Math.max(1, Math.round(naturalHeight * baseScale * scaleStep));
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext("2d");
+    if (!context) continue;
+    context.drawImage(image, 0, 0, width, height);
+
+    for (const quality of qualitySteps) {
+      const blob = mimeType === "image/png"
+        ? await canvasToBlob(canvas, mimeType)
+        : await canvasToBlob(canvas, mimeType, quality);
+      if (!blob) continue;
+      if (!smallestCandidate || blob.size < smallestCandidate.size) smallestCandidate = blob;
+      if (blob.size <= maxBytes) {
+        return new File([blob], replaceFileExtension(file.name, getExtensionForMimeType(blob.type || mimeType)),
+          { type: blob.type || mimeType, lastModified: file.lastModified });
+      }
+    }
+  }
+
+  if (file.size <= maxBytes) return file;
+  if (smallestCandidate && smallestCandidate.size <= maxBytes) {
+    return new File([smallestCandidate],
+      replaceFileExtension(file.name, getExtensionForMimeType(smallestCandidate.type || mimeType)),
+      { type: smallestCandidate.type || mimeType, lastModified: file.lastModified });
+  }
+  return null;
 }
 
 /* ── Escaping (Yapply helpers) ── */
@@ -489,7 +605,7 @@ function renderStepPhotos(data, isTr) {
           </svg>
         </div>
         <p class="wizard-upload-text">${isTr ? "Fotoğraf yüklemek için dokunun" : "Tap to upload photos"}</p>
-        <small class="wizard-upload-hint">${isTr ? "En fazla 3 görsel, max 2MB" : "Up to 3 images, max 2MB each"}</small>
+        <small class="wizard-upload-hint">${isTr ? "En fazla 3 görsel — fotoğraflar otomatik optimize edilir" : "Up to 3 images — photos are optimized automatically"}</small>
         <input type="file" name="referenceUpload" accept="image/*" multiple class="wizard-upload-input" data-wizard-upload-input />
       </div>
       <div class="wizard-upload-preview" data-wizard-upload-preview hidden></div>
@@ -757,32 +873,40 @@ async function renderCreatePage(container, opts) {
   function setupPhotoUploadHandlers() {
     const uploadInput = bodyEl.querySelector("[data-wizard-upload-input]");
     if (!uploadInput) return;
-    uploadInput.addEventListener("change", () => {
+    uploadInput.addEventListener("change", async () => {
+      const msgEl = bodyEl.querySelector("[data-wizard-upload-message]");
       const incoming = Array.from(uploadInput.files || []).filter(
         (f) => f instanceof File && f.type.startsWith("image/")
       );
-      const msgEl = bodyEl.querySelector("[data-wizard-upload-message]");
       const nonImages = Array.from(uploadInput.files || []).filter(
         (f) => f instanceof File && !f.type.startsWith("image/")
       );
-      const tooBig = incoming.filter((f) => f.size > 2 * 1024 * 1024);
 
+      if (msgEl && incoming.length) {
+        msgEl.hidden = false;
+        msgEl.textContent = isTr ? "Fotoğraflar optimize ediliyor…" : "Optimizing photos…";
+      }
+
+      /* Yapply pipeline: compress each photo to ≤400KB / 1024px — iPhone
+         photos always fit; only undecodable files are refused. */
+      let failed = 0;
       const existingKeys = new Set(uploadFiles.map((f) => `${f.name}:${f.lastModified}`));
       for (const file of incoming) {
-        if (file.size > 2 * 1024 * 1024) continue;
         const key = `${file.name}:${file.lastModified}`;
-        if (!existingKeys.has(key) && uploadFiles.length < 3) {
-          uploadFiles.push(file);
-          existingKeys.add(key);
-        }
+        if (existingKeys.has(key) || uploadFiles.length >= 3) continue;
+        let optimized = null;
+        try { optimized = await optimizeImageFile(file); } catch (e) { optimized = null; }
+        if (!optimized) { failed += 1; continue; }
+        uploadFiles.push(optimized);
+        existingKeys.add(key);
       }
 
       if (nonImages.length > 0 && msgEl) {
         msgEl.hidden = false;
         msgEl.textContent = isTr ? "Yalnızca görsel dosyaları yükleyebilirsiniz." : "Only image files can be uploaded.";
-      } else if (tooBig.length > 0 && msgEl) {
+      } else if (failed > 0 && msgEl) {
         msgEl.hidden = false;
-        msgEl.textContent = isTr ? "Görseller en fazla 2MB olabilir." : "Images can be at most 2MB.";
+        msgEl.textContent = isTr ? "Bir görsel işlenemedi — lütfen farklı bir fotoğraf deneyin." : "One image could not be processed — please try a different photo.";
       } else if (uploadFiles.length >= 3 && incoming.length > 0 && msgEl) {
         msgEl.hidden = false;
         msgEl.textContent = isTr ? "En fazla 3 görsel yükleyebilirsiniz." : "You can upload a maximum of 3 images.";
@@ -791,6 +915,7 @@ async function renderCreatePage(container, opts) {
         msgEl.textContent = "";
       }
 
+      uploadInput.value = "";
       renderUploadPreviews();
       showError(null);
     });
