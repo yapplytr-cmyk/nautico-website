@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('contact-form')?.addEventListener('submit', handleContact);
 
   // Handle initial route from URL hash
-  const hash = window.location.hash.replace('#', '') || 'home';
+  const hash = window.location.hash.replace('#', '') || 'marketplace';
   navigate(hash);
 
   // Check for existing session
@@ -298,13 +298,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Handle browser back/forward
 window.addEventListener('popstate', () => {
-  const hash = window.location.hash.replace('#', '') || 'home';
+  const hash = window.location.hash.replace('#', '') || 'marketplace';
   navigate(hash);
 });
 
 // Fallback: handle hashchange (catches cases where click listeners don't fire)
 window.addEventListener('hashchange', () => {
-  const hash = window.location.hash.replace('#', '') || 'home';
+  const hash = window.location.hash.replace('#', '') || 'marketplace';
   if (routes[hash]) {
     navigate(hash);
   }
