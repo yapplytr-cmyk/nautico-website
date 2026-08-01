@@ -1076,6 +1076,22 @@
     /* --- Step 5: Form submission --- */
     var form = wizard.querySelector("[data-onboarding-form]");
     if (form) {
+      // Enter advances the pager (native submit would skip validation order
+      // and surface wrong errors like "selfie required" mid-flow).
+      form.addEventListener("keydown", function (e) {
+        if (e.key !== "Enter") return;
+        var t = e.target;
+        if (t && t.tagName === "TEXTAREA") return;
+        e.preventDefault();
+        var bar = form.querySelector("[data-onboarding-pager]");
+        var nextBtn = bar && bar.querySelector("[data-onboarding-pager-next]");
+        if (nextBtn && nextBtn.style.display !== "none") {
+          nextBtn.click();
+        } else {
+          var submitBtn = form.querySelector(".onboarding-submit-btn");
+          if (submitBtn && submitBtn.style.display !== "none") submitBtn.click();
+        }
+      });
       form.addEventListener("submit", async function (e) {
         e.preventDefault();
         var errorEl = wizard.querySelector("[data-onboarding-error]");
