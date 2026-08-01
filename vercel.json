@@ -1,1 +1,24 @@
-{}
+{
+  "rewrites": [
+    {
+      "source": "/api/billing/checkout",
+      "destination": "/api/router?route=billing/checkout"
+    },
+    {
+      "source": "/api/billing/intent",
+      "destination": "/api/router?route=billing/intent"
+    },
+    {
+      "source": "/api/billing/status",
+      "destination": "/api/router?route=billing/status"
+    },
+    {
+      "source": "/api/billing/config",
+      "destination": "/api/router?route=billing/config"
+    },
+    {
+      "source": "/api/billing/webhook",
+      "destination": "/api/router?route=billing/webhook"
+    }
+  ]
+}
