@@ -166,10 +166,17 @@ def _get_pack(pack_id: str) -> dict:
   return rows[0]
 
 
+# Web purchases skip the App Store's commission, so the site charges 20% less
+# than the in-app price. Keep in sync with WEB_DISCOUNT in js/tokens.js.
+WEB_DISCOUNT = 0.8
+
+
 def _cents(row: dict) -> str:
-  """Unit amount in the smallest currency unit. Nautico stores `price` (major
-  units) + `currency` — NOT Yapply's price_try."""
-  return str(int(round(float(row["price"]) * 100)))
+  """Unit amount in the smallest currency unit, with the web discount applied.
+  Nautico stores `price` (major units, the App Store price) + `currency`.
+  Falls back to price_try for legacy rows."""
+  base = row.get("price", row.get("price_try"))
+  return str(int(round(float(base) * WEB_DISCOUNT * 100)))
 
 
 def _currency(row: dict) -> str:
