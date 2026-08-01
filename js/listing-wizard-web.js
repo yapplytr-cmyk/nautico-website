@@ -1064,6 +1064,14 @@ function progressDots(totalSteps, currentStep) {
 
 /* ── Modal opener for the website ── */
 window.NauticoListingWizard = {
+  /* Render inline on a page (Yapply: the form is its own page, not a modal). */
+  render: function (host, opts) {
+    opts = opts || {};
+    return renderCreatePage(host, {
+      locale: opts.locale || "en",
+      onCreated: opts.onCreated,
+    }).catch(function (e) { console.warn("[nautico] wizard:", e && e.message); });
+  },
   open: function (opts) {
     opts = opts || {};
     var old = document.getElementById("nlw-ov");

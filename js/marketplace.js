@@ -222,7 +222,11 @@
     }
     grid.innerHTML = state.listings.map(card).join("");
     grid.querySelectorAll(".mkt-card").forEach(function (el) {
-      el.addEventListener("click", function () { openDetail(el.getAttribute("data-id")); });
+      el.addEventListener("click", function () {
+        var id = el.getAttribute("data-id");
+        if (typeof navigate === "function") navigate("listing/" + id);
+        else openDetail(id);
+      });
     });
   }
 
@@ -232,7 +236,10 @@
     if (!r.getAttribute("data-init")) {
       r.setAttribute("data-init", "1");
       r.innerHTML = shell();
-      r.querySelector("#mkt-post-btn").addEventListener("click", openCreate);
+      r.querySelector("#mkt-post-btn").addEventListener("click", function () {
+        if (typeof navigate === "function") navigate("post");
+        else openCreate();
+      });
       var searchEl = r.querySelector("#mkt-search");
       if (searchEl) {
         var _t = null;
@@ -258,11 +265,13 @@
 
   /* ── Listing detail (modal) ── */
   async function openDetail(id) {
+    _pageHost = "listing-root";
     if (!ready()) return;
+    showModal('<div class="mkt-detail"><div class="mkt-empty">Loading listing…</div></div>');
     var l = null;
     try {
       var res = await sb.from("marketplace_listings")
-        .select("id,owner_user_id,status,accepted_bid_id,title,description,category,location,boat_length_m,budget,currency,timeframe,created_at," +
+        .select("id,owner_user_id,status,accepted_bid_id,title,description,category,location,boat_length_m,budget,currency,timeframe,created_at,payload," +
                 "listing_bids(id,bidder_user_id,status,company_name,bid_amount,currency,estimated_timeframe,proposal_message,created_at)")
         .eq("id", id).single();
       if (res.error || !res.data) throw (res.error || new Error("not found"));
@@ -361,10 +370,13 @@
       "</div>"
     );
 
-    var ov = document.getElementById("mkt-modal-ov");
+    /* Wire everything inside the listing PAGE (the old modal id is gone). */
+    var ov = document.getElementById(_pageHost) || document.getElementById("listing-root");
     if (!ov) return;
     ov.querySelectorAll(".mkt-bid-name").forEach(function (a) {
       a.addEventListener("click", function (e) {
+        var pid = a.getAttribute("data-provider");
+        if (pid && typeof navigate === "function") { e.preventDefault(); navigate("provider/" + pid); return; }
         e.preventDefault();
         openProviderProfile(a.getAttribute("data-provider"));
       });
@@ -421,7 +433,7 @@
           (d && d.success === false);
         if (insufficient) {
           btn.disabled = false; btn.textContent = prev;
-          if (err) err.innerHTML = 'Insufficient tokens. <a href="#" onclick="closeMktModal();navigate(&#39;pricing&#39;);return false">Get more tokens</a>';
+          if (err) err.innerHTML = 'Insufficient tokens. <a href="#" onclick="navigate(&#39;pricing&#39;);return false">Get more tokens</a>';
           return;
         }
       } catch (eRpc) { /* RPC not deployed — proceed free */ }
@@ -544,6 +556,7 @@
   /* ── Provider profile + reviews (modal) ── */
   async function openProviderProfile(userId) {
     if (!ready() || !userId) return;
+    _pageHost = "provider-root";
     showModal('<div class="mkt-detail"><div class="mkt-empty">Loading profile…</div></div>');
     var p = null, revs = [], totalBids = null, acceptedBids = null;
     try {
@@ -606,24 +619,30 @@
     );
   }
 
-  /* ── Post a job (owner) — Yapply one-question-at-a-time wizard ── */
+  /* ── Post a job (owner) — Yapply one-question-at-a-time wizard, own page ── */
   function openCreate() {
-    if (currentUser && window.NauticoListingWizard && window.NauticoListingWizard.open) {
-      window.NauticoListingWizard.open({
-        locale: (function () { try { return localStorage.getItem("nautico-language") || "en"; } catch (e) { return "en"; } })(),
-        onCreated: function () {
-          state.category = "";
-          var chips = document.querySelectorAll(".mkt-chip");
-          chips.forEach(function (x, i) { x.classList.toggle("is-active", i === 0); });
-          renderGrid();
-        }
-      });
-      return;
+    _pageHost = "post-root";
+    if (currentUser && window.NauticoListingWizard && window.NauticoListingWizard.render) {
+      var host = document.getElementById("post-root");
+      if (host) {
+        host.innerHTML = "";
+        window.NauticoListingWizard.render(host, {
+          locale: (function () { try { return localStorage.getItem("nautico-language") || "en"; } catch (e) { return "en"; } })(),
+          onCreated: function () {
+            state.category = "";
+            var chips = document.querySelectorAll(".mkt-chip");
+            chips.forEach(function (x, i) { x.classList.toggle("is-active", i === 0); });
+            if (typeof navigate === "function") navigate("marketplace");
+            renderGrid();
+          }
+        });
+        return;
+      }
     }
     if (!currentUser) {
       showModal('<div class="mkt-detail"><h2>Log in to post a job</h2>' +
         '<p>You need a Nautico account to post a listing.</p>' +
-        '<button class="btn btn-primary" onclick="closeMktModal();navigate(\'login\')">Go to login</button></div>');
+        '<button class="btn btn-primary" onclick="navigate(&#39;login&#39;)">Go to login</button></div>');
       return;
     }
     var opts = CATEGORIES.filter(function (c) { return c.id; })
@@ -727,19 +746,25 @@
     });
   }
 
-  /* ── tiny modal ── */
+  /* ── Page rendering (Yapply parity: every listing / form is its own page,
+        with its own URL — no pop-ups) ── */
+  var _pageHost = "listing-root";
   function showModal(inner) {
-    closeMktModal();
-    var ov = document.createElement("div");
-    ov.className = "mkt-modal-ov";
-    ov.id = "mkt-modal-ov";
-    ov.innerHTML = '<div class="mkt-modal"><button class="mkt-modal-x" aria-label="Close">&times;</button>' + inner + "</div>";
-    document.body.appendChild(ov);
-    ov.addEventListener("click", function (e) { if (e.target === ov) closeMktModal(); });
-    ov.querySelector(".mkt-modal-x").addEventListener("click", closeMktModal);
-    try { wireGalleries(ov); } catch (e) {}
+    var host = document.getElementById(_pageHost);
+    if (!host) return;
+    host.innerHTML = inner;
+    try { wireGalleries(host); } catch (e) {}
+    try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (e) {}
   }
-  window.closeMktModal = function () { var el = document.getElementById("mkt-modal-ov"); if (el) el.remove(); };
+  /* Kept for older inline handlers — now simply returns to the marketplace. */
+  window.closeMktModal = function () {
+    if (typeof navigate === "function") navigate("marketplace");
+  };
+
+  /* ── Router hooks: each sub-page renders itself on navigation ── */
+  window.loadListingPage = function (id) { if (id) openDetail(id); };
+  window.loadPostPage = function () { openCreate(); };
+  window.loadProviderPage = function (id) { if (id) openProviderProfile(id); };
 
   /* ── injected styles (bids / reviews / profiles) ── */
   (function injectMktStyles() {
@@ -747,6 +772,9 @@
     var st = document.createElement("style");
     st.id = "mkt-ext-styles";
     st.textContent =
+      ".mkt-subpage{max-width:960px;margin:0 auto;padding:96px 20px 60px;}" +
+      ".mkt-back{background:none;border:none;color:#7ec8e3;font:inherit;font-size:.95rem;font-weight:600;cursor:pointer;padding:6px 0;margin-bottom:14px;display:inline-flex;align-items:center;gap:6px;}" +
+      ".mkt-back:hover{opacity:.8;}" +
       ".mkt-card-media{margin:-16px -16px 12px;height:150px;overflow:hidden;border-radius:14px 14px 0 0;background:rgba(0,0,0,.18);}" +
       ".mkt-card-media img{width:100%;height:100%;object-fit:cover;display:block;}" +
       ".mkt-gal{position:relative;margin:0 0 14px;border-radius:14px;overflow:hidden;background:rgba(0,0,0,.2);}" +

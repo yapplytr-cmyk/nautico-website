@@ -48,10 +48,18 @@ const routes = {
   login: 'page-login',
   dashboard: 'page-dashboard',
   marketplace: 'page-marketplace',
+  listing: 'page-listing',
+  post: 'page-post',
+  provider: 'page-provider',
   signup: 'page-signup'
 };
 
-function navigate(route) {
+/* Routes may carry an id: "listing/<uuid>". Yapply gives every listing and the
+   job form their own page — these are the SPA equivalents, with real URLs. */
+function navigate(routeSpec) {
+  const parts = String(routeSpec == null ? '' : routeSpec).split('/');
+  const route = parts[0];
+  const param = parts.slice(1).join('/');
   // Hide all pages
   document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
 
@@ -86,7 +94,12 @@ function navigate(route) {
 
   // Update URL with a clean path (no hash). Skipped on back/forward so we don't
   // add duplicate history entries.
-  history.pushState(null, '', '#' + route);
+  history.pushState(null, '', '#' + routeSpec);
+
+  // Listing detail / post-a-job / provider profile — each is its own page.
+  if (route === 'listing' && typeof loadListingPage === 'function') loadListingPage(param);
+  if (route === 'post' && typeof loadPostPage === 'function') loadPostPage();
+  if (route === 'provider' && typeof loadProviderPage === 'function') loadProviderPage(param);
 
 
   // If navigating to dashboard, check auth
@@ -384,7 +397,7 @@ window.addEventListener('popstate', () => {
 // Fallback: handle hashchange (catches cases where click listeners don't fire)
 window.addEventListener('hashchange', () => {
   const hash = window.location.hash.replace('#', '') || 'marketplace';
-  if (routes[hash]) {
+  if (routes[hash.split('/')[0]]) {
     navigate(hash);
   }
 });
