@@ -792,12 +792,13 @@
       try {
         var overlay = document.createElement("div");
         overlay.className = "nautico-leap";
-        overlay.innerHTML = '<div class="nautico-leap__dolphin">' + dolphinLeapingSvg() + "</div>";
+        overlay.innerHTML =
+          '<div class="nl-x"><div class="nl-y">' + dolphinLeapingSvg() + "</div></div>";
         document.body.appendChild(overlay);
         setTimeout(function () {
           overlay.remove();
           if (typeof done === "function") done();
-        }, 980);
+        }, 1750);
       } catch (_) {
         if (typeof done === "function") done();
       }
