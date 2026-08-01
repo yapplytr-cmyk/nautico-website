@@ -19,7 +19,7 @@
   var CAT_LABEL = {};
   CATEGORIES.forEach(function (c) { if (c.id) CAT_LABEL[c.id] = c.en; });
 
-  var state = { category: "", listings: [], loaded: false };
+  var state = { category: "", q: "", listings: [], loaded: false };
   var TIMEFRAMES = ["1-2 hafta", "2-4 hafta", "1-2 ay", "2+ ay"];
   var profileCache = {};
 
@@ -149,6 +149,8 @@
         "</div>" +
       "</div>" +
       '<div class="mkt-chips">' + chips + "</div>" +
+      '<div class="mkt-searchwrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" class="mkt-search-ic"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>' +
+      '<input type="search" id="mkt-search" autocomplete="off" placeholder="Search jobs, services, marinas…" /></div>' +
       '<div class="mkt-grid" id="mkt-grid"></div>'
     );
   }
@@ -158,6 +160,12 @@
     if (!grid) return;
     grid.innerHTML = '<div class="mkt-empty">Loading listings…</div>';
     state.listings = await fetchListings();
+    if (state.q) {
+      state.listings = state.listings.filter(function (l) {
+        var hay = ((l.title || "") + " " + (l.description || "") + " " + (l.location || "") + " " + (l.category || "")).toLowerCase();
+        return hay.indexOf(state.q) !== -1;
+      });
+    }
     if (!state.listings.length) {
       grid.innerHTML = '<div class="mkt-empty">No open jobs in this category yet. Be the first to post one.</div>';
       return;
@@ -175,6 +183,17 @@
       r.setAttribute("data-init", "1");
       r.innerHTML = shell();
       r.querySelector("#mkt-post-btn").addEventListener("click", openCreate);
+      var searchEl = r.querySelector("#mkt-search");
+      if (searchEl) {
+        var _t = null;
+        searchEl.addEventListener("input", function () {
+          clearTimeout(_t);
+          _t = setTimeout(function () {
+            state.q = (searchEl.value || "").toLowerCase().trim();
+            renderGrid();
+          }, 220);
+        });
+      }
       r.querySelectorAll(".mkt-chip").forEach(function (ch) {
         ch.addEventListener("click", function () {
           state.category = ch.getAttribute("data-cat");
@@ -656,6 +675,20 @@
   })();
 
   // expose
+  (function () {
+    var st = document.createElement("style");
+    st.textContent =
+      ".mkt-searchwrap{display:flex;align-items:center;gap:10px;max-width:520px;margin:14px auto 22px;padding:13px 18px;border-radius:999px;" +
+      "background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.12);" +
+      "box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 4px 16px rgba(0,0,0,.16);transition:border-color .2s ease, box-shadow .2s ease}" +
+      ".mkt-searchwrap:focus-within{border-color:#1b6fa8;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 0 3px rgba(27,111,168,.22)}" +
+      ".mkt-search-ic{width:19px;height:19px;color:rgba(255,255,255,.45);flex:0 0 auto}" +
+      "#mkt-search{flex:1;min-width:0;border:none;outline:none;background:transparent;color:inherit;font:inherit;font-size:.95rem}" +
+      "#mkt-search::placeholder{color:rgba(255,255,255,.35)}" +
+      "#mkt-search::-webkit-search-cancel-button{-webkit-appearance:none}";
+    document.head.appendChild(st);
+  })();
+
   window.loadMarketplace = loadMarketplace;
   window.openProviderProfile = openProviderProfile;
 })();

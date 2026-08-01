@@ -184,15 +184,16 @@
 
   function dolphinMoney() {
     return dphSvg(
-      '<rect x="6" y="6" width="32" height="19" rx="3" fill="' + DPH.money + '" />' +
-      '<rect x="9" y="9" width="26" height="13" rx="1.5" fill="none" stroke="' + DPH.moneyDk + '" stroke-width="0.8" />' +
-      '<text x="22" y="19" font-size="11" fill="' + DPH.moneyDk + '" font-weight="bold" text-anchor="middle">₺</text>' +
-      '<ellipse cx="76" cy="60" rx="8" ry="6.5" fill="' + DPH.coinDk + '" />' +
-      '<ellipse cx="76" cy="58" rx="8" ry="6.5" fill="' + DPH.coin + '" />' +
-      '<text x="76" y="61" font-size="6" fill="' + DPH.coinDk + '" font-weight="bold" text-anchor="middle">₺</text>' +
-      '<ellipse cx="86" cy="64" rx="7" ry="5.5" fill="' + DPH.coinDk + '" opacity="0.8" />' +
-      '<ellipse cx="86" cy="62" rx="7" ry="5.5" fill="' + DPH.coin + '" opacity="0.9" />' +
-      dolphinBody({ finAngle: 30 })
+      '<ellipse cx="82" cy="62" rx="8" ry="6.5" fill="' + DPH.coinDk + '" />' +
+      '<ellipse cx="82" cy="60" rx="8" ry="6.5" fill="' + DPH.coin + '" />' +
+      '<text x="82" y="63" font-size="6" fill="' + DPH.coinDk + '" font-weight="bold" text-anchor="middle">₺</text>' +
+      dolphinBody({ tilt: 2, lookDir: 1 }) +
+      '<g transform="rotate(-10,44,58)">' +
+      '<rect x="30" y="50" width="28" height="17" rx="2.5" fill="' + DPH.money + '" />' +
+      '<rect x="32.5" y="52.5" width="23" height="12" rx="1.5" fill="none" stroke="' + DPH.moneyDk + '" stroke-width="0.8" />' +
+      '<text x="44" y="61.5" font-size="9" fill="' + DPH.moneyDk + '" font-weight="bold" text-anchor="middle">₺</text>' +
+      "</g>" +
+      '<ellipse cx="58" cy="53" rx="8" ry="3.8" fill="' + DPH.dk + '" transform="rotate(-12,58,53)" />'
     );
   }
 
@@ -210,10 +211,10 @@
   function dolphinTools() {
     return dphSvg(
       dolphinBody({ tilt: 3, lookDir: 1 }) +
-      '<g transform="translate(64,40) scale(0.72)">' +
+      '<g transform="translate(77.2,38.1) rotate(83) scale(0.6)">' +
       '<path d="M33 10a8 8 0 0 0-10 10L9 34a4.5 4.5 0 0 0 6.4 6.4L29 26a8 8 0 0 0 10-10l-6 6-4-1-1-4z" fill="' + DPH.tool + '" />' +
       "</g>" +
-      '<ellipse cx="63" cy="52" rx="8" ry="3.8" fill="' + DPH.dk + '" transform="rotate(-10,63,52)" />'
+      '<ellipse cx="57" cy="49" rx="8" ry="3.8" fill="' + DPH.dk + '" transform="rotate(-14,57,49)" />'
     );
   }
 
@@ -343,8 +344,12 @@
   /* -- Selectable data: regions / experience / specialty categories --
      Stored as stable values so professionals can be categorized later. */
   var NAUTICO_REGIONS = [
-    "İstanbul", "Bodrum", "Marmaris", "Fethiye", "Göcek", "Antalya",
-    "Kaş", "Çeşme", "İzmir", "Kuşadası", "Didim", "Ayvalık", "Mersin",
+    "İstanbul", "Tuzla", "Yalova", "Bodrum", "Turgutreis", "Yalıkavak",
+    "Göltürkbükü", "Güllük", "Milas", "Marmaris", "Datça", "Bozburun",
+    "Selimiye", "Fethiye", "Göcek", "Gökova", "Akyaka", "Antalya",
+    "Alanya", "Side", "Kemer", "Finike", "Kaş", "Kalkan", "Çeşme",
+    "Alaçatı", "İzmir", "Foça", "Kuşadası", "Didim", "Ayvalık",
+    "Çanakkale", "Mersin", "Kıbrıs (KKTC)",
   ];
 
   var NAUTICO_SPECIALTIES = [
@@ -362,6 +367,19 @@
     { v: "captain-transfer", tr: "Kaptanlık & Transfer", en: "Captain & Transfer" },
     { v: "marina-services", tr: "Marina Hizmetleri", en: "Marina Services" },
     { v: "insurance-survey", tr: "Sigorta & Ekspertiz", en: "Insurance & Survey" },
+    { v: "hydraulics", tr: "Hidrolik Sistemler", en: "Hydraulic Systems" },
+    { v: "generator-power", tr: "Jeneratör & Güç", en: "Generator & Power" },
+    { v: "shaft-propeller", tr: "Şaft & Pervane", en: "Shaft & Propeller" },
+    { v: "underwater-diving", tr: "Dalgıç & Sualtı", en: "Diver & Underwater" },
+    { v: "hull-cleaning", tr: "Karina Temizliği", en: "Hull Cleaning" },
+    { v: "lift-slipway", tr: "Vinç & Çekek", en: "Lift & Slipway" },
+    { v: "upholstery", tr: "Döşeme & Kaplama", en: "Upholstery" },
+    { v: "canvas-covers", tr: "Tente & Branda", en: "Canvas & Covers" },
+    { v: "glass-perspex", tr: "Cam & Perspeks", en: "Glass & Perspex" },
+    { v: "solar-charging", tr: "Güneş Enerjisi & Şarj", en: "Solar & Charging" },
+    { v: "welding-metal", tr: "Kaynak & Metal İşleri", en: "Welding & Metalwork" },
+    { v: "teak-deck", tr: "Tik Güverte", en: "Teak Decking" },
+    { v: "yacht-management", tr: "Yat Yönetimi", en: "Yacht Management" },
     { v: "other", tr: "Diğer", en: "Other" },
   ];
 
@@ -471,7 +489,6 @@
       '<div class="onboarding-step__content">' +
       '<div class="onboarding-mascot" data-onboarding-mascot aria-hidden="true"></div>' +
       '<h2 class="onboarding-step__title">' + (isTr ? "Hesap Bilgileri" : "Account Details") + "</h2>" +
-      '<p class="onboarding-step__desc" data-onboarding-form-desc></p>' +
       '<form class="onboarding-form" data-onboarding-form novalidate>' +
       '<input type="hidden" name="accountRole" value="owner" data-onboarding-role-input />' +
       '<input type="hidden" name="developerType" value="" data-onboarding-devtype-input />' +
@@ -491,19 +508,17 @@
       '<label class="onboarding-field"><span>' + (isTr ? "Firma / Profesyonel Adı" : "Company / Professional Name") + '</span><input type="text" name="companyName" placeholder="' + (isTr ? "Firma veya profesyonel adınız" : "Your company or professional name") + '" /></label>' +
       // Service area -- iOS-style wheel, not typeable
       '<div class="onboarding-field onboarding-field--center" data-onboarding-chip-field="serviceArea"><span>' + (isTr ? "Hizmet Bölgesi" : "Service Area") + "</span>" +
-      '<p class="onboarding-chip-hint">' + (isTr ? "Kaydırın ve bölge ekleyin" : "Scroll and add your regions") + "</p>" +
       buildWheel("serviceArea", NAUTICO_REGIONS, isTr, true) + "</div>" +
       // Experience -- iOS-style wheel, single pick
       '<div class="onboarding-field onboarding-field--center"><span>' + (isTr ? "Deneyim (Yıl)" : "Years of Experience") + "</span>" +
       buildWheel("yearsExperience", NAUTICO_EXPERIENCE.map(function (y) { return { v: y, tr: y + " yıl", en: y + " years" }; }), isTr, false) + "</div>" +
       // Specialty -- iOS-style wheel with multi-add (stable category keys)
       '<div class="onboarding-field onboarding-field--center" data-onboarding-chip-field="specialties"><span>' + (isTr ? "Uzmanlık Alanı" : "Specialty") + "</span>" +
-      '<p class="onboarding-chip-hint">' + (isTr ? "Kaydırın ve kategori ekleyin" : "Scroll and add your categories") + "</p>" +
       buildWheel("specialties", NAUTICO_SPECIALTIES, isTr, true) + "</div>" +
       // Selfie (required for providers)
       '<div class="onboarding-field" data-onboarding-selfie-section>' +
       '<span data-onboarding-selfie-title>' + (isTr ? "Selfie Doğrulama (Zorunlu)" : "Selfie Verification (Required)") + "</span>" +
-      '<p class="onboarding-selfie-note">' + (isTr ? "Bu görsel profil resminiz olarak kullanılacaktır." : "This image will be used as your profile picture.") + "</p>" +
+      '<p class="onboarding-selfie-note">' + (isTr ? "Profil resminiz olarak kullanılır." : "Used as your profile picture.") + "</p>" +
       // Business accounts may choose selfie OR company logo
       '<div class="onboarding-selfie-mode" data-onboarding-avatar-mode hidden>' +
       '<button type="button" class="onboarding-chip onboarding-chip--active" data-onboarding-avatar-choice="selfie">' + (isTr ? "Selfie Çek" : "Take Selfie") + "</button>" +
@@ -511,7 +526,7 @@
       "</div>" +
       '<div class="onboarding-selfie-icon">' + CAMERA_SVG + "</div>" +
       "<div data-onboarding-selfie-camera-ui>" +
-      '<p class="onboarding-selfie-hint">' + (isTr ? "Doğrulama için şimdi ön kameradan bir selfie çekin" : "Take a live selfie with the front camera now to verify") + "</p>" +
+      '<p class="onboarding-selfie-hint">' + (isTr ? "Ön kameradan bir selfie çekin" : "Take a selfie with the front camera") + "</p>" +
       '<video data-onboarding-selfie-video autoplay playsinline muted class="onboarding-selfie-video"></video>' +
       '<canvas data-onboarding-selfie-canvas style="display:none"></canvas>' +
       '<div class="onboarding-selfie-actions">' +
@@ -521,11 +536,11 @@
       "</div></div>" +
       '<div data-onboarding-selfie-upload-ui style="display:none">' +
       '<p class="onboarding-selfie-hint">' + (isTr ? "Kamera açılamıyorsa bir selfie yükleyin" : "If the camera will not open, upload a selfie") + "</p>" +
-      '<input type="file" accept="image/*" capture="user" data-onboarding-selfie-file class="onboarding-selfie-file" />' +
+      '<label class="onboarding-file-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:1rem;height:1rem"><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/></svg><span>' + (isTr ? "Fotoğraf Seç" : "Choose Photo") + '</span><input type="file" accept="image/*" capture="user" data-onboarding-selfie-file /></label>' +
       "</div>" +
       '<div data-onboarding-logo-ui style="display:none">' +
-      '<p class="onboarding-selfie-hint">' + (isTr ? "İşletme logonuzu yükleyin (kare önerilir)" : "Upload your business logo (square recommended)") + "</p>" +
-      '<input type="file" accept="image/*" data-onboarding-logo-file class="onboarding-selfie-file" />' +
+      '<p class="onboarding-selfie-hint">' + (isTr ? "" : "") + "</p>" +
+      '<label class="onboarding-file-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:1rem;height:1rem"><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/></svg><span>' + (isTr ? "Logo Seç" : "Choose Logo") + '</span><input type="file" accept="image/*" data-onboarding-logo-file /></label>' +
       "</div>" +
       '<img data-onboarding-selfie-preview class="onboarding-selfie-preview" alt="" />' +
       '<img data-onboarding-logo-preview class="onboarding-selfie-preview onboarding-logo-preview" alt="" />' +

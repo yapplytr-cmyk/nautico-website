@@ -948,3 +948,24 @@
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-2.5px) rotate(-1.2deg); }
 }
+
+
+/* Nautico-styled file pickers (native input hidden) */
+.onboarding-file-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.6rem 1.3rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--accent);
+  background: var(--surface);
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin: 6px auto 0;
+  transition: background 150ms ease, transform 150ms ease;
+}
+.onboarding-file-btn:active { transform: scale(0.96); }
+.onboarding-file-btn input[type="file"] { display: none; }
