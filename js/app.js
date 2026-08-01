@@ -4,8 +4,9 @@
 ═══════════════════════════════════════════ */
 
 // ── Supabase Init ──
-const SUPABASE_URL = 'https://shgcdzdnmwkjqpwdlsug.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNoZ2NkemRubXdranFwd2Rsc3VnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NzA5MDIsImV4cCI6MjA5MDA0NjkwMn0.sWSvSuj1sS7Yi1ucFjX6gkOSOQkSwr6yX45lN3dFdw8';
+// nautico-marine (new marine marketplace project) — same DB the iOS app uses.
+const SUPABASE_URL = 'https://bxfftlzivdnziiflvdqy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_BvUhsH6O1D_-WFib5Xy5nQ_5QqPSGQI';
 
 var sb = null;
 let currentUser = null;
@@ -42,7 +43,8 @@ const routes = {
   privacy: 'page-privacy',
   terms: 'page-terms',
   login: 'page-login',
-  dashboard: 'page-dashboard'
+  dashboard: 'page-dashboard',
+  marketplace: 'page-marketplace'
 };
 
 function navigate(route) {
@@ -86,6 +88,11 @@ function navigate(route) {
   // If navigating to dashboard, check auth
   if (route === 'dashboard') {
     loadDashboard();
+  }
+
+  // Marketplace listings (mirrors the app + yapplytr.com)
+  if (route === 'marketplace' && typeof loadMarketplace === 'function') {
+    loadMarketplace();
   }
 
   // If navigating to login and already logged in, redirect to dashboard
