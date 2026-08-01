@@ -133,6 +133,12 @@
     );
   }
 
+  // Animation-safe prop wrapper: the idle float animates THIS group (no
+  // transform attribute), so children keep their positioning transforms.
+  function prop(inner) {
+    return '<g class="dph-prop">' + inner + "</g>";
+  }
+
   function dphSvg(inner, vb) {
     return '<svg viewBox="' + (vb || DPH_VB) + '" fill="none" xmlns="http://www.w3.org/2000/svg" class="onboarding-dolphin-svg">' + inner + "</svg>";
   }
@@ -141,32 +147,38 @@
 
   function dolphinWriting() {
     return dphSvg(
-      '<rect x="60" y="46" width="30" height="23" rx="2" fill="' + DPH.paper + '" stroke="' + DPH.paperLn + '" stroke-width="0.7" transform="rotate(-4,75,57)" />' +
-      '<line x1="65" y1="53" x2="86" y2="52" stroke="' + DPH.paperLn + '" stroke-width="0.7" />' +
-      '<line x1="65" y1="58" x2="83" y2="57" stroke="' + DPH.paperLn + '" stroke-width="0.7" />' +
-      '<rect x="58" y="47" width="20" height="3" rx="1.5" fill="' + DPH.penBody + '" transform="rotate(-22 58 47)" />' +
+      prop(
+        '<rect x="60" y="46" width="30" height="23" rx="2" fill="' + DPH.paper + '" stroke="' + DPH.paperLn + '" stroke-width="0.7" transform="rotate(-4,75,57)" />' +
+        '<line x1="65" y1="53" x2="86" y2="52" stroke="' + DPH.paperLn + '" stroke-width="0.7" />' +
+        '<line x1="65" y1="58" x2="83" y2="57" stroke="' + DPH.paperLn + '" stroke-width="0.7" />' +
+        '<rect x="58" y="47" width="20" height="3" rx="1.5" fill="' + DPH.penBody + '" transform="rotate(-22 58 47)" />'
+      ) +
       dolphinBody({ tilt: 4, lookDir: 1 })
     );
   }
 
   function dolphinThinking() {
     return dphSvg(
-      '<circle cx="82" cy="9" r="6" fill="' + DPH.cloud + '" />' +
-      '<circle cx="89" cy="7" r="5" fill="' + DPH.cloud + '" />' +
-      '<circle cx="85" cy="4" r="5" fill="' + DPH.cloud + '" />' +
-      '<ellipse cx="85" cy="11" rx="9" ry="4" fill="' + DPH.cloud + '" />' +
-      '<circle cx="77" cy="16" r="2.5" fill="' + DPH.cloudDk + '" opacity="0.5" />' +
-      '<text x="85" y="11" font-size="9" fill="' + DPH.dk + '" font-weight="bold" text-anchor="middle" opacity="0.5">?</text>' +
+      prop(
+        '<circle cx="82" cy="9" r="6" fill="' + DPH.cloud + '" />' +
+        '<circle cx="89" cy="7" r="5" fill="' + DPH.cloud + '" />' +
+        '<circle cx="85" cy="4" r="5" fill="' + DPH.cloud + '" />' +
+        '<ellipse cx="85" cy="11" rx="9" ry="4" fill="' + DPH.cloud + '" />' +
+        '<circle cx="77" cy="16" r="2.5" fill="' + DPH.cloudDk + '" opacity="0.5" />' +
+        '<text x="85" y="11" font-size="9" fill="' + DPH.dk + '" font-weight="bold" text-anchor="middle" opacity="0.5">?</text>'
+      ) +
       dolphinBody({ tilt: -3, lookDir: 1, finAngle: 14 })
     );
   }
 
   function dolphinFocused() {
     return dphSvg(
-      '<rect x="60" y="44" width="30" height="22" rx="2" fill="' + DPH.paper + '" stroke="' + DPH.paperLn + '" stroke-width="0.7" />' +
-      '<line x1="64" y1="51" x2="86" y2="51" stroke="' + DPH.paperLn + '" stroke-width="0.6" />' +
-      '<line x1="64" y1="56" x2="84" y2="56" stroke="' + DPH.paperLn + '" stroke-width="0.6" />' +
-      '<line x1="64" y1="61" x2="80" y2="61" stroke="' + DPH.paperLn + '" stroke-width="0.6" />' +
+      prop(
+        '<rect x="60" y="44" width="30" height="22" rx="2" fill="' + DPH.paper + '" stroke="' + DPH.paperLn + '" stroke-width="0.7" />' +
+        '<line x1="64" y1="51" x2="86" y2="51" stroke="' + DPH.paperLn + '" stroke-width="0.6" />' +
+        '<line x1="64" y1="56" x2="84" y2="56" stroke="' + DPH.paperLn + '" stroke-width="0.6" />' +
+        '<line x1="64" y1="61" x2="80" y2="61" stroke="' + DPH.paperLn + '" stroke-width="0.6" />'
+      ) +
       dolphinBody({ tilt: 4, lookDir: 1 })
     );
   }
@@ -174,70 +186,81 @@
   function dolphinPhone() {
     return dphSvg(
       dolphinBody({ tilt: -2, lookDir: 1 }) +
-      '<rect x="66" y="40" width="14" height="24" rx="2.5" fill="' + DPH.phone + '" />' +
-      '<rect x="68" y="43" width="10" height="17" rx="1" fill="' + DPH.phoneSc + '" />' +
-      '<line x1="70" y1="47" x2="76" y2="47" stroke="#fff" stroke-width="0.6" opacity="0.4" />' +
-      '<line x1="70" y1="50" x2="75" y2="50" stroke="#fff" stroke-width="0.6" opacity="0.3" />' +
-      '<ellipse cx="64" cy="50" rx="8" ry="3.8" fill="' + DPH.dk + '" transform="rotate(-10,64,50)" />'
+      prop(
+        '<rect x="66" y="40" width="14" height="24" rx="2.5" fill="' + DPH.phone + '" />' +
+        '<rect x="68" y="43" width="10" height="17" rx="1" fill="' + DPH.phoneSc + '" />' +
+        '<line x1="70" y1="47" x2="76" y2="47" stroke="#fff" stroke-width="0.6" opacity="0.4" />' +
+        '<line x1="70" y1="50" x2="75" y2="50" stroke="#fff" stroke-width="0.6" opacity="0.3" />' +
+        '<ellipse cx="64" cy="50" rx="8" ry="3.8" fill="' + DPH.dk + '" transform="rotate(-10,64,50)" />'
+      )
     );
   }
 
   function dolphinMoney() {
     return dphSvg(
-      '<ellipse cx="82" cy="62" rx="8" ry="6.5" fill="' + DPH.coinDk + '" />' +
-      '<ellipse cx="82" cy="60" rx="8" ry="6.5" fill="' + DPH.coin + '" />' +
-      '<text x="82" y="63" font-size="6" fill="' + DPH.coinDk + '" font-weight="bold" text-anchor="middle">₺</text>' +
+      prop(
+        '<ellipse cx="82" cy="62" rx="8" ry="6.5" fill="' + DPH.coinDk + '" />' +
+        '<ellipse cx="82" cy="60" rx="8" ry="6.5" fill="' + DPH.coin + '" />' +
+        '<text x="82" y="63" font-size="6" fill="' + DPH.coinDk + '" font-weight="bold" text-anchor="middle">₺</text>'
+      ) +
       dolphinBody({ tilt: 2, lookDir: 1 }) +
-      '<g transform="rotate(-10,44,58)">' +
-      '<rect x="30" y="50" width="28" height="17" rx="2.5" fill="' + DPH.money + '" />' +
-      '<rect x="32.5" y="52.5" width="23" height="12" rx="1.5" fill="none" stroke="' + DPH.moneyDk + '" stroke-width="0.8" />' +
-      '<text x="44" y="61.5" font-size="9" fill="' + DPH.moneyDk + '" font-weight="bold" text-anchor="middle">₺</text>' +
-      "</g>" +
-      '<ellipse cx="58" cy="53" rx="8" ry="3.8" fill="' + DPH.dk + '" transform="rotate(-12,58,53)" />'
+      prop(
+        '<g transform="rotate(-10,44,58)">' +
+        '<rect x="30" y="50" width="28" height="17" rx="2.5" fill="' + DPH.money + '" />' +
+        '<rect x="32.5" y="52.5" width="23" height="12" rx="1.5" fill="none" stroke="' + DPH.moneyDk + '" stroke-width="0.8" />' +
+        '<text x="44" y="61.5" font-size="9" fill="' + DPH.moneyDk + '" font-weight="bold" text-anchor="middle">₺</text>' +
+        "</g>" +
+        '<ellipse cx="58" cy="53" rx="8" ry="3.8" fill="' + DPH.dk + '" transform="rotate(-12,58,53)" />'
+      )
     );
   }
 
   function dolphinCamera() {
     return dphSvg(
       dolphinBody({ tilt: 2, lookDir: 1 }) +
-      '<rect x="66" y="28" width="22" height="15" rx="3" fill="' + DPH.camera + '" />' +
-      '<circle cx="77" cy="35" r="5" fill="' + DPH.cameraDk + '" />' +
-      '<circle cx="77" cy="35" r="3.5" fill="' + DPH.cameraL + '" />' +
-      '<circle cx="77" cy="35" r="2" fill="' + DPH.eye + '" />' +
-      '<ellipse cx="65" cy="40" rx="8" ry="3.8" fill="' + DPH.dk + '" transform="rotate(6,65,40)" />'
+      prop(
+        '<rect x="66" y="28" width="22" height="15" rx="3" fill="' + DPH.camera + '" />' +
+        '<circle cx="77" cy="35" r="5" fill="' + DPH.cameraDk + '" />' +
+        '<circle cx="77" cy="35" r="3.5" fill="' + DPH.cameraL + '" />' +
+        '<circle cx="77" cy="35" r="2" fill="' + DPH.eye + '" />' +
+        '<ellipse cx="65" cy="40" rx="8" ry="3.8" fill="' + DPH.dk + '" transform="rotate(6,65,40)" />'
+      )
     );
   }
 
   function dolphinTools() {
     return dphSvg(
       dolphinBody({ tilt: 3, lookDir: 1 }) +
-      /* wrench pressed against the chest like the envelope -- head up-right,
-         handle diagonally across the belly */
-      '<g transform="translate(52,32) scale(0.8)">' +
-      '<path d="M33 10a8 8 0 0 0-10 10L9 34a4.5 4.5 0 0 0 6.4 6.4L29 26a8 8 0 0 0 10-10l-6 6-4-1-1-4z" fill="' + DPH.tool + '" />' +
-      "</g>" +
-      /* fin wrapped over the middle of the handle */
-      '<ellipse cx="63" cy="51" rx="8" ry="3.9" fill="' + DPH.dk + '" transform="rotate(38,63,51)" />'
+      prop(
+        '<g transform="translate(52,32) scale(0.8)">' +
+        '<path d="M33 10a8 8 0 0 0-10 10L9 34a4.5 4.5 0 0 0 6.4 6.4L29 26a8 8 0 0 0 10-10l-6 6-4-1-1-4z" fill="' + DPH.tool + '" />' +
+        "</g>" +
+        '<ellipse cx="63" cy="51" rx="8" ry="3.9" fill="' + DPH.dk + '" transform="rotate(38,63,51)" />'
+      )
     );
   }
 
   function dolphinEnvelope() {
     return dphSvg(
       dolphinBody({ tilt: 3, lookDir: 1 }) +
-      '<g transform="translate(60,44) rotate(-5)">' +
-      '<rect x="0" y="0" width="27" height="18" rx="2" fill="' + DPH.envelope + '" />' +
-      '<path d="M0,0 L13.5,10 L27,0" fill="' + DPH.envFlap + '" />' +
-      "</g>" +
-      '<ellipse cx="60" cy="56" rx="8" ry="3.8" fill="' + DPH.dk + '" transform="rotate(-10,60,56)" />'
+      prop(
+        '<g transform="translate(60,44) rotate(-5)">' +
+        '<rect x="0" y="0" width="27" height="18" rx="2" fill="' + DPH.envelope + '" />' +
+        '<path d="M0,0 L13.5,10 L27,0" fill="' + DPH.envFlap + '" />' +
+        "</g>" +
+        '<ellipse cx="60" cy="56" rx="8" ry="3.8" fill="' + DPH.dk + '" transform="rotate(-10,60,56)" />'
+      )
     );
   }
 
   function dolphinSuccessSvg() {
     return dphSvg(
       dolphinBody({ finAngle: -20 }) +
-      '<path d="M80,42 L82,37 L84,42 L89,44 L84,46 L82,51 L80,46 L75,44 Z" fill="' + DPH.penBody + '" opacity="0.4" />' +
-      '<path d="M12,16 L13,13 L14,16 L17,17 L14,18 L13,21 L12,18 L9,17 Z" fill="' + DPH.penBody + '" opacity="0.3" />' +
-      '<path d="M86,10 L89,14 L96,4" stroke="' + DPH.check + '" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6" />'
+      prop(
+        '<path d="M80,42 L82,37 L84,42 L89,44 L84,46 L82,51 L80,46 L75,44 Z" fill="' + DPH.penBody + '" opacity="0.4" />' +
+        '<path d="M12,16 L13,13 L14,16 L17,17 L14,18 L13,21 L12,18 L9,17 Z" fill="' + DPH.penBody + '" opacity="0.3" />' +
+        '<path d="M86,10 L89,14 L96,4" stroke="' + DPH.check + '" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6" />'
+      )
     );
   }
 
@@ -245,14 +268,16 @@
   function dolphinLeapingSvg() {
     return dphSvg(
       dolphinBody({ tilt: -6 }) +
-      '<path d="M22,76 Q32,68 42,76" stroke="' + DPH.belly + '" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.55" />' +
-      '<path d="M14,80 Q26,73 38,80" stroke="' + DPH.belly + '" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.35" />' +
-      '<circle cx="34" cy="66" r="2" fill="' + DPH.belly + '" opacity="0.5" />' +
-      '<g transform="translate(58,52)">' +
-      '<rect x="0" y="0" width="24" height="16" rx="2" fill="' + DPH.envelope + '" />' +
-      '<path d="M0,0 L12,9 L24,0" fill="' + DPH.envFlap + '" />' +
-      '<path d="M10,6 C10,4.6 12,3.9 12,5.4 C12,3.9 14,4.6 14,6 L12,8.6 Z" fill="' + DPH.heart + '" />' +
-      "</g>",
+      prop(
+        '<path d="M22,76 Q32,68 42,76" stroke="' + DPH.belly + '" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.55" />' +
+        '<path d="M14,80 Q26,73 38,80" stroke="' + DPH.belly + '" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.35" />' +
+        '<circle cx="34" cy="66" r="2" fill="' + DPH.belly + '" opacity="0.5" />' +
+        '<g transform="translate(58,52)">' +
+        '<rect x="0" y="0" width="24" height="16" rx="2" fill="' + DPH.envelope + '" />' +
+        '<path d="M0,0 L12,9 L24,0" fill="' + DPH.envFlap + '" />' +
+        '<path d="M10,6 C10,4.6 12,3.9 12,5.4 C12,3.9 14,4.6 14,6 L12,8.6 Z" fill="' + DPH.heart + '" />' +
+        "</g>"
+      ),
       "0 0 105 82"
     );
   }
@@ -504,7 +529,8 @@
       '<label class="onboarding-field"><span>' + (isTr ? "Telefon" : "Phone") + '</span><input type="tel" name="phoneNumber" placeholder="+90 5XX XXX XX XX" autocomplete="tel" required /></label>' +
       // Owner-specific fields
       '<div class="onboarding-role-fields" data-onboarding-role-fields="owner">' +
-      '<label class="onboarding-field"><span>' + (isTr ? "Şehir" : "City") + '</span><input type="text" name="preferredRegion" placeholder="' + (isTr ? "İstanbul, Bodrum..." : "Istanbul, Bodrum...") + '" /></label>' +
+      '<div class="onboarding-field onboarding-field--center"><span>' + (isTr ? "Şehir" : "City") + "</span>" +
+      buildWheel("preferredRegion", NAUTICO_REGIONS, isTr, false) + "</div>" +
       "</div>" +
       // Provider shared fields
       '<div class="onboarding-role-fields" data-onboarding-role-fields="provider" hidden>' +
@@ -1230,6 +1256,19 @@
     Array.prototype.forEach.call(otpDigits, function (digit, idx) {
       digit.addEventListener("input", function (e) {
         var val = e.target.value.replace(/[^0-9]/g, "");
+        if (val.length > 1) {
+          // Apple one-time-code autofill (or fast paste) puts the whole code
+          // in one box — spread it across the digits.
+          var chars = val.slice(0, otpDigits.length).split("");
+          Array.prototype.forEach.call(otpDigits, function (d, i) {
+            d.value = chars[i] || "";
+            d.classList.toggle("onboarding-otp-digit--filled", !!chars[i]);
+          });
+          var fi = Math.min(chars.length, otpDigits.length) - 1;
+          if (otpDigits[fi]) otpDigits[fi].focus();
+          updateVerifyBtnState();
+          return;
+        }
         e.target.value = val.slice(0, 1);
         if (val && idx < otpDigits.length - 1) otpDigits[idx + 1].focus();
         updateVerifyBtnState();

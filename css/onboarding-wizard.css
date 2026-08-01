@@ -937,8 +937,10 @@
   50% { transform: rotate(3.5deg); }
 }
 
-/* Held items (paper, envelope, camera...) float on their own beat */
-.onboarding-dolphin-svg > *:not(.dph-body) {
+/* Held items (paper, envelope, camera...) float on their own beat.
+   ONLY the .dph-prop wrapper animates — children keep their SVG
+   transform attributes (CSS transforms would override them). */
+.onboarding-dolphin-svg > .dph-prop {
   animation: dphPropFloat 2.8s ease-in-out infinite;
   animation-delay: 0.35s;
   transform-box: fill-box;

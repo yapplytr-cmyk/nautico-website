@@ -85,13 +85,13 @@
     var b = Number(budget || 0), i, t, min, max;
     try {
       var res = await sb.from("bid_token_costs")
-        .select("min_budget_tl,max_budget_tl,token_cost")
-        .order("min_budget_tl", { ascending: true });
+        .select("min_budget,max_budget,token_cost")
+        .order("min_budget", { ascending: true });
       if (!res.error && res.data && res.data.length) {
         for (i = 0; i < res.data.length; i++) {
           t = res.data[i];
-          min = Number(t.min_budget_tl || 0);
-          max = (t.max_budget_tl == null) ? Infinity : Number(t.max_budget_tl);
+          min = Number(t.min_budget || 0);
+          max = (t.max_budget == null) ? Infinity : Number(t.max_budget);
           if (b >= min && b <= max) return Math.max(1, Number(t.token_cost) || 1);
         }
       }
@@ -365,7 +365,10 @@
         var rpc = await sb.rpc("spend_tokens_for_bid", { p_user_id: currentUser.id, p_listing_id: l.id, p_cost: cost });
         var d = rpc ? rpc.data : null;
         if (Array.isArray(d)) d = d[0];
-        if (rpc && !rpc.error && d && d.success === false) {
+        var insufficient =
+          (rpc && rpc.error && /INSUFFICIENT_TOKENS/i.test(rpc.error.message || "")) ||
+          (d && d.success === false);
+        if (insufficient) {
           btn.disabled = false; btn.textContent = prev;
           if (err) err.innerHTML = 'Insufficient tokens. <a href="#" onclick="closeMktModal();navigate(&#39;pricing&#39;);return false">Get more tokens</a>';
           return;
