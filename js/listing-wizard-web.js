@@ -59,12 +59,14 @@ const TURKISH_MARINAS = [
 
 /* ── Marine budget ranges (Yapply budgetOptions, marine amounts) ── */
 function budgetOptions(isTr) {
+  /* num = numeric midpoint stored in the (numeric) budget column — it drives
+     the bid token-cost tiers. The human label goes into payload.budgetLabel. */
   return [
-    { label: isTr ? "1.000 - 5.000 TL" : "1,000 - 5,000 TL", value: "1000-5000" },
-    { label: isTr ? "5.000 - 15.000 TL" : "5,000 - 15,000 TL", value: "5000-15000" },
-    { label: isTr ? "15.000 - 50.000 TL" : "15,000 - 50,000 TL", value: "15000-50000" },
-    { label: isTr ? "50.000 - 150.000 TL" : "50,000 - 150,000 TL", value: "50000-150000" },
-    { label: isTr ? "150.000 TL+" : "150,000 TL+", value: "150000+" },
+    { label: isTr ? "1.000 - 5.000 TL" : "1,000 - 5,000 TL", value: "1000-5000", num: 3000 },
+    { label: isTr ? "5.000 - 15.000 TL" : "5,000 - 15,000 TL", value: "5000-15000", num: 10000 },
+    { label: isTr ? "15.000 - 50.000 TL" : "15,000 - 50,000 TL", value: "15000-50000", num: 32500 },
+    { label: isTr ? "50.000 - 150.000 TL" : "50,000 - 150,000 TL", value: "50000-150000", num: 100000 },
+    { label: isTr ? "150.000 TL+" : "150,000 TL+", value: "150000+", num: 150000 },
   ];
 }
 
@@ -293,8 +295,10 @@ function ensureStyles() {
 @media (max-height: 600px) { .nx-lw .wizard-icon { height: 56px; } .nx-lw .wizard-icon__graphic { width: 40px; height: 40px; } }
 /* step-check overlay (same look as the signup wizard) */
 .nx-lw .lw-step-check { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
-.nx-lw .lw-step-check__badge { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; background: var(--grad-primary, linear-gradient(135deg, #1B6FA8, #2A8DC8)); box-shadow: 0 10px 30px rgba(27,111,168,0.45); animation: lwCheckPop 0.34s cubic-bezier(0.22, 1.4, 0.36, 1) both; }
-.nx-lw .lw-step-check__badge svg { width: 30px; height: 30px; }
+.nx-lw .wizard-icon { pointer-events: none; }
+.nx-lw .wizard-icon:has(.lw-step-check) .wizard-icon__graphic { opacity: 0; }
+.nx-lw .lw-step-check__badge { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; background: var(--grad-primary, linear-gradient(135deg, #1B6FA8, #2A8DC8)); box-shadow: 0 10px 30px rgba(27,111,168,0.45); animation: lwCheckPop 0.34s cubic-bezier(0.22, 1.4, 0.36, 1) both; }
+.nx-lw .lw-step-check__badge svg { width: 26px; height: 26px; }
 .nx-lw .lw-step-check--leaving .lw-step-check__badge { animation: lwCheckLeave 0.22s ease both; }
 @keyframes lwCheckPop { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
 @keyframes lwCheckLeave { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.7); } }
@@ -621,6 +625,10 @@ function budgetLabel(value, isTr) {
   const opt = budgetOptions(isTr).find((o) => o.value === value);
   return opt ? opt.label : (value || "");
 }
+function budgetNumber(value) {
+  const opt = budgetOptions(false).find((o) => o.value === value);
+  return opt ? opt.num : null;
+}
 function timeframeLabel(value, isTr) {
   const opt = timeframeOptions(isTr).find((o) => o.value === value);
   return opt ? opt.label : (value || "");
@@ -718,7 +726,8 @@ async function renderCreatePage(container, opts) {
   /* ── Step-complete check animation (Yapply playStepCheck) ── */
   function playStepCheck(done) {
     try {
-      const host = bodyEl.closest(".wizard-card") || root;
+      /* Pop the check in the step-ICON slot at the top — never over the inputs. */
+      const host = root.querySelector("[data-wizard-icon]") || root;
       const overlay = document.createElement("div");
       overlay.className = "lw-step-check";
       overlay.innerHTML = '<div class="lw-step-check__badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5 10-11"/></svg></div>';
@@ -984,10 +993,10 @@ async function renderCreatePage(container, opts) {
         location: data.location || "",
         boatId: yacht ? yacht.id : "",
         boatLengthM: data.boatLengthM != null ? data.boatLengthM : undefined,
-        budget: budgetLabel(data.budget, isTr),
+        budget: budgetNumber(data.budget),
         currency: CURRENCY,
         timeframe: timeframeLabel(data.timeframe, isTr),
-        payload: { photos: photoUrls, phone: data.phone || "" },
+        payload: { photos: photoUrls, phone: data.phone || "", budgetLabel: budgetLabel(data.budget, isTr) },
       });
 
       haptic();
