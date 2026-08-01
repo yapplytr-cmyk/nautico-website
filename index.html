@@ -7,11 +7,31 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Nautico — Smart Yacht Management</title>
+  <link rel="stylesheet" href="css/onboarding-wizard.css?v=mp2" />
+  <style>
+    /* Marketplace-explainer home */
+    .mp-hero { padding: 120px 20px 60px; text-align: center; }
+    .mp-hero-inner { max-width: 720px; margin: 0 auto; }
+    .mp-hero .cc-brand { letter-spacing: 0.5em; font-size: 0.85rem; opacity: 0.7; margin-bottom: 18px; }
+    .mp-hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); margin: 0 0 14px; }
+    .mp-hero-sub { opacity: 0.75; font-size: 1.05rem; max-width: 520px; margin: 0 auto 26px; }
+    .mp-hero .mkt-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .mp-steps { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin: 34px 0; }
+    .mp-step { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 26px 24px; max-width: 250px; flex: 1 1 220px; text-align: center; }
+    .mp-step-n { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #1b6fa8, #2ecc9a); font-weight: 800; margin-bottom: 12px; }
+    .mp-step h3 { margin: 0 0 6px; font-size: 1.05rem; }
+    .mp-step p { margin: 0; font-size: 0.88rem; opacity: 0.7; }
+    .mp-pro-strip { display: flex; gap: 18px; align-items: center; justify-content: space-between; flex-wrap: wrap; background: rgba(245,197,66,0.07); border: 1px solid rgba(245,197,66,0.35); border-radius: 16px; padding: 20px 26px; max-width: 640px; margin: 0 auto 40px; }
+    .mp-pro-copy strong { display: block; margin-bottom: 4px; }
+    .mp-pro-copy p { margin: 0; font-size: 0.88rem; opacity: 0.75; }
+  </style>
+
   <meta name="description" content="Nautico is the all-in-one yacht management app. Track expenses, plan voyages, monitor maintenance, and navigate with live nautical charts." />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png" />
   <link rel="stylesheet" href="css/style.css?v=19" />
+  <link rel="stylesheet" href="css/signup-wizard.css?v=mp1" />
   <!-- Start fetching the hero 3D model immediately so it's ready sooner -->
   <link rel="preload" href="assets/boat-midnight.glb" as="fetch" crossorigin="anonymous" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -24,32 +44,16 @@
   <!-- ══ FLOATING PARTICLES (drift across the whole page, Rival-style) ══ -->
   <canvas id="cc-particles" aria-hidden="true"></canvas>
 
-  <!-- ══ PERSISTENT "NEXT SECTION" CHEVRON — always pinned to the bottom of the
-       screen on the home page so it's never hidden below a tall section ══ -->
-  <a id="cc-next" class="cc-next" href="#" aria-label="Next section">
-    <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-  </a>
-
-  <!-- ══ SCROLL PROGRESS DOTS (grow toward the download CTA) ══ -->
-  <div class="cc-progress" id="cc-progress" aria-hidden="true">
-    <a class="cc-pdot" data-target="cc-hero" href="#home"></a>
-    <a class="cc-pdot" data-target="intro-section" href="#intro-section"></a>
-    <a class="cc-pdot" data-target="features-section" href="#features-section"></a>
-    <a class="cc-pdot" data-target="screenshots-section" href="#screenshots-section"></a>
-    <a class="cc-pdot cc-pdot-cta" data-target="cta-section" href="#cta-section"></a>
-  </div>
-
   <!-- ══ NAVBAR ══ -->
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
       <div class="nav-links" id="nav-links">
         <a href="#marketplace" class="nav-link active" data-route="marketplace">Marketplace</a>
         <a href="#home" class="nav-link" data-route="home" data-i18n="nav_home">Home</a>
-        <a href="#pricing" class="nav-link" data-route="pricing" data-i18n="nav_pricing">Pricing</a>
+        <a href="#pricing" class="nav-link" data-route="pricing">Get Tokens</a>
         <a href="#contact" class="nav-link" data-route="contact" data-i18n="nav_contact">Contact</a>
-        <a href="#login" class="nav-link nav-login-btn" data-route="login" data-i18n="nav_login">Log In</a>
+        <a href="#signup" class="nav-link nav-signup-btn" data-route="signup">Sign Up</a>
+        <a href="#login" class="nav-link nav-login-btn" data-route="login">Log In</a>
         <div class="theme-toggle" id="theme-toggle" role="button" aria-label="Toggle theme" title="Toggle light / dark">
           <div class="theme-toggle-knob" id="theme-knob">
             <svg viewBox="0 0 24 24" fill="none" stroke="#2A1A00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="theme-icon"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/></svg>
@@ -81,493 +85,30 @@
 
     <!-- ════════ HOME PAGE ════════ -->
     <section class="page" id="page-home" style="display:none;">
-
-      <!-- ══ COMMAND CENTER HERO — full screen, 3D Midnight ══ -->
-      <section class="cc-hero" id="cc-hero">
-        <div class="cc-stars"></div>
-        <div class="cc-stars2"></div>
-        <div class="cc-stars3"></div>
-        <div class="cc-aurora a1"></div>
-        <div class="cc-aurora a2"></div>
-
-        <div class="cc-hero-inner">
+      <div class="mp-hero">
+        <div class="mp-hero-inner">
           <div class="cc-brand">N A U T I C O</div>
-
-          <!-- Big 3D boat — sits BETWEEN brand and tagline -->
-          <div class="cc-hero-3d" id="hero3d">
-            <div class="cc-hero-3d-loading" id="hero3d-loading">Loading vessel…</div>
-          </div>
-
-          <h1 class="cc-tagline">Enter your<br><span class="cc-grad">command center</span></h1>
-          <p class="cc-hero-sub">Your entire vessel — expenses, voyages, maintenance and live nautical charts — in one app.</p>
-          <a href="#intro-section" class="cc-enter-btn scroll-to" data-target="intro-section">Discover Nautico</a>
-        </div>
-
-        <!-- Scroll cue (horizontally centered) -->
-        <a href="#intro-section" class="cc-scroll-cue scroll-to" data-target="intro-section" aria-label="Scroll down">
-          <div class="cc-arrows" aria-hidden="true">
-            <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-          <div class="cc-hint">Discover Nautico</div>
-        </a>
-      </section>
-
-      <!-- Hero -->
-      <div class="hero" id="intro-section">
-        <!-- Floating nautical graphics -->
-        <div class="hero-bg-elements" aria-hidden="true">
-          <!-- Large compass rose — top left -->
-          <svg class="hero-float f1" width="220" height="220" viewBox="0 0 220 220" fill="none" opacity="0.04">
-            <circle cx="110" cy="110" r="105" stroke="#7EC8E3" stroke-width="0.6"/>
-            <circle cx="110" cy="110" r="90" stroke="#7EC8E3" stroke-width="0.4" stroke-dasharray="4 6"/>
-            <circle cx="110" cy="110" r="70" stroke="#7EC8E3" stroke-width="0.5"/>
-            <circle cx="110" cy="110" r="12" stroke="#7EC8E3" stroke-width="0.8"/>
-            <polygon points="110,18 115,98 110,88 105,98" fill="#7EC8E3" opacity="0.7"/>
-            <polygon points="110,202 115,122 110,132 105,122" fill="#5BA3CF" opacity="0.5"/>
-            <polygon points="18,110 98,105 88,110 98,115" fill="#5BA3CF" opacity="0.4"/>
-            <polygon points="202,110 122,105 132,110 122,115" fill="#5BA3CF" opacity="0.4"/>
-            <text x="110" y="14" text-anchor="middle" fill="#7EC8E3" font-size="8" font-weight="300" opacity="0.6">N</text>
-            <text x="110" y="214" text-anchor="middle" fill="#7EC8E3" font-size="8" font-weight="300" opacity="0.6">S</text>
-            <text x="8" y="113" text-anchor="middle" fill="#7EC8E3" font-size="8" font-weight="300" opacity="0.6">W</text>
-            <text x="212" y="113" text-anchor="middle" fill="#7EC8E3" font-size="8" font-weight="300" opacity="0.6">E</text>
-            <!-- Degree ticks -->
-            <line x1="110" y1="5" x2="110" y2="20" stroke="#7EC8E3" stroke-width="0.3" opacity="0.5"/>
-            <line x1="110" y1="200" x2="110" y2="215" stroke="#7EC8E3" stroke-width="0.3" opacity="0.5"/>
-            <line x1="5" y1="110" x2="20" y2="110" stroke="#7EC8E3" stroke-width="0.3" opacity="0.5"/>
-            <line x1="200" y1="110" x2="215" y2="110" stroke="#7EC8E3" stroke-width="0.3" opacity="0.5"/>
-          </svg>
-
-          <!-- Detailed helm wheel — bottom left -->
-          <svg class="hero-float f6" width="180" height="180" viewBox="0 0 180 180" fill="none" opacity="0.035">
-            <circle cx="90" cy="90" r="80" stroke="#7EC8E3" stroke-width="0.6"/>
-            <circle cx="90" cy="90" r="65" stroke="#7EC8E3" stroke-width="0.4"/>
-            <circle cx="90" cy="90" r="20" stroke="#7EC8E3" stroke-width="0.8"/>
-            <circle cx="90" cy="90" r="8" fill="#7EC8E3" opacity="0.15"/>
-            <!-- 8 spokes with handles -->
-            <line x1="90" y1="10" x2="90" y2="70" stroke="#7EC8E3" stroke-width="0.6"/><circle cx="90" cy="8" r="4" stroke="#7EC8E3" stroke-width="0.5"/>
-            <line x1="90" y1="110" x2="90" y2="170" stroke="#7EC8E3" stroke-width="0.6"/><circle cx="90" cy="172" r="4" stroke="#7EC8E3" stroke-width="0.5"/>
-            <line x1="10" y1="90" x2="70" y2="90" stroke="#7EC8E3" stroke-width="0.6"/><circle cx="8" cy="90" r="4" stroke="#7EC8E3" stroke-width="0.5"/>
-            <line x1="110" y1="90" x2="170" y2="90" stroke="#7EC8E3" stroke-width="0.6"/><circle cx="172" cy="90" r="4" stroke="#7EC8E3" stroke-width="0.5"/>
-            <line x1="33.4" y1="33.4" x2="63.4" y2="63.4" stroke="#7EC8E3" stroke-width="0.5"/><circle cx="31" cy="31" r="3.5" stroke="#7EC8E3" stroke-width="0.5"/>
-            <line x1="146.6" y1="146.6" x2="116.6" y2="116.6" stroke="#7EC8E3" stroke-width="0.5"/><circle cx="149" cy="149" r="3.5" stroke="#7EC8E3" stroke-width="0.5"/>
-            <line x1="33.4" y1="146.6" x2="63.4" y2="116.6" stroke="#7EC8E3" stroke-width="0.5"/><circle cx="31" cy="149" r="3.5" stroke="#7EC8E3" stroke-width="0.5"/>
-            <line x1="146.6" y1="33.4" x2="116.6" y2="63.4" stroke="#7EC8E3" stroke-width="0.5"/><circle cx="149" cy="31" r="3.5" stroke="#7EC8E3" stroke-width="0.5"/>
-          </svg>
-
-          <!-- Topographic wave pattern — top right -->
-          <svg class="hero-float f3" width="300" height="80" viewBox="0 0 300 80" fill="none" opacity="0.035">
-            <path d="M0,40 Q37.5,15 75,40 T150,40 T225,40 T300,40" stroke="#7EC8E3" stroke-width="0.8" fill="none"/>
-            <path d="M0,50 Q37.5,25 75,50 T150,50 T225,50 T300,50" stroke="#7EC8E3" stroke-width="0.6" fill="none"/>
-            <path d="M0,60 Q37.5,35 75,60 T150,60 T225,60 T300,60" stroke="#5BA3CF" stroke-width="0.5" fill="none"/>
-            <path d="M0,30 Q37.5,5 75,30 T150,30 T225,30 T300,30" stroke="#5BA3CF" stroke-width="0.4" fill="none" opacity="0.7"/>
-          </svg>
-
-          <!-- Concentric rings — right side -->
-          <svg class="hero-float f2" width="160" height="160" viewBox="0 0 160 160" fill="none" opacity="0.03">
-            <circle cx="80" cy="80" r="75" stroke="#7EC8E3" stroke-width="0.5"/>
-            <circle cx="80" cy="80" r="60" stroke="#7EC8E3" stroke-width="0.4" stroke-dasharray="3 5"/>
-            <circle cx="80" cy="80" r="45" stroke="#7EC8E3" stroke-width="0.3"/>
-            <circle cx="80" cy="80" r="30" stroke="#5BA3CF" stroke-width="0.4" stroke-dasharray="2 4"/>
-            <circle cx="80" cy="80" r="15" stroke="#5BA3CF" stroke-width="0.5"/>
-            <circle cx="80" cy="80" r="3" fill="#7EC8E3" opacity="0.3"/>
-          </svg>
-
-          <!-- Grid / chart lines — bottom right -->
-          <svg class="hero-float f7" width="200" height="140" viewBox="0 0 200 140" fill="none" opacity="0.025">
-            <line x1="0" y1="0" x2="0" y2="140" stroke="#7EC8E3" stroke-width="0.3"/><line x1="40" y1="0" x2="40" y2="140" stroke="#7EC8E3" stroke-width="0.3"/><line x1="80" y1="0" x2="80" y2="140" stroke="#7EC8E3" stroke-width="0.3"/><line x1="120" y1="0" x2="120" y2="140" stroke="#7EC8E3" stroke-width="0.3"/><line x1="160" y1="0" x2="160" y2="140" stroke="#7EC8E3" stroke-width="0.3"/><line x1="200" y1="0" x2="200" y2="140" stroke="#7EC8E3" stroke-width="0.3"/>
-            <line x1="0" y1="0" x2="200" y2="0" stroke="#7EC8E3" stroke-width="0.3"/><line x1="0" y1="35" x2="200" y2="35" stroke="#7EC8E3" stroke-width="0.3"/><line x1="0" y1="70" x2="200" y2="70" stroke="#7EC8E3" stroke-width="0.3"/><line x1="0" y1="105" x2="200" y2="105" stroke="#7EC8E3" stroke-width="0.3"/><line x1="0" y1="140" x2="200" y2="140" stroke="#7EC8E3" stroke-width="0.3"/>
-            <path d="M0,100 L40,80 L80,90 L120,60 L160,70 L200,40" stroke="#5BA3CF" stroke-width="0.8" fill="none"/>
-            <circle cx="40" cy="80" r="2" fill="#5BA3CF" opacity="0.4"/><circle cx="120" cy="60" r="2" fill="#5BA3CF" opacity="0.4"/><circle cx="200" cy="40" r="2" fill="#5BA3CF" opacity="0.4"/>
-          </svg>
-        </div>
-        <div class="hero-content">
-          <div class="hero-badge" data-i18n="this_is_nautico">This is Nautico</div>
-          <h1 class="hero-title"><span data-i18n="hero_title_1">Your Entire Vessel,</span><br/><span class="hero-accent" data-i18n="hero_title_2">In the Palm of Your Hand</span></h1>
-          <p class="hero-subtitle" data-i18n="hero_subtitle">From bow to stern — track expenses, log voyages, schedule maintenance, and navigate with live nautical charts. One app, every sea mile.</p>
-          <div class="hero-cta-row">
-            <a href="https://apps.apple.com/tr/app/nautico/id6761394669" target="_blank" class="btn btn-primary btn-lg btn-appstore" style="justify-content:center;text-align:center;gap:8px;">
-              <svg width="20" height="24" viewBox="0 0 814 1000" fill="currentColor"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57.8-155.5-127.4c-58.3-81.2-105.9-207.6-105.9-328.2 0-193.1 125.7-295.7 249.4-295.7 65.7 0 120.3 43.2 161.4 43.2 39.2 0 100.4-45.8 174.7-45.8 28.2 0 130 2.6 197 97.9zm-135.3-174.3c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.9 32.4-54.2 83.6-54.2 135.5 0 7.8.7 15.6 1.3 18.2 2.6.3 6.3.6 10.2.6 45.9.1 101.7-30.3 138.6-70.7z"/></svg>
-              <span data-i18n="hero_appstore_btn">Download on the App Store</span>
-            </a>
-            <a href="#features-section" class="btn btn-primary btn-lg scroll-to" data-target="features-section">
-              <span data-i18n="hero_cta">Discover More</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:8px"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
-            </a>
-          </div>
-          <div class="hero-trust">
-            <span class="hero-trust-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              <span data-i18n="hero_trust_trial">Free to use — try Premium 7 days free</span>
-            </span>
-            <span class="hero-trust-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              <span data-i18n="hero_trust_cancel">Cancel anytime</span>
-            </span>
+          <h1>Tekne işleriniz için <span class="cc-grad">teklif alın</span></h1>
+          <p class="mp-hero-sub">Post your boat job once — trusted marine pros compete with bids, you pick the best.</p>
+          <div class="mkt-actions">
+            <a class="btn btn-primary" href="#marketplace" data-route="marketplace">Browse marketplace</a>
+            <a class="btn btn-outline" href="#signup" data-route="signup">Create account</a>
           </div>
         </div>
-        <div class="hero-visual hero-visual-wide">
-          <div class="hero-3phones">
-            <div class="hero-phone hero-phone-left">
-              <div class="hero-phone-screen">
-                <img src="screenshots/home.png" alt="Nautico Home" />
-              </div>
-            </div>
-            <div class="hero-phone hero-phone-center">
-              <div class="hero-phone-screen">
-                <img src="screenshots/dashboard.png" alt="Nautico Dashboard" />
-              </div>
-            </div>
-            <div class="hero-phone hero-phone-right">
-              <div class="hero-phone-screen">
-                <img src="screenshots/chart.png" alt="Nautical Charts" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <a href="#features-section" class="section-arrow scroll-to" data-target="features-section" aria-label="Next">
-          <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </a>
       </div>
-
-
-      <!-- Features Section -->
-      <div class="section" id="features-section">
+      <div class="section">
         <div class="section-inner">
-          <div class="section-label anim-in" data-i18n="feat_label">Features</div>
-          <h2 class="section-title anim-in" data-i18n="feat_title">Everything you need. One app.</h2>
-          <p class="section-subtitle anim-in" data-i18n="feat_subtitle">Nautico replaces your spreadsheets, paper logs, and guesswork with a single, intelligent platform designed for yacht owners.</p>
-          <!-- 3D Viking showcase -->
-          <!-- Interactive Feature Explorer -->
-          <div class="feat-explorer">
-            <!-- Icon tabs — onclick for bulletproof switching -->
-            <div class="feat-tabs">
-              <button class="feat-tab active" data-feat="0" onclick="switchFeatTab(0)"><div class="feat-tab-icon feat-money"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><span data-i18n="feat_tab_money">Money</span></button>
-              <button class="feat-tab" data-feat="1" onclick="switchFeatTab(1)"><div class="feat-tab-icon feat-health"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><span data-i18n="feat_tab_health">Health</span></button>
-              <button class="feat-tab" data-feat="2" onclick="switchFeatTab(2)"><div class="feat-tab-icon feat-location"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><span data-i18n="feat_tab_location">Location</span></button>
-              <button class="feat-tab" data-feat="3" onclick="switchFeatTab(3)"><div class="feat-tab-icon feat-logbook"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div><span data-i18n="feat_tab_logbook">Logbook</span></button>
-              <button class="feat-tab" data-feat="4" onclick="switchFeatTab(4)"><div class="feat-tab-icon feat-fuel"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></div><span data-i18n="feat_tab_fuel">Fuel</span></button>
-              <button class="feat-tab" data-feat="5" onclick="switchFeatTab(5)"><div class="feat-tab-icon feat-charts"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div><span data-i18n="feat_tab_charts">Charts</span></button>
-              <button class="feat-tab" data-feat="6" onclick="switchFeatTab(6)"><div class="feat-tab-icon feat-anchor"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="21"/><path d="M5 19a7 7 0 0114 0"/></svg></div><span data-i18n="feat_tab_anchor">Anchor</span></button>
-            </div>
-
-            <!-- Detail panels with arrow nav -->
-            <div class="feat-panels-wrapper">
-              <button class="feat-arrow feat-arrow-left" onclick="featNav(-1)" aria-label="Previous feature">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-              </button>
-            <div class="feat-panels">
-              <!-- Small Viking 3D render — lives INSIDE the solution box, on the
-                   left where the icon used to be. Re-angles per solution, always rotating. -->
-              <div class="cc-section-3d cc-section-3d-sm feat-viking-3d" id="boat-viking" data-boat3d="assets/boat-viking.glb" data-fit="4.6" data-base-yaw="-1.57">
-                <div class="cc-hero-3d-loading">Loading vessel…</div>
-              </div>
-              <div class="feat-panel active" data-panel="0">
-                <div class="feat-panel-graphic"><div class="card-icon-circle feat-money"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
-                <div class="feat-panel-info">
-                  <span class="card-tag feat-money-tag" data-i18n="feat_tag_0">Financial</span>
-                  <h3 class="card-title" data-i18n="feat_0_title">Smart Money Management</h3>
-                  <p class="card-desc" data-i18n="feat_0_desc">Track every dollar spent on your vessel. Nautico automatically categorizes and totals costs so you always know where your money goes.</p>
-                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon green">📊</div><span data-i18n="feat_0_b1">Monthly & yearly cost breakdowns</span></div><div class="card-bullet"><div class="card-bullet-icon green">⛽</div><span data-i18n="feat_0_b2">Fuel, maintenance, docking & more</span></div><div class="card-bullet"><div class="card-bullet-icon green">📈</div><span data-i18n="feat_0_b3">Spending trends & budget forecasts</span></div></div>
-                </div>
-                <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/dashboard.png" alt="Spending Dashboard" /></div></div>
-              </div>
-
-              <div class="feat-panel" data-panel="1">
-                <div class="feat-panel-graphic"><div class="card-icon-circle feat-health"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#5BC4F0" stroke-width="1.5" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
-                <div class="feat-panel-info">
-                  <span class="card-tag feat-health-tag" data-i18n="feat_tag_1">Maintenance</span>
-                  <h3 class="card-title" data-i18n="feat_1_title">Vessel Health Monitor</h3>
-                  <p class="card-desc" data-i18n="feat_1_desc">Service reminders based on your specific make, model, and engine hours. Never miss an oil change or haul-out again.</p>
-                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon blue">🔧</div><span data-i18n="feat_1_b1">Service reminders by model specs</span></div><div class="card-bullet"><div class="card-bullet-icon blue">⚙️</div><span data-i18n="feat_1_b2">Engine hours & health score</span></div><div class="card-bullet"><div class="card-bullet-icon blue">📋</div><span data-i18n="feat_1_b3">Full maintenance history log</span></div></div>
-                </div>
-                <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/service.png" alt="Service Tracker" /></div></div>
-              </div>
-
-              <div class="feat-panel" data-panel="2">
-                <div class="feat-panel-graphic"><div class="card-icon-circle feat-location"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#FFC75F" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
-                <div class="feat-panel-info">
-                  <span class="card-tag feat-location-tag" data-i18n="feat_tag_2">Navigation</span>
-                  <h3 class="card-title" data-i18n="feat_2_title">Location Intelligence</h3>
-                  <p class="card-desc" data-i18n="feat_2_desc">Wherever you sail, Nautico gives you the info you need — local regulations, safe mooring spots, and weather alerts.</p>
-                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon gold">🏗️</div><span data-i18n="feat_2_b1">Safe mooring spots & marinas</span></div><div class="card-bullet"><div class="card-bullet-icon gold">⚖️</div><span data-i18n="feat_2_b2">Local laws & regulations</span></div><div class="card-bullet"><div class="card-bullet-icon gold">🌊</div><span data-i18n="feat_2_b3">Weather & sea conditions</span></div></div>
-                </div>
-                <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/alerts.png" alt="Smart Alerts" /></div></div>
-              </div>
-
-              <div class="feat-panel" data-panel="3">
-                <div class="feat-panel-graphic"><div class="card-icon-circle feat-logbook"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
-                <div class="feat-panel-info">
-                  <span class="card-tag feat-logbook-tag" data-i18n="feat_tag_3">Logbook</span>
-                  <h3 class="card-title" data-i18n="feat_3_title">Digital Voyage Logbook</h3>
-                  <p class="card-desc" data-i18n="feat_3_desc">Every voyage auto-logged with departure, arrival, crew, conditions — exportable as a professional PDF.</p>
-                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon purple">📖</div><span data-i18n="feat_3_b1">Auto-generated voyage entries</span></div><div class="card-bullet"><div class="card-bullet-icon purple">📄</div><span data-i18n="feat_3_b2">Export logbook as PDF</span></div><div class="card-bullet"><div class="card-bullet-icon purple">🗺️</div><span data-i18n="feat_3_b3">Route history with duration</span></div></div>
-                </div>
-                <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/logbook.png" alt="Voyage Logbook" /></div></div>
-              </div>
-
-              <div class="feat-panel" data-panel="4">
-                <div class="feat-panel-graphic"><div class="card-icon-circle feat-fuel"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
-                <div class="feat-panel-info">
-                  <span class="card-tag feat-fuel-tag" data-i18n="feat_tag_4">Smart Fuel</span>
-                  <h3 class="card-title" data-i18n="feat_4_title">Fuel Cost Calculator</h3>
-                  <p class="card-desc" data-i18n="feat_4_desc">Select your ports and Nautico calculates distance, fuel needed, and estimated cost from live fuel prices.</p>
-                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon orange">⛽</div><span data-i18n="feat_4_b1">Auto-calculates from vessel specs</span></div><div class="card-bullet"><div class="card-bullet-icon orange">📍</div><span data-i18n="feat_4_b2">Marina-to-marina distance</span></div><div class="card-bullet"><div class="card-bullet-icon orange">💰</div><span data-i18n="feat_4_b3">Live fuel price estimates</span></div></div>
-                </div>
-                <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/home.png" alt="Home Screen" /></div></div>
-              </div>
-
-              <div class="feat-panel" data-panel="5">
-                <div class="feat-panel-graphic"><div class="card-icon-circle feat-charts"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
-                <div class="feat-panel-info">
-                  <span class="card-tag feat-charts-tag" data-i18n="feat_tag_5">Charts</span>
-                  <h3 class="card-title" data-i18n="feat_5_title">Nautical Charts & Map</h3>
-                  <p class="card-desc" data-i18n="feat_5_desc">Interactive sea charts with real marina locations, route planning, and live weather overlays at your fingertips.</p>
-                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon skyblue">🗺️</div><span data-i18n="feat_5_b1">Interactive chart with marinas</span></div><div class="card-bullet"><div class="card-bullet-icon skyblue">⚓</div><span data-i18n="feat_5_b2">Sea-path route planning</span></div><div class="card-bullet"><div class="card-bullet-icon skyblue">🌤️</div><span data-i18n="feat_5_b3">Real-time weather overlays</span></div></div>
-                </div>
-                <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/chart.png" alt="Nautical Charts" /></div></div>
-              </div>
-
-              <div class="feat-panel" data-panel="6">
-                <div class="feat-panel-graphic"><div class="card-icon-circle feat-anchor"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="21"/><path d="M5 19a7 7 0 0114 0"/></svg><div class="card-orbit"><div class="card-orbit-dot d1"></div><div class="card-orbit-dot d2"></div><div class="card-orbit-dot d3"></div></div></div></div>
-                <div class="feat-panel-info">
-                  <span class="card-tag feat-anchor-tag" data-i18n="feat_tag_6">Anchor Monitor</span>
-                  <h3 class="card-title" data-i18n="feat_6_title">Anchor Watch & Drift Alerts</h3>
-                  <p class="card-desc" data-i18n="feat_6_desc">Set your anchor radius and rest easy. Nautico monitors your vessel's position around the clock and sends critical alerts if you drift — even when your screen is off or the app is closed.</p>
-                  <div class="card-bullets"><div class="card-bullet"><div class="card-bullet-icon skyblue">📍</div><span data-i18n="feat_6_b1">Native GPS monitoring 24/7</span></div><div class="card-bullet"><div class="card-bullet-icon skyblue">🔔</div><span data-i18n="feat_6_b2">Critical alerts even when app is closed</span></div><div class="card-bullet"><div class="card-bullet-icon skyblue">🛡️</div><span data-i18n="feat_6_b3">Custom radius with live distance tracking</span></div></div>
-                </div>
-                <div class="feat-panel-phone"><div class="feat-phone"><img src="screenshots/alerts.png" alt="Anchor Watch Alerts" /></div></div>
-              </div>
-            </div>
-              <button class="feat-arrow feat-arrow-right" onclick="featNav(1)" aria-label="Next feature">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-              </button>
-            </div>
+          <div class="mp-steps">
+            <div class="mp-step"><span class="mp-step-n">1</span><h3>Post your job</h3><p>Describe the work, your boat and budget.</p></div>
+            <div class="mp-step"><span class="mp-step-n">2</span><h3>Pros bid</h3><p>Local marine professionals send their offers.</p></div>
+            <div class="mp-step"><span class="mp-step-n">3</span><h3>Accept &amp; track</h3><p>Pick the best bid and follow the job to completion.</p></div>
           </div>
-          <!-- Inline tab switch function — guaranteed available -->
-          <script>
-          var _featTotal = 7;
-          function _getCurrentFeat() {
-            var active = document.querySelector('.feat-tab.active');
-            return active ? parseInt(active.getAttribute('data-feat')) : 0;
-          }
-          function switchFeatTab(idx, dir) {
-            document.querySelectorAll('.feat-tab').forEach(function(t) { t.classList.remove('active'); });
-            var tab = document.querySelector('.feat-tab[data-feat="' + idx + '"]');
-            if (tab) tab.classList.add('active');
-            document.querySelectorAll('.feat-panel').forEach(function(p) { p.classList.remove('active'); });
-            var panel = document.querySelector('.feat-panel[data-panel="' + idx + '"]');
-            if (panel) {
-              panel.classList.add('active');
-              panel.style.animation = 'none';
-              panel.offsetHeight;
-              // slide in from the side you're heading toward (Rival-style switch)
-              var anim = (dir === -1) ? 'featPanelInLeft' : 'featPanelIn';
-              panel.style.animation = anim + ' 0.42s cubic-bezier(0.16,1,0.3,1)';
-            }
-            // Swing the Viking 3D to a fresh viewing angle per solution
-            // (it keeps continuously rotating; this just shifts the base view).
-            try {
-              if (window.NauticoBoats && window.NauticoBoats['boat-viking']) {
-                window.NauticoBoats['boat-viking'].setView(idx * (Math.PI / 3)); // 60° per tab
-              }
-            } catch (e) {}
-          }
-          function featNav(dir) {
-            var cur = _getCurrentFeat();
-            var next = (cur + dir + _featTotal) % _featTotal;
-            if (window._scrollFeatToCenter) window._scrollFeatToCenter(next);
-            else switchFeatTab(next, dir);
-          }
-          // ── Solution feature SCROLL-WHEEL: the focused feature sits centred,
-          //    the rest fade + shrink symmetrically toward both sides. ──
-          (function () {
-            var wrap = document.querySelector('.feat-tabs');
-            if (!wrap) return;
-            var tabs = [].slice.call(wrap.querySelectorAll('.feat-tab'));
-            if (!tabs.length) return;
-            var lastIdx = -1, raf = null;
-            function paint() {
-              var wr = wrap.getBoundingClientRect();
-              var cx = wr.left + wr.width / 2, nearest = 0, nd = Infinity;
-              tabs.forEach(function (t, i) {
-                var r = t.getBoundingClientRect();
-                var d = Math.abs((r.left + r.width / 2) - cx);
-                var n = Math.min(1, d / (wr.width * 0.42));   // 0 at centre → 1 at edge
-                t.style.opacity = (1 - n * 0.72).toFixed(3);
-                t.style.transform = 'scale(' + (1 - n * 0.26).toFixed(3) + ')';
-                if (d < nd) { nd = d; nearest = i; }
-              });
-              if (nearest !== lastIdx) {
-                lastIdx = nearest;
-                switchFeatTab(parseInt(tabs[nearest].getAttribute('data-feat')) || 0);
-              }
-            }
-            function onScroll() { if (raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(paint); }
-            wrap.addEventListener('scroll', onScroll, { passive: true });
-            window.addEventListener('resize', onScroll);
-            window._scrollFeatToCenter = function (featIdx) {
-              var t = wrap.querySelector('.feat-tab[data-feat="' + featIdx + '"]');
-              if (!t) return;
-              var wr = wrap.getBoundingClientRect(), r = t.getBoundingClientRect();
-              wrap.scrollBy({ left: (r.left + r.width / 2) - (wr.left + wr.width / 2), behavior: 'smooth' });
-            };
-            tabs.forEach(function (t) {
-              t.addEventListener('click', function () {
-                window._scrollFeatToCenter(parseInt(t.getAttribute('data-feat')) || 0);
-              });
-            });
-            setTimeout(function () { if (window._scrollFeatToCenter) window._scrollFeatToCenter(0); paint(); }, 100);
-            window.addEventListener('load', function () { setTimeout(paint, 220); });
-          })();
-          // Swipe left/right across the solution box to change feature (but NOT
-          // when the gesture starts on the Viking 3D, which rotates on touch).
-          (function () {
-            var box = document.querySelector('.feat-panels');
-            if (!box) return;
-            var x0 = null, y0 = null;
-            box.addEventListener('touchstart', function (e) {
-              if (e.target.closest && e.target.closest('#boat-viking')) { x0 = null; return; }
-              x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
-            }, { passive: true });
-            box.addEventListener('touchend', function (e) {
-              if (x0 === null) return;
-              var dx = e.changedTouches[0].clientX - x0;
-              var dy = e.changedTouches[0].clientY - y0;
-              x0 = null;
-              if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) featNav(dx < 0 ? 1 : -1);
-            }, { passive: true });
-          })();
-          </script>
-          <a href="#screenshots-section" class="section-arrow scroll-to" data-target="screenshots-section" aria-label="Next">
-            <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            <svg class="cc-ar" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </a>
-        </div>
-      </div>
-
-      <!-- Wave Divider -->
-      <div class="wave-divider">
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0,30 C360,55 720,5 1080,30 C1260,42 1380,35 1440,30 L1440,60 L0,60 Z" fill="#13303D"/>
-        </svg>
-      </div>
-
-      <!-- Screenshots Section -->
-      <div class="screenshots-section" id="screenshots-section">
-        <div class="screenshots-inner">
-          <div class="screenshots-header">
-            <div class="screenshots-label" data-i18n="ss_label">See It In Action</div>
-            <h2 class="screenshots-title" data-i18n="ss_title">Designed for yacht owners, by yacht owners</h2>
-            <p class="screenshots-subtitle" data-i18n="ss_subtitle">Explore every feature of Nautico with a visual walkthrough of the app's core screens.</p>
-          </div>
-          <!-- Live Demo Video — clean: just the phone + caption -->
-          <div class="demo-video-wrap">
-            <div class="demo-video-phone">
-              <video class="demo-video" autoplay muted loop playsinline>
-                <source src="screenshots/app-demo.mp4" type="video/mp4" />
-              </video>
+          <div class="mp-pro-strip">
+            <div class="mp-pro-copy">
+              <strong>For professionals</strong>
+              <p>Find jobs near you, bid with tokens, get reviewed &amp; verified.</p>
             </div>
-            <p class="demo-video-caption" data-i18n="ss_video_caption">Live App Walkthrough</p>
-          </div>
-          <!-- Auto-play video when scrolled into view (iOS fix) -->
-          <script>
-          (function() {
-            var video = document.querySelector('.demo-video');
-            if (!video) return;
-            var observer = new IntersectionObserver(function(entries) {
-              entries.forEach(function(entry) {
-                if (entry.isIntersecting) { video.play(); }
-              });
-            }, { threshold: 0.3 });
-            observer.observe(video);
-          })();
-          </script>
-
-          <div class="screenshots-container" id="screenshots-container">
-            <div class="screenshot-mockup">
-              <div class="screenshot-phone">
-                <div class="screenshot-content">
-                  <img src="screenshots/home.png" alt="Home" class="screenshot-img" />
-                </div>
-              </div>
-              <div class="screenshot-caption" data-i18n="ss_cap_home">Home</div>
-            </div>
-            <div class="screenshot-mockup">
-              <div class="screenshot-phone">
-                <div class="screenshot-content">
-                  <img src="screenshots/dashboard.png" alt="Weather & Spending" class="screenshot-img" />
-                </div>
-              </div>
-              <div class="screenshot-caption" data-i18n="ss_cap_spending">Weather & Spending</div>
-            </div>
-            <div class="screenshot-mockup">
-              <div class="screenshot-phone">
-                <div class="screenshot-content">
-                  <img src="screenshots/service.png" alt="Service Tracker" class="screenshot-img" />
-                </div>
-              </div>
-              <div class="screenshot-caption" data-i18n="ss_cap_service">Service Tracker</div>
-            </div>
-            <div class="screenshot-mockup">
-              <div class="screenshot-phone">
-                <div class="screenshot-content">
-                  <img src="screenshots/logbook.png" alt="Voyage Logbook" class="screenshot-img" />
-                </div>
-              </div>
-              <div class="screenshot-caption" data-i18n="ss_cap_logbook">Voyage Logbook</div>
-            </div>
-            <div class="screenshot-mockup">
-              <div class="screenshot-phone">
-                <div class="screenshot-content">
-                  <img src="screenshots/chart.png" alt="Nautical Charts" class="screenshot-img" />
-                </div>
-              </div>
-              <div class="screenshot-caption" data-i18n="ss_cap_charts">Nautical Charts</div>
-            </div>
-            <div class="screenshot-mockup">
-              <div class="screenshot-phone">
-                <div class="screenshot-content">
-                  <img src="screenshots/alerts.png" alt="Smart Alerts" class="screenshot-img" />
-                </div>
-              </div>
-              <div class="screenshot-caption" data-i18n="ss_cap_alerts">Smart Alerts</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- CTA Section -->
-      <div class="section section-cta" id="cta-section">
-        <div class="section-inner center">
-          <!-- 3D Center-console boat sits on top of the headline -->
-          <div class="cc-section-3d cc-cta-3d" id="boat-cc" data-boat3d="assets/boat-cc.glb" data-fit="5.4">
-            <div class="cc-hero-3d-loading">Loading vessel…</div>
-          </div>
-          <div class="cta-eyebrow" data-i18n="cta_eyebrow">Your command center awaits</div>
-          <h2 class="section-title" data-i18n="cta_title">Ready to take control?</h2>
-          <p class="section-subtitle" data-i18n="cta_subtitle">Join yacht owners who've simplified their ownership with Nautico. Free to use — try Premium free for 7 days.</p>
-          <a href="https://apps.apple.com/tr/app/nautico/id6761394669" target="_blank" class="btn btn-primary btn-lg btn-appstore" style="justify-content:center;text-align:center;gap:8px;">
-            <svg width="20" height="24" viewBox="0 0 814 1000" fill="currentColor"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57.8-155.5-127.4c-58.3-81.2-105.9-207.6-105.9-328.2 0-193.1 125.7-295.7 249.4-295.7 65.7 0 120.3 43.2 161.4 43.2 39.2 0 100.4-45.8 174.7-45.8 28.2 0 130 2.6 197 97.9zm-135.3-174.3c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.9 32.4-54.2 83.6-54.2 135.5 0 7.8.7 15.6 1.3 18.2 2.6.3 6.3.6 10.2.6 45.9.1 101.7-30.3 138.6-70.7z"/></svg>
-            <span data-i18n="cta_btn">Download on the App Store</span>
-          </a>
-          <div class="hero-trust cta-trust">
-            <span class="hero-trust-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              <span data-i18n="cta_trust_free">Free to use</span>
-            </span>
-            <span class="hero-trust-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              <span data-i18n="cta_trust_trial">7-day Premium trial</span>
-            </span>
-            <span class="hero-trust-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2ECC9A" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              <span data-i18n="cta_trust_cancel">Cancel anytime</span>
-            </span>
+            <a class="btn btn-outline" href="#pricing" data-route="pricing">Get tokens</a>
           </div>
         </div>
       </div>
@@ -576,60 +117,12 @@
     <!-- ════════ PRICING PAGE ════════ -->
     <section class="page" id="page-pricing" style="display:none;">
       <div class="page-hero">
-        <h1 data-i18n="price_title">Simple, Transparent Pricing</h1>
-        <p data-i18n="price_subtitle">Nautico is free to use. Both Premium plans include a 7-day free trial — no charge until your trial ends.</p>
+        <h1>Get Tokens</h1>
+        <p>Tokens are used to place bids on jobs.</p>
       </div>
       <div class="section">
         <div class="section-inner">
-          <div class="pricing-grid">
-            <div class="pricing-card">
-              <div class="pricing-name" data-i18n="price_monthly">Monthly</div>
-              <div class="pricing-price">$9.99<span>/mo</span></div>
-              <div class="pricing-desc" data-i18n="price_monthly_desc">Billed monthly after trial</div>
-              <ul class="pricing-features">
-                <li data-i18n="price_f1">7-day free Premium trial</li>
-                <li data-i18n="price_f2">All features included</li>
-                <li data-i18n="price_f3">Unlimited vessels</li>
-                <li data-i18n="price_f4">Cloud-synced data</li>
-                <li data-i18n="price_f5">Cancel anytime</li>
-              </ul>
-              <a href="#login" class="btn btn-outline" data-route="login"><span data-i18n="price_cta">Start Free Trial</span></a>
-            </div>
-            <div class="pricing-card popular">
-              <div class="pricing-badge" data-i18n="price_badge">Most Popular</div>
-              <div class="pricing-name" data-i18n="price_yearly">Yearly</div>
-              <div class="pricing-price">$4.99<span>/mo</span></div>
-              <div class="pricing-desc" data-i18n="price_yearly_desc">$59.94/yr — Save 50%</div>
-              <ul class="pricing-features">
-                <li data-i18n="price_f1">7-day free Premium trial</li>
-                <li data-i18n="price_f2">All features included</li>
-                <li data-i18n="price_f3">Unlimited vessels</li>
-                <li data-i18n="price_f4">Cloud-synced data</li>
-                <li data-i18n="price_f6">Priority support</li>
-                <li data-i18n="price_f7">Save $60/year vs monthly</li>
-              </ul>
-              <a href="#login" class="btn btn-primary" data-route="login"><span data-i18n="price_cta">Start Free Trial</span></a>
-            </div>
-          </div>
-          <div class="pricing-faq">
-            <h2 data-i18n="price_faq_title">Frequently Asked Questions</h2>
-            <div class="faq-item">
-              <h3 data-i18n="price_faq1_q">How does the free trial work?</h3>
-              <p data-i18n="price_faq1_a">Nautico is free to use with core features. Both monthly and yearly Premium plans come with a 7-day free trial. You won't be charged until the trial ends. Cancel anytime during the 7 days and pay nothing.</p>
-            </div>
-            <div class="faq-item">
-              <h3 data-i18n="price_faq2_q">Can I switch plans later?</h3>
-              <p data-i18n="price_faq2_a">Yes. You can switch between monthly and yearly at any time from your account settings or through the App Store.</p>
-            </div>
-            <div class="faq-item">
-              <h3 data-i18n="price_faq3_q">Is my data safe?</h3>
-              <p data-i18n="price_faq3_a">Absolutely. All data is encrypted and stored securely on enterprise-grade infrastructure. We never sell or share your personal information.</p>
-            </div>
-            <div class="faq-item">
-              <h3 data-i18n="price_faq4_q">What payment methods do you accept?</h3>
-              <p data-i18n="price_faq4_a">Subscriptions are handled through Apple's App Store, which supports all major credit cards, Apple Pay, and carrier billing in select regions.</p>
-            </div>
-          </div>
+          <div id="tokens-root"></div>
         </div>
       </div>
     </section>
@@ -800,7 +293,7 @@
             <div id="login-error" class="auth-error" style="display:none;"></div>
             <button type="submit" class="btn btn-primary btn-full" id="login-btn"><span data-i18n="login_btn">Log In</span></button>
           </form>
-          <p class="auth-footer-text"><span data-i18n="login_footer">Don't have an account?</span> <a href="https://apps.apple.com/tr/app/nautico/id6761394669" target="_blank" data-i18n="login_footer_link">Download Nautico</a> <span data-i18n="login_footer_suffix">to get started.</span></p>
+          <p class="auth-footer-text">Don't have an account? <a href="#signup" data-route="signup">Create account</a></p>
         </div>
       </div>
     </section>
@@ -850,6 +343,11 @@
       </div>
     </section>
 
+    <!-- ════════ SIGNUP PAGE ════════ -->
+    <section class="page" id="page-signup" style="display:none;">
+      <div id="signup-root"></div>
+    </section>
+
     <!-- ════════ MARKETPLACE PAGE ════════ -->
     <section class="page" id="page-marketplace">
       <div id="marketplace-root"></div>
@@ -875,8 +373,11 @@
   <script src="js/hero3d.js?v=19"></script>
 
   <script src="js/i18n.js?v=19"></script>
-  <script src="js/marketplace.js?v=19"></script>
-  <script src="js/app.js?v=19"></script>
+  <script src="js/marketplace.js?v=mp1"></script>
+  <script src="js/onboarding-wizard.js?v=mp2"></script>
+  <script src="js/tokens.js?v=mp2"></script>
+  <script src="js/signup-wizard.js?v=mp1"></script>
+  <script src="js/app.js?v=mp1"></script>
 
   <!-- Language switcher dropdown toggle -->
   <script>

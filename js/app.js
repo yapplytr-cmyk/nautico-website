@@ -15,6 +15,8 @@ function initSupabase() {
   try {
     if (!sb && window.supabase && window.supabase.createClient) {
       sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      window.sb = sb;
+      window.supabaseClient = sb; // shared with the signup wizard
       return true;
     }
   } catch (e) {
@@ -44,7 +46,8 @@ const routes = {
   terms: 'page-terms',
   login: 'page-login',
   dashboard: 'page-dashboard',
-  marketplace: 'page-marketplace'
+  marketplace: 'page-marketplace',
+  signup: 'page-signup'
 };
 
 function navigate(route) {
@@ -99,7 +102,27 @@ function navigate(route) {
   if (route === 'login' && currentUser) {
     navigate('dashboard');
   }
+
+  // Signup — launch the dolphin wizard (full-screen overlay, same as the app)
+  if (route === 'signup') {
+    if (currentUser) { navigate('dashboard'); return; }
+    if (window.NauticoWizard && typeof window.NauticoWizard.start === 'function') {
+      window.NauticoWizard.start();
+    }
+  }
+
+  // Get Tokens page
+  if (route === 'pricing' && typeof loadTokens === 'function') {
+    loadTokens();
+  }
 }
+
+// Called by the signup wizard after a successful account creation.
+window.loadApp = function (user) {
+  if (user) currentUser = user;
+  updateNavForAuth(true);
+  navigate('marketplace');
+};
 
 // ── Button Navigation with Spinner ──
 function navigateWithSpinner(button, route, delay = 300) {
