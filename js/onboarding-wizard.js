@@ -264,21 +264,19 @@
     );
   }
 
-  // Leaping with the envelope -- submit animation + email verify hero.
+  // Leaping with the envelope -- clean flying silhouette; the submit arc
+  // (CSS) owns all rotation/translation. No splash: water doesn't fly.
   function dolphinLeapingSvg() {
     return dphSvg(
-      dolphinBody({ tilt: -6 }) +
+      dolphinBody({ tilt: 0, lookDir: 1 }) +
       prop(
-        '<path d="M22,76 Q32,68 42,76" stroke="' + DPH.belly + '" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.55" />' +
-        '<path d="M14,80 Q26,73 38,80" stroke="' + DPH.belly + '" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.35" />' +
-        '<circle cx="34" cy="66" r="2" fill="' + DPH.belly + '" opacity="0.5" />' +
-        '<g transform="translate(58,52)">' +
-        '<rect x="0" y="0" width="24" height="16" rx="2" fill="' + DPH.envelope + '" />' +
-        '<path d="M0,0 L12,9 L24,0" fill="' + DPH.envFlap + '" />' +
-        '<path d="M10,6 C10,4.6 12,3.9 12,5.4 C12,3.9 14,4.6 14,6 L12,8.6 Z" fill="' + DPH.heart + '" />' +
-        "</g>"
-      ),
-      "0 0 105 82"
+        '<g transform="translate(58,44) rotate(-5)">' +
+        '<rect x="0" y="0" width="26" height="17" rx="2" fill="' + DPH.envelope + '" />' +
+        '<path d="M0,0 L13,9 L26,0" fill="' + DPH.envFlap + '" />' +
+        '<path d="M11,5.6 C11,4.3 13,3.6 13,5.1 C13,3.6 15,4.3 15,5.6 L13,8.2 Z" fill="' + DPH.heart + '" />' +
+        "</g>" +
+        '<ellipse cx="58" cy="55" rx="8" ry="3.8" fill="' + DPH.dk + '" transform="rotate(-10,58,55)" />'
+      )
     );
   }
 
