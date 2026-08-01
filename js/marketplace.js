@@ -20,7 +20,13 @@
   CATEGORIES.forEach(function (c) { if (c.id) CAT_LABEL[c.id] = c.en; });
 
   var state = { category: "", q: "", listings: [], loaded: false };
-  var TIMEFRAMES = ["1-2 hafta", "2-4 hafta", "1-2 ay", "2+ ay"];
+  /* Yapply bid-timeframe options: 1-3 weeks then 1-12 months */
+  var TIMEFRAMES = (function () {
+    var out = [], i;
+    for (i = 1; i <= 3; i++) out.push(i + " hafta");
+    for (i = 1; i <= 12; i++) out.push(i + " ay");
+    return out;
+  })();
   var profileCache = {};
 
   function esc(v) {
@@ -113,7 +119,33 @@
     if (state.category) q = q.eq("category", state.category);
     var res = await q;
     if (res.error) { console.log("[nautico] listings:", res.error.message); return []; }
-    return res.data || [];
+    return (res.data || []).filter(function (l) { return !isBiddingEnded(l); });
+  }
+
+  /* Yapply computeBidDeadline: months ×30 (weeks ×7), default 30 days */
+  function bidWindowDays(l) {
+    var tf = String(l.timeframe || "").toLowerCase();
+    var m = tf.match(/(\d+)/);
+    var num = m ? parseInt(m[1], 10) : 0;
+    if (/ay|month/.test(tf) && num) return Math.min(365, num * 30);
+    if (/hafta|week/.test(tf) && num) return num * 7;
+    if (/hafta|week|acil|urgent/.test(tf)) return 7;
+    return 30;
+  }
+  function bidDaysLeft(l) {
+    if (!l.created_at) return null;
+    var end = new Date(l.created_at).getTime() + bidWindowDays(l) * 86400000;
+    return Math.ceil((end - Date.now()) / 86400000);
+  }
+  function isBiddingEnded(l) {
+    var left = bidDaysLeft(l);
+    return left != null && left <= 0;
+  }
+  function deadlineLabel(l) {
+    var left = bidDaysLeft(l);
+    if (left == null) return "";
+    if (left <= 0) return "Bidding ended";
+    return left + (left === 1 ? " day left" : " days left");
   }
 
   function card(l) {
@@ -129,7 +161,7 @@
         '<div class="mkt-facts">' +
           '<div><span>Length</span><strong>' + esc(lenM(l.boat_length_m)) + "</strong></div>" +
           '<div><span>Budget</span><strong>' + esc(money(l.budget, l.currency)) + "</strong></div>" +
-          '<div><span>When</span><strong>' + esc(l.timeframe || when(l.created_at) || "—") + "</strong></div>" +
+          '<div><span>When</span><strong>' + esc(deadlineLabel(l) || l.timeframe || when(l.created_at) || "—") + "</strong></div>" +
         "</div>" +
       "</button>"
     );
@@ -149,8 +181,7 @@
         "</div>" +
       "</div>" +
       '<div class="mkt-chips">' + chips + "</div>" +
-      '<div class="mkt-searchwrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" class="mkt-search-ic"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>' +
-      '<input type="search" id="mkt-search" autocomplete="off" placeholder="Search jobs, services, marinas…" /></div>' +
+
       '<div class="mkt-grid" id="mkt-grid"></div>'
     );
   }
@@ -279,9 +310,9 @@
           '<div class="mkt-token-badge" id="mkt-token-badge">Checking token cost…</div>' +
           '<div class="mkt-form-row">' +
             '<label>Your offer (₺)<input name="bidAmount" class="mkt-in" type="number" step="1" min="1" placeholder="7500" required></label>' +
-            '<label>Timeframe<select name="timeframeSel" class="mkt-in">' + tfOpts + "</select></label>" +
+            '<label>Timeframe<select name="timeframeSel" class="mkt-in" required><option value="" disabled selected>Select</option>' + tfOpts + "</select></label>" +
           "</div>" +
-          '<label>Proposal<textarea name="proposal" class="mkt-in" rows="3" placeholder="What you&#39;ll do, materials, availability…"></textarea></label>' +
+          '<label>Proposal<textarea name="proposal" class="mkt-in" rows="3" required placeholder="What you&#39;ll do, materials, availability…"></textarea></label>' +
           '<div class="mkt-form-err" id="mkt-bid-err"></div>' +
           '<button type="submit" class="btn btn-primary btn-full">Submit bid</button>' +
         "</form>";
@@ -555,8 +586,20 @@
     );
   }
 
-  /* ── Post a job (owner) ── */
+  /* ── Post a job (owner) — Yapply one-question-at-a-time wizard ── */
   function openCreate() {
+    if (currentUser && window.NauticoListingWizard && window.NauticoListingWizard.open) {
+      window.NauticoListingWizard.open({
+        locale: (function () { try { return localStorage.getItem("nautico-language") || "en"; } catch (e) { return "en"; } })(),
+        onCreated: function () {
+          state.category = "";
+          var chips = document.querySelectorAll(".mkt-chip");
+          chips.forEach(function (x, i) { x.classList.toggle("is-active", i === 0); });
+          renderGrid();
+        }
+      });
+      return;
+    }
     if (!currentUser) {
       showModal('<div class="mkt-detail"><h2>Log in to post a job</h2>' +
         '<p>You need a Nautico account to post a listing.</p>' +

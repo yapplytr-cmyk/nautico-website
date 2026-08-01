@@ -19,6 +19,10 @@
     {
       "source": "/api/billing/webhook",
       "destination": "/api/router?route=billing/webhook"
+    },
+    {
+      "source": "/api/billing/revenuecat-webhook",
+      "destination": "/api/router?route=billing/revenuecat-webhook"
     }
   ]
 }

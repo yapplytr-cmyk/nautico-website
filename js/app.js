@@ -17,6 +17,7 @@ function initSupabase() {
       sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       window.sb = sb;
       window.supabaseClient = sb; // shared with the signup wizard
+      try { wireRecovery(); } catch (e) {}
       return true;
     }
   } catch (e) {
@@ -122,7 +123,62 @@ window.loadApp = function (user) {
   if (user) currentUser = user;
   updateNavForAuth(true);
   navigate('marketplace');
+  // Yapply parity: short 3-slide tutorial popup right after signup
+  try {
+    if (window.NauticoObTutorial) {
+      var role = 'owner';
+      try { role = (user && user.user_metadata && user.user_metadata.role) === 'provider' ? 'provider' : 'owner'; } catch (e) {}
+      var loc = 'en';
+      try { loc = localStorage.getItem('nautico-language') || 'en'; } catch (e) {}
+      setTimeout(function () { window.NauticoObTutorial.show(loc, role); }, 800);
+    }
+  } catch (e) {}
 };
+
+// ── Forgot password (Yapply parity: reset email → set-new-password landing) ──
+document.addEventListener('click', async function (e) {
+  var link = e.target.closest('#login-forgot');
+  if (!link) return;
+  e.preventDefault();
+  if (!sb) initSupabase();
+  var email = (document.getElementById('login-email') || {}).value || '';
+  email = email.trim();
+  var errorEl = document.getElementById('login-error');
+  if (!email) {
+    if (errorEl) { errorEl.textContent = 'Enter your email above first, then tap "Forgot password?".'; errorEl.style.display = 'block'; }
+    return;
+  }
+  try {
+    await sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + '/#login' });
+    if (errorEl) { errorEl.textContent = 'Reset link sent — check your inbox.'; errorEl.style.display = 'block'; }
+  } catch (err) {
+    if (errorEl) { errorEl.textContent = (err && err.message) || 'Could not send the reset email.'; errorEl.style.display = 'block'; }
+  }
+});
+
+// Recovery landing: Supabase redirects back with type=recovery — let the user set a new password.
+function wireRecovery() {
+  if (!sb || wireRecovery._done) return;
+  wireRecovery._done = true;
+  sb.auth.onAuthStateChange(function (event) {
+    if (event !== 'PASSWORD_RECOVERY') return;
+    setTimeout(async function () {
+      var pw = prompt('Choose a new password (min. 8 characters):');
+      if (!pw) return;
+      if (pw.length < 8) { alert('Password must be at least 8 characters.'); return; }
+      try {
+        var res = await sb.auth.updateUser({ password: pw });
+        if (res.error) throw res.error;
+        alert('Password updated — you are now logged in.');
+        currentUser = (res.data && res.data.user) || currentUser;
+        updateNavForAuth(true);
+        navigate('marketplace');
+      } catch (err) {
+        alert((err && err.message) || 'Could not update the password.');
+      }
+    }, 300);
+  });
+}
 
 // ── Button Navigation with Spinner ──
 function navigateWithSpinner(button, route, delay = 300) {

@@ -590,3 +590,98 @@ def handle_billing_webhook(handler) -> None:
     _json_response(handler, err.status, {"ok": False, "code": err.code, "message": err.message})
   except Exception as err:  # noqa: BLE001
     _json_response(handler, 500, {"ok": False, "code": "SERVER_ERROR", "message": str(err)[:300]})
+
+# ─────────────────────────────────────────────────────────────────────────────
+# RevenueCat webhook (Apple IAP → Supabase crediting) — ported from Yapply.
+# ─────────────────────────────────────────────────────────────────────────────
+
+_MEMBERSHIP_PREFIX = "com.nautico.app.membership."
+_TOKENS_PREFIX = "com.nautico.app.tokens."
+_PACK_BY_SIZE = {"small": "pack-small", "medium": "pack-medium", "large": "pack-large"}
+
+
+def _ms_to_iso(ms):
+  try:
+    if not ms:
+      return None
+    secs = int(ms) / 1000.0
+    return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(secs))
+  except Exception:  # noqa: BLE001
+    return None
+
+
+def handle_billing_revenuecat_webhook(handler) -> None:
+  """RevenueCat webhook: grant memberships / token packs bought via Apple IAP."""
+  payload = _read_body(handler)
+
+  expected = (os.environ.get("REVENUECAT_WEBHOOK_AUTH") or "").strip()
+  got = (handler.headers.get("Authorization") or "").strip()
+  if not expected or got != expected:
+    _json_response(handler, 401, {"ok": False, "code": "UNAUTHORIZED"})
+    return
+
+  try:
+    body = json.loads(payload.decode("utf-8") or "{}")
+    event = body.get("event") or {}
+    etype = str(event.get("type") or "")
+    user_id = str(event.get("app_user_id") or "")
+    product_id = str(event.get("product_id") or "")
+    event_id = str(event.get("id") or "")
+
+    # Ignore RevenueCat's own sandbox/test pings and events we can't act on.
+    if not user_id or not product_id or user_id.startswith("$RCAnonymous"):
+      _json_response(handler, HTTPStatus.OK, {"ok": True, "skipped": "no_user_or_product"})
+      return
+
+    if event_id and _already_processed(event_id):
+      _json_response(handler, HTTPStatus.OK, {"ok": True, "skipped": "duplicate"})
+      return
+
+    # ── Membership subscription ──
+    if product_id.startswith(_MEMBERSHIP_PREFIX):
+      plan_id = product_id[len(_MEMBERSHIP_PREFIX):].strip()
+      period_end = _ms_to_iso(event.get("expiration_at_ms"))
+      provider_ref = str(event.get("transaction_id") or event_id or "")
+
+      if etype in ("INITIAL_PURCHASE", "RENEWAL", "UNCANCELLATION", "PRODUCT_CHANGE"):
+        plan = _get_plan(plan_id)
+        _upsert_membership(user_id, plan_id, provider_ref, period_end, provider="apple", status="active")
+        _set_profile_plan(user_id, plan_id)
+        # Monthly token allowance — only on the actual purchase/renewal events.
+        tokens = int(plan.get("tokens_per_month") or 0)
+        if tokens > 0 and etype in ("INITIAL_PURCHASE", "RENEWAL"):
+          _grant_tokens(user_id, tokens, "membership", event_id or provider_ref)
+        _json_response(handler, HTTPStatus.OK, {"ok": True, "plan": plan_id})
+        return
+
+      if etype in ("EXPIRATION", "BILLING_ISSUE"):
+        # Access lapses only on EXPIRATION — CANCELLATION just turns off
+        # auto-renew; the user keeps access until the period ends.
+        if etype == "EXPIRATION":
+          _upsert_membership(user_id, "free", provider_ref, period_end, provider="apple", status="expired")
+          _set_profile_plan(user_id, "free")
+        _json_response(handler, HTTPStatus.OK, {"ok": True, "status": etype})
+        return
+
+      _json_response(handler, HTTPStatus.OK, {"ok": True, "ignored": etype})
+      return
+
+    # ── One-time token pack (consumable) ──
+    if product_id.startswith(_TOKENS_PREFIX):
+      size = product_id[len(_TOKENS_PREFIX):].strip()
+      pack_id = _PACK_BY_SIZE.get(size)
+      if pack_id and etype in ("NON_RENEWING_PURCHASE", "INITIAL_PURCHASE"):
+        pack = _get_pack(pack_id)
+        tokens = int(pack.get("tokens") or 0)
+        if tokens > 0:
+          _grant_tokens(user_id, tokens, "purchase", event_id or product_id)
+        _json_response(handler, HTTPStatus.OK, {"ok": True, "granted": tokens, "pack": pack_id})
+        return
+      _json_response(handler, HTTPStatus.OK, {"ok": True, "ignored": etype})
+      return
+
+    _json_response(handler, HTTPStatus.OK, {"ok": True, "skipped": "unknown_product"})
+  except BillingError as err:
+    _json_response(handler, err.status, {"ok": False, "code": err.code, "message": err.message})
+  except Exception as err:  # noqa: BLE001
+    _json_response(handler, 500, {"ok": False, "code": "SERVER_ERROR", "message": str(err)[:300]})

@@ -918,11 +918,24 @@
         goBtn.addEventListener("click", function () {
           haptic();
           try { localStorage.removeItem("nautico_guest_mode"); } catch (_) {}
+          /* Yapply parity: short app tutorial pop-up right after signup */
+          try {
+            localStorage.setItem("nautico_show_tutorial", "1");
+            localStorage.setItem("nautico_tutorial_role", selectedRole === "provider" ? "provider" : "owner");
+          } catch (_) {}
           try {
             if (typeof window.loadApp === "function") window.loadApp(finishUser);
           } catch (_) {}
           var h = document.getElementById("nautico-wizard");
           if (h) h.remove();
+          try {
+            if (window.NauticoObTutorial) {
+              setTimeout(function () {
+                window.NauticoObTutorial.show(isTr ? "tr" : "en",
+                  selectedRole === "provider" ? "provider" : "owner");
+              }, 900);
+            }
+          } catch (_) {}
         });
       }
       goToStep(7);
@@ -1196,6 +1209,11 @@
             meta.years_experience = (fd.get("yearsExperience") || "").toString();
             meta.provider_type = selectedDevType || "";
             meta.avatar_kind = avatarMode === "logo" && logoDataUrl ? "logo" : "selfie";
+            meta.business_website = (fd.get("businessWebsite") || "").toString();
+            meta.business_description = (fd.get("businessDescription") || "").toString();
+            meta.portfolio_link = (fd.get("individualPortfolioLink") || "").toString();
+          } else {
+            meta.preferred_region = (fd.get("preferredRegion") || "").toString();
           }
 
           var res = await supabaseClient.auth.signUp({

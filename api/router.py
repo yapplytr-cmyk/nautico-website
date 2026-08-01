@@ -14,6 +14,7 @@ from api.billing import (
   handle_billing_intent,
   handle_billing_status,
   handle_billing_webhook,
+  handle_billing_revenuecat_webhook,
   _json_response,
 )
 
@@ -68,6 +69,10 @@ class handler(BaseHTTPRequestHandler):
 
     if route == "billing/webhook":
       handle_billing_webhook(self)
+      return
+
+    if route == "billing/revenuecat-webhook":
+      handle_billing_revenuecat_webhook(self)
       return
 
     _json_response(
