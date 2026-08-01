@@ -211,10 +211,13 @@
   function dolphinTools() {
     return dphSvg(
       dolphinBody({ tilt: 3, lookDir: 1 }) +
-      '<g transform="translate(77.2,38.1) rotate(83) scale(0.6)">' +
+      /* wrench pressed against the chest like the envelope -- head up-right,
+         handle diagonally across the belly */
+      '<g transform="translate(52,32) scale(0.8)">' +
       '<path d="M33 10a8 8 0 0 0-10 10L9 34a4.5 4.5 0 0 0 6.4 6.4L29 26a8 8 0 0 0 10-10l-6 6-4-1-1-4z" fill="' + DPH.tool + '" />' +
       "</g>" +
-      '<ellipse cx="57" cy="49" rx="8" ry="3.8" fill="' + DPH.dk + '" transform="rotate(-14,57,49)" />'
+      /* fin wrapped over the middle of the handle */
+      '<ellipse cx="63" cy="51" rx="8" ry="3.9" fill="' + DPH.dk + '" transform="rotate(38,63,51)" />'
     );
   }
 
