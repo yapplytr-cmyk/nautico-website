@@ -153,10 +153,24 @@
     return left + (left === 1 ? " day left" : " days left");
   }
 
+  /* Photos: job photos first, then the vessel's own photos. */
+  function imgUrls(v) {
+    var arr = Array.isArray(v) ? v : [];
+    return arr.map(function (p) { return typeof p === "string" ? p : (p && p.url); }).filter(Boolean);
+  }
+  function listingImages(l) {
+    var pl = (l && typeof l.payload === "object" && l.payload) ? l.payload : {};
+    var own = imgUrls(pl.photos);
+    var boat = imgUrls(pl.boatPhotos);
+    return own.concat(boat.filter(function (u) { return own.indexOf(u) === -1; }));
+  }
+
   function card(l) {
     var bids = (l.listing_bids || []).length;
+    var cover = listingImages(l)[0];
     return (
       '<button class="mkt-card" data-id="' + esc(l.id) + '">' +
+        (cover ? '<div class="mkt-card-media"><img src="' + esc(cover) + '" alt="" loading="lazy"></div>' : "") +
         '<div class="mkt-card-top">' +
           '<span class="mkt-badge">' + esc(CAT_LABEL[l.category] || "Service") + "</span>" +
           '<span class="mkt-bids">' + bids + (bids === 1 ? " bid" : " bids") + "</span>" +
@@ -332,6 +346,7 @@
 
     showModal(
       '<div class="mkt-detail">' +
+        galleryHtml(listingImages(l)) +
         '<span class="mkt-badge">' + esc(CAT_LABEL[l.category] || "Service") + "</span>" +
         "<h2>" + esc(l.title || "Marine job") + "</h2>" +
         (l.location ? '<div class="mkt-loc">' + esc(l.location) + "</div>" : "") +
@@ -671,6 +686,47 @@
     }
   }
 
+  /* ── Swipeable gallery (same mechanics as the app) ── */
+  function galleryHtml(urls) {
+    if (!urls.length) return "";
+    var many = urls.length > 1;
+    return '<div class="mkt-gal" data-gal>' +
+      '<div class="mkt-gal-track" data-gal-track>' +
+        urls.map(function (u) { return '<img src="' + esc(u) + '" alt="" loading="lazy">'; }).join("") +
+      "</div>" +
+      (many
+        ? '<button type="button" class="mkt-gal-nav mkt-gal-prev" data-gal-prev aria-label="Previous">\u2039</button>' +
+          '<button type="button" class="mkt-gal-nav mkt-gal-next" data-gal-next aria-label="Next">\u203A</button>' +
+          '<div class="mkt-gal-dots" data-gal-dots>' +
+            urls.map(function (_, i) { return '<span class="' + (i === 0 ? "is-on" : "") + '"></span>'; }).join("") +
+          "</div>"
+        : "") +
+      "</div>";
+  }
+  function wireGalleries(root) {
+    root.querySelectorAll("[data-gal]").forEach(function (gal) {
+      var track = gal.querySelector("[data-gal-track]");
+      if (!track) return;
+      var dots = Array.prototype.slice.call(gal.querySelectorAll("[data-gal-dots] span"));
+      var step = function () { return track.clientWidth || 1; };
+      var go = function (d) { track.scrollBy({ left: d * step(), behavior: "smooth" }); };
+      var p = gal.querySelector("[data-gal-prev]"), n = gal.querySelector("[data-gal-next]");
+      if (p) p.addEventListener("click", function (e) { e.stopPropagation(); go(-1); });
+      if (n) n.addEventListener("click", function (e) { e.stopPropagation(); go(1); });
+      if (dots.length) {
+        var raf = null;
+        track.addEventListener("scroll", function () {
+          if (raf) return;
+          raf = requestAnimationFrame(function () {
+            raf = null;
+            var i = Math.round(track.scrollLeft / step());
+            dots.forEach(function (d, k) { d.classList.toggle("is-on", k === i); });
+          });
+        }, { passive: true });
+      }
+    });
+  }
+
   /* ── tiny modal ── */
   function showModal(inner) {
     closeMktModal();
@@ -681,6 +737,7 @@
     document.body.appendChild(ov);
     ov.addEventListener("click", function (e) { if (e.target === ov) closeMktModal(); });
     ov.querySelector(".mkt-modal-x").addEventListener("click", closeMktModal);
+    try { wireGalleries(ov); } catch (e) {}
   }
   window.closeMktModal = function () { var el = document.getElementById("mkt-modal-ov"); if (el) el.remove(); };
 
@@ -690,6 +747,17 @@
     var st = document.createElement("style");
     st.id = "mkt-ext-styles";
     st.textContent =
+      ".mkt-card-media{margin:-16px -16px 12px;height:150px;overflow:hidden;border-radius:14px 14px 0 0;background:rgba(0,0,0,.18);}" +
+      ".mkt-card-media img{width:100%;height:100%;object-fit:cover;display:block;}" +
+      ".mkt-gal{position:relative;margin:0 0 14px;border-radius:14px;overflow:hidden;background:rgba(0,0,0,.2);}" +
+      ".mkt-gal-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}" +
+      ".mkt-gal-track::-webkit-scrollbar{display:none;}" +
+      ".mkt-gal-track img{flex:0 0 100%;width:100%;height:250px;object-fit:cover;scroll-snap-align:center;display:block;}" +
+      ".mkt-gal-nav{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;background:rgba(0,0,0,.48);color:#fff;font-size:21px;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;}" +
+      ".mkt-gal-prev{left:8px}.mkt-gal-next{right:8px}" +
+      ".mkt-gal-dots{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:6px;pointer-events:none;}" +
+      ".mkt-gal-dots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.45);}" +
+      ".mkt-gal-dots span.is-on{background:#fff;transform:scale(1.25);}" +
       ".mkt-bid-who{display:flex;align-items:center;gap:8px;min-width:0;}" +
       ".mkt-bid-name{color:inherit;font-weight:600;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.35);}" +
       ".mkt-bid-name:hover{border-bottom-color:currentColor;}" +

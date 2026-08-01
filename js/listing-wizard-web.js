@@ -456,7 +456,7 @@ async function getActiveYacht(uid) {
     const supabase = await getSupabaseClient();
     const res = await supabase
       .from("user_yachts")
-      .select("id,name,brand,model,length_m,length_ft,year,home_port,berth")
+      .select("id,name,brand,model,length_m,length_ft,year,home_port,berth,photos")
       .eq("owner_id", uid)
       .order("created_at", { ascending: true })
       .limit(1);
@@ -996,7 +996,12 @@ async function renderCreatePage(container, opts) {
         budget: budgetNumber(data.budget),
         currency: CURRENCY,
         timeframe: timeframeLabel(data.timeframe, isTr),
-        payload: { photos: photoUrls, phone: data.phone || "", budgetLabel: budgetLabel(data.budget, isTr) },
+        payload: {
+          photos: photoUrls,
+          boatPhotos: (yacht && Array.isArray(yacht.photos)) ? yacht.photos : [],
+          phone: data.phone || "",
+          budgetLabel: budgetLabel(data.budget, isTr),
+        },
       });
 
       haptic();
